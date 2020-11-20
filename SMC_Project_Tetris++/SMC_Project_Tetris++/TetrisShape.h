@@ -9,7 +9,17 @@ public:
 	using Position = std::pair<uint16_t, uint16_t>;
 
 public:
-	TetrisShape(uint16_t, uint16_t);
+
+	// Rule of Five
+	TetrisShape();
+	TetrisShape(uint16_t, uint16_t, Color);
+	TetrisShape(const TetrisShape&);
+	TetrisShape(TetrisShape&&);
+	TetrisShape& operator=(const TetrisShape&);
+	TetrisShape& operator=(TetrisShape&&);
+	~TetrisShape();
+	//
+
 	std::optional<int>& operator[](const Position&);
 	const std::optional<int>& operator[](const Position&) const;
 	
@@ -20,7 +30,8 @@ public: //metodele care trebuie suprascrise pentru fiecare piesa
 	virtual void MoveRight() = 0;
 	virtual void MoveDown() = 0;
 	virtual void Rotate() = 0;
-	virtual void Scale() = 0;
+	virtual void ScaleUp() = 0;
+	virtual void ScaleDown() = 0;
 
 protected: 
 	const static size_t ROWS = 5;

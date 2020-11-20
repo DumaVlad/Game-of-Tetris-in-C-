@@ -1,10 +1,52 @@
 #include "TetrisShape.h"
 
-TetrisShape::TetrisShape(uint16_t centerL, uint16_t centerC)
-	: m_centerL{centerL}, m_centerC{centerC}, m_color{Color::Red}
+TetrisShape::TetrisShape()
+{
+}
+
+TetrisShape::TetrisShape(uint16_t centerL, uint16_t centerC, Color color)
+	: m_centerL{centerL}, m_centerC{centerC}, m_color{color}
 {
 	//m_piece_array[m_centerL,m_centerC] = 1  // nu inteleg de ce nu imi acceseaza operatorul [] 
 	m_piece_array[m_centerL * COLUMNS + m_centerC] = 1;
+}
+
+TetrisShape::TetrisShape(const TetrisShape& other)
+{
+	*this = other;
+}
+
+TetrisShape::TetrisShape(TetrisShape&& other)
+{
+	*this = std::move(other);
+}
+
+TetrisShape& TetrisShape::operator=(const TetrisShape& other)
+{
+	if (this != &other)
+	{
+		m_centerL = other.m_centerL;
+		m_centerC = other.m_centerC;
+		m_color = other.m_color;
+		m_piece_array = other.m_piece_array;
+	}
+	return *this;
+}
+
+TetrisShape& TetrisShape::operator=(TetrisShape&& other)
+{
+	if (this != &other)
+	{
+		m_centerL = other.m_centerL;
+		m_centerC = other.m_centerC;
+		m_color = other.m_color;
+		m_piece_array = other.m_piece_array;
+	}
+	return *this;
+}
+
+TetrisShape::~TetrisShape()
+{
 }
 
 std::optional<int>& TetrisShape::operator[](const Position& position)
