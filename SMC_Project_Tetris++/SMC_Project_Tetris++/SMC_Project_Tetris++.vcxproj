@@ -173,6 +173,7 @@
     <ClCompile Include="SShape.cpp" />
     <ClCompile Include="TetrisShape.cpp" />
     <ClCompile Include="TShape.cpp" />
+    <ClCompile Include="ZShape.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Color.h" />
@@ -183,6 +184,7 @@
     <ClInclude Include="SShape.h" />
     <ClInclude Include="TetrisShape.h" />
     <ClInclude Include="TShape.h" />
+    <ClInclude Include="ZShape.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
