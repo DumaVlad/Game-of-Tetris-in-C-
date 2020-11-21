@@ -1,7 +1,7 @@
 #include "TShape.h"
 
 TShape::TShape()
-	: TetrisShape(1,2, Color::Red)
+	: TetrisShape(1, 2, Color::Red)
 {
 	m_piece_array[(m_centerL + 1) * COLUMNS + (m_centerC - 1)] = 1;
 	m_piece_array[(m_centerL + 1) * COLUMNS + m_centerC] = 1;
@@ -14,7 +14,6 @@ void TShape::MoveLeft()
 
 void TShape::MoveRight()
 {
-	
 }
 
 void TShape::MoveDown()

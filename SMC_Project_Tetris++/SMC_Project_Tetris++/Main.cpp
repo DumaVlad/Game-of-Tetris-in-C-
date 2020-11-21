@@ -1,7 +1,8 @@
 #include <SFML/Graphics.hpp>
 #include <conio.h>
 #include "Color.h"
-#include "TShape.h"
+#include "IShape.h"
+
 
 constexpr auto KB_UP = 72;;
 constexpr auto KB_ESCAPE = 27;
@@ -27,7 +28,7 @@ int main()
 		window.display();
 	}*/
 
-	TShape shape;
+	IShape shape;
 	std::cout << shape << std::endl;
 	
 	char input = 0;

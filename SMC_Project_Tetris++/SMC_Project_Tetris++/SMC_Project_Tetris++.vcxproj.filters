@@ -27,6 +27,12 @@
     <ClCompile Include="TShape.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="OShape.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="IShape.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="TetrisShape.h">
@@ -36,6 +42,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="TShape.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="OShape.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="IShape.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
