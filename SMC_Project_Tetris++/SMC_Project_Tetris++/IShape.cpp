@@ -3,8 +3,9 @@
 IShape::IShape()
 	: TetrisShape(1, 2, Color::Yellow)
 {
-	m_piece_array[(m_centerC + 1) * COLUMNS + m_centerL] = 1;
-	m_piece_array[(m_centerC + 2) * COLUMNS + m_centerL] = 1;
+	m_piece_array[(m_centerL + 1) * COLUMNS + m_centerC] = 1;
+	m_piece_array[(m_centerL + 2) * COLUMNS + m_centerC] = 1;
+	m_piece_array[(m_centerL + 3) * COLUMNS + m_centerC] = 1;
 }
 
 void IShape::MoveLeft()
@@ -38,28 +39,41 @@ void IShape::Rotate()
 
 void IShape::ScaleUp()
 {
-	if (!(*this)[{1, 1}].has_value())
+	if (!(*this)[{0, 2}].has_value() && (*this)[{4, 2}].has_value())
 	{
 		(*this)[{0, 2}] = 1;
-		(*this)[{4, 2}] = 1;
+
 	}
-	if (!(*this)[{2, 0}].has_value())
+	if (!(*this)[{4, 2}].has_value() && (*this)[{0, 2}].has_value())
+	{
+		(*this)[{4, 2}] = 1;
+
+	}
+	if (!(*this)[{2, 0}].has_value() && (*this)[{2, 4}].has_value())
 	{
 		(*this)[{2, 0}] = 1;
-		(*this)[{2, 4}] = 1;
+
 	}
+	if (!(*this)[{2, 4}].has_value() && (*this)[{2, 0}].has_value())
+	{
+		(*this)[{2, 4}] = 1;
+
+	}
+
+
+
 }
 
 void IShape::ScaleDown()
 {
-	if ((*this)[{0, 2}].has_value())
+	if ((*this)[{0, 2}].has_value() && (*this)[{4, 2}].has_value())
 	{
 		(*this)[{0, 2}].reset();
-		(*this)[{4, 2}].reset();
+
 	}
-	if ((*this)[{2, 0}].has_value())
+	if ((*this)[{2, 0}].has_value()&& (*this)[{2, 4}].has_value())
 	{
 		(*this)[{2, 0}].reset();
-		(*this)[{2, 4}].reset();
 	}
+
 }
