@@ -74,4 +74,20 @@ void SShape::ScaleUp()
 
 void SShape::ScaleDown()
 {
+	if ((*this)[{1, 4}].has_value() && (*this)[{3, 0}].has_value())
+	{
+		(*this)[{2, 1}] = 1;
+		(*this)[{3, 1}].reset();
+		(*this)[{3, 2}].reset();
+		(*this)[{3, 0}].reset();
+		(*this)[{1, 4}].reset();
+	}
+	if ((*this)[{0, 1}].has_value() && (*this)[{4, 3}].has_value())
+	{
+		(*this)[{3, 2}] = 1;
+		(*this)[{0, 1}].reset();
+		(*this)[{2, 3}].reset();
+		(*this)[{3, 3}].reset();
+		(*this)[{4, 3}].reset();
+	}
 }
