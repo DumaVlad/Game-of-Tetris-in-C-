@@ -2,6 +2,9 @@
 #include <conio.h>
 #include "Color.h"
 #include "IShape.h"
+#include "TShape.h"
+#include "OShape.h"
+#include "SShape.h"
 
 
 constexpr auto KB_UP = 72;;
@@ -28,7 +31,7 @@ int main()
 		window.display();
 	}*/
 
-	IShape shape;
+	SShape shape;
 	std::cout << shape << std::endl;
 	
 	char input = 0;

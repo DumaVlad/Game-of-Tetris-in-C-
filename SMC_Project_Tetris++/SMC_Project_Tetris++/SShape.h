@@ -1,15 +1,17 @@
 #pragma once
 #include "TetrisShape.h"
- class OShape : public TetrisShape
+class SShape :
+	public TetrisShape
 {
 public:
-	OShape();
+	SShape();
 	void MoveLeft();
 	void MoveRight();
 	void MoveDown();
 	void Rotate();
 	void ScaleUp();
 	void ScaleDown();
-private:
+private: 
 
 };
+

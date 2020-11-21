@@ -22,7 +22,7 @@ void OShape::MoveDown()
 {
 }
 
-void OShape::Roatate()
+void OShape::Rotate()
 {
 	TetrisShape::Position position;
 	auto& [i, j] = position;

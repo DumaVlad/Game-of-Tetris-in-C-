@@ -168,6 +168,7 @@
     <ClCompile Include="IShape.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="OShape.cpp" />
+    <ClCompile Include="SShape.cpp" />
     <ClCompile Include="TetrisShape.cpp" />
     <ClCompile Include="TShape.cpp" />
   </ItemGroup>
@@ -175,6 +176,7 @@
     <ClInclude Include="Color.h" />
     <ClInclude Include="IShape.h" />
     <ClInclude Include="OShape.h" />
+    <ClInclude Include="SShape.h" />
     <ClInclude Include="TetrisShape.h" />
     <ClInclude Include="TShape.h" />
   </ItemGroup>

@@ -10,6 +10,7 @@ enum class Color : uint8_t
 	Blue,
 	Purple,
 	Pink,
+	Orange,
 	None,
 };
 

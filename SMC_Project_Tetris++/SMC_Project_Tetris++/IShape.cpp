@@ -19,7 +19,7 @@ void IShape::MoveDown()
 {
 }
 
-void IShape::Roatate()
+void IShape::Rotate()
 {
 	TetrisShape::Position position;
 	auto& [i, j] = position;
@@ -38,7 +38,7 @@ void IShape::Roatate()
 
 void IShape::ScaleUp()
 {
-	if (!(*this)[{0, 2}].has_value())
+	if (!(*this)[{1, 1}].has_value())
 	{
 		(*this)[{0, 2}] = 1;
 		(*this)[{4, 2}] = 1;
