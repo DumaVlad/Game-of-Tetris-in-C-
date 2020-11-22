@@ -39,6 +39,9 @@
     <ClCompile Include="LShape.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="JShape.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="TetrisShape.h">
@@ -60,6 +63,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="LShape.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="JShape.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
