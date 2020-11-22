@@ -5,6 +5,7 @@
 #include "TShape.h"
 #include "OShape.h"
 #include "SShape.h"
+#include "LShape.h"
 
 
 constexpr auto KB_UP = 72;;
@@ -31,7 +32,7 @@ int main()
 		window.display();
 	}*/
 
-	SShape shape;
+	LShape shape;
 	std::cout << shape << std::endl;
 	
 	char input = 0;
