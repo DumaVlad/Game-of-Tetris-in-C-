@@ -14,11 +14,26 @@ constexpr auto KB_UP = 72;;
 constexpr auto KB_ESCAPE = 27;
 constexpr auto KB_PLUS = 43;
 constexpr auto KB_MINUS = 45;
+
 int main()
 {
-	/*sf::RenderWindow window(sf::VideoMode(200, 200), "SFML works!");
-	sf::CircleShape shape(100.f);
-	shape.setFillColor(sf::Color::Red);
+	/*sf::RenderWindow window(sf::VideoMode(300, 300), "SFML works!");
+	sf::RectangleShape shape1(sf::Vector2f(200,200));
+	shape1.setPosition(50, 30);
+	shape1.setFillColor(sf::Color::Yellow);
+	shape1.setOutlineThickness(5);
+	shape1.setOutlineColor(sf::Color::Blue);
+
+	sf::Mouse button();
+	if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
+	{
+		window.close();
+	}
+
+	// get global mouse position
+	sf::Vector2i position = sf::Mouse::getPosition();
+	// set mouse position relative to a window
+	sf::Mouse::setPosition(sf::Vector2i(200, 200), window);
 
 	while (window.isOpen())
 	{
@@ -30,7 +45,7 @@ int main()
 		}
 
 		window.clear();
-		window.draw(shape);
+		window.draw(shape1);
 		window.display();
 	}*/
 
