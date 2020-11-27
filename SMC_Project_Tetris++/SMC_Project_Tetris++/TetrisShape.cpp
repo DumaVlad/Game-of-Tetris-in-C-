@@ -1,87 +1,75 @@
 #include "TetrisShape.h"
+#include <SFML/Graphics/RenderTarget.hpp>
+#include <iostream>
 
-TetrisShape::TetrisShape()
-{
-}
+/*BlockArray5x5 // The 5x5 array used to store a Shape
+[0, 1, 2, 3, 4]
+[5, 6, 7, 8, 9]
+[10, 11, 12, 13, 14]
+[15, 16, 17, 18, 19]
+[20, 21, 22, 23, 24]
+*/
 
-TetrisShape::TetrisShape(uint16_t centerL, uint16_t centerC, Color color)
-	: m_centerL{centerL}, m_centerC{centerC}, m_color{color}
-{
-	//m_piece_array[m_centerL,m_centerC] = 1  // nu inteleg de ce nu imi acceseaza operatorul [] 
-	m_piece_array[m_centerL * COLUMNS + m_centerC] = 1;
-}
+unsigned int BlockArray5x5[7][4] = {
+	{6, 7, 11, 12},   // SquareShape
+	{7, 12, 17, 18},  // LShape
+	{7, 12, 17, 16},  // JShape
+	{6, 11, 12, 17},  // SShape
+	{7, 12, 11, 16},  // ZShape
+	{7, 11, 12, 13},  // TShape
+	{7, 12, 17, 22}   // IShape
+};
 
-TetrisShape::TetrisShape(const TetrisShape& other)
+TetrisShape::TetrisShape(sf::Texture& texture, uint16_t id)
+	: m_Position{Position{5,5}}, m_CurrentRotation{0}, m_ID{id}, m_Block{}, m_Sprite{texture, sf::IntRect{(id % 7) * 18, 0, 18, 18}}
 {
-	*this = other;
-}
-
-TetrisShape::TetrisShape(TetrisShape&& other)
-{
-	*this = std::move(other);
-}
-
-TetrisShape& TetrisShape::operator=(const TetrisShape& other)
-{
-	if (this != &other)
+	m_ID = m_ID % 7; // In case of an id > 6, we make sure that is not out of bounds
+	for (int index = 0; index < 4; index++)
 	{
-		m_centerL = other.m_centerL;
-		m_centerC = other.m_centerC;
-		m_color = other.m_color;
-		m_piece_array = other.m_piece_array;
+		m_Block[index].x = BlockArray5x5[m_ID][index] % 5;
+		m_Block[index].y = BlockArray5x5[m_ID][index] / 5;
 	}
-	return *this;
 }
 
-TetrisShape& TetrisShape::operator=(TetrisShape&& other)
+uint16_t TetrisShape::GetID() const
 {
-	if (this != &other)
-	{
-		m_centerL = other.m_centerL;
-		m_centerC = other.m_centerC;
-		m_color = other.m_color;
-		m_piece_array = other.m_piece_array;
-	}
-	return *this;
+	return uint16_t();
 }
 
-TetrisShape::~TetrisShape()
+std::array<TetrisShape::Position, 4> TetrisShape::GetBlockPosition() const
+{
+	return std::array<Position, 4>();
+}
+
+std::array<TetrisShape::Position, 4> TetrisShape::GetFutureBlockPosition(Direction direction) const
+{
+	return std::array<Position, 4>();
+}
+
+void TetrisShape::RevertState()
 {
 }
 
-std::optional<int>& TetrisShape::operator[](const Position& position)
+void TetrisShape::SetPosition(const Position& position)
 {
-	const auto& [line, column] = position;
-	if (line < ROWS && column < COLUMNS)
-		return m_piece_array[line * COLUMNS + column];
-	else
-		throw "Index out of bounds";
 }
 
-const std::optional<int>& TetrisShape::operator[](const Position& position) const
+void TetrisShape::Rotate()
 {
-	const auto& [line, column] = position;
-	if (line < ROWS && column < COLUMNS)
-		return m_piece_array[line * COLUMNS + column];
-	else
-		throw "Index out of bounds";
 }
 
-std::ostream& operator<<(std::ostream& outFlux, TetrisShape& shape)
+void TetrisShape::Move(Direction direction)
 {
-	TetrisShape::Position position;
-	auto& [line, column] = position;
+}
 
-	for (line = 0; line < TetrisShape::ROWS; line++)
-	{
-		for (column = 0; column < TetrisShape::COLUMNS ; column++)
-		{
-			if (const auto& optInt = shape[position]; optInt.has_value())
-				outFlux << optInt.value() << " ";
-			else
-				outFlux << "-" << " ";
-		}
-		outFlux << std::endl;
-	}
-	return outFlux;
+void TetrisShape::ScaleUp()
+{
+}
+
+void TetrisShape::ScaleDown()
+{
+}
+
+void TetrisShape::draw(sf::RenderTarget& target, sf::RenderStates states) const
+{
 }

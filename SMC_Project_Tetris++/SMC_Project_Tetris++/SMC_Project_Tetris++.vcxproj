@@ -164,27 +164,16 @@
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Color.cpp" />
-    <ClCompile Include="IShape.cpp" />
-    <ClCompile Include="JShape.cpp" />
-    <ClCompile Include="LShape.cpp" />
     <ClCompile Include="Main.cpp" />
-    <ClCompile Include="OShape.cpp" />
-    <ClCompile Include="SShape.cpp" />
     <ClCompile Include="TetrisShape.cpp" />
-    <ClCompile Include="TShape.cpp" />
-    <ClCompile Include="ZShape.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Color.h" />
-    <ClInclude Include="IShape.h" />
-    <ClInclude Include="JShape.h" />
-    <ClInclude Include="LShape.h" />
-    <ClInclude Include="OShape.h" />
-    <ClInclude Include="SShape.h" />
+    <ClInclude Include="Directions.h" />
+    <ClInclude Include="Shapes.h" />
     <ClInclude Include="TetrisShape.h" />
-    <ClInclude Include="TShape.h" />
-    <ClInclude Include="ZShape.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="Blocks.png" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -1,45 +1,38 @@
 #pragma once
+#include "Shapes.h"
+#include "Directions.h"
+#include <SFML/Graphics/Sprite.hpp>
+#include <SFML/Graphics/Drawable.hpp>
 #include <array>
 
-class TetrisShape
+class TetrisShape : public sf::Drawable
 {
 public:
-	using Position = std::pair<uint16_t, uint16_t>;
+	using Position = sf::Vector2i;
 
 public:
+	TetrisShape(sf::Texture&, uint16_t);
+	~TetrisShape() = default;
 
-	// Rule of Five
-	TetrisShape();
-	TetrisShape(uint16_t, uint16_t, Color);
-	TetrisShape(const TetrisShape&);
-	TetrisShape(TetrisShape&&);
-	TetrisShape& operator=(const TetrisShape&);
-	TetrisShape& operator=(TetrisShape&&);
-	~TetrisShape();
-	//
+	uint16_t GetID() const;
+	std::array<Position, 4> GetBlockPosition() const;
+	std::array<Position, 4> GetFutureBlockPosition(Direction) const;
+	void RevertState();
+	void SetPosition(const Position&);
+	void Rotate();
+	void Move(Direction);
+	void ScaleUp();
+	void ScaleDown();
 
-	std::optional<int>& operator[](const Position&);
-	const std::optional<int>& operator[](const Position&) const;
-	
-	friend std::ostream& operator<<(std::ostream&, TetrisShape&);
+private:
+	void draw(sf::RenderTarget&, sf::RenderStates) const override;
 
-public: //metodele care trebuie suprascrise pentru fiecare piesa
-	virtual void MoveLeft() = 0;
-	virtual void MoveRight() = 0;
-	virtual void MoveDown() = 0;
-	virtual void Rotate() = 0;
-	virtual void ScaleUp() = 0;
-	virtual void ScaleDown() = 0;
-
-protected: 
-	const static size_t ROWS = 5;
-	const static size_t COLUMNS = 5;
-	const static size_t SIZE = ROWS * COLUMNS;
-
-protected:
-	uint16_t m_centerL;
-	uint16_t m_centerC;
-	Color m_color;
-	std::array<std::optional<int>, SIZE> m_piece_array;
+private:
+	Position m_Position;
+	uint16_t m_CurrentRotation;
+	uint16_t m_ID;
+	std::array<Position, 4> m_Block;
+	std::array<Position, 4> m_OldBlock;
+	mutable sf::Sprite m_Sprite;
 };
 

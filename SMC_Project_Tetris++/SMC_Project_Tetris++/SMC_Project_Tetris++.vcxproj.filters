@@ -21,58 +21,21 @@
     <ClCompile Include="TetrisShape.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Color.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="TShape.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="OShape.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="IShape.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="SShape.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="LShape.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="JShape.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="ZShape.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="TetrisShape.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Color.h">
+    <ClInclude Include="Directions.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="TShape.h">
+    <ClInclude Include="Shapes.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="OShape.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="IShape.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="SShape.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="LShape.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="JShape.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="ZShape.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="Blocks.png">
+      <Filter>Resource Files</Filter>
+    </Image>
   </ItemGroup>
 </Project>
