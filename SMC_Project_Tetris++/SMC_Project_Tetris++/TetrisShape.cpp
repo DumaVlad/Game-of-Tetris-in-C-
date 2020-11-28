@@ -48,7 +48,20 @@ std::array<TetrisShape::Position, 4> TetrisShape::GetBlockPosition() const
 
 std::array<TetrisShape::Position, 4> TetrisShape::GetFutureBlockPosition(Direction direction) const
 {
-	return std::array<Position, 4>();
+	std::array<Position, 4> blockPositions;
+	Position tempPosition{ m_Position };
+
+	if (direction == Direction::Left)
+		tempPosition.x--;
+	else if (direction == Direction::Right)
+		tempPosition.x++;
+	else
+		tempPosition.y++;
+
+	for (auto i = 0; i < 4; ++i) {
+		blockPositions[i] = Position{ m_Block[i].x + tempPosition.x, m_Block[i].y + tempPosition.y };
+	}
+	return blockPositions;
 }
 
 void TetrisShape::RevertState()
