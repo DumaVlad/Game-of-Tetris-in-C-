@@ -19,23 +19,23 @@ int main()
 				window.close();
 	
 		window.clear();
-		//window.draw(shape); TO BE implemented
+		window.draw(shape); 
 
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
 		{
-			//shape.Rotate(); TO BE implemented
+			shape.Rotate(); 
 		}
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
 		{
-			//shape.Move(Direction::Left); TO BE implemented
+			shape.Move(Direction::Left);
 		}
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
 		{
-			//shape.Move(Direction::Right); TO BE implemented
+			shape.Move(Direction::Right);
 		}
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
 		{
-			//shape.Move(Direction::Down); TO BE implemented
+			shape.Move(Direction::Down);
 		}
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
 		{

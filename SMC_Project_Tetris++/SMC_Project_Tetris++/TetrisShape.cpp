@@ -33,7 +33,7 @@ TetrisShape::TetrisShape(sf::Texture& texture, uint16_t id)
 
 uint16_t TetrisShape::GetID() const
 {
-	return uint16_t();
+	return m_ID;
 }
 
 std::array<TetrisShape::Position, 4> TetrisShape::GetBlockPosition() const
@@ -83,7 +83,7 @@ void TetrisShape::Rotate()
 	}
 	if (m_ID == 6) { // IShape: restrict "rotation" to two states (horizontal/vertical)
 		m_CurrentRotation++;
-		for (auto i = 0; i < 9; ++i) {
+		for (auto i = 0; i < 4; ++i) {
 			Position oldPoint = m_Block[i];    //pivot
 			Position localVector = oldPoint - Position{ 1, 2 };
 			Position nextPoint{};
@@ -106,7 +106,7 @@ void TetrisShape::Rotate()
 		}
 		return;
 	}
-	for (auto i = 0; i < 9; ++i) {
+	for (auto i = 0; i < 4; ++i) {
 		Position oldPoint = m_Block[i];    //pivot
 		Position localVector = oldPoint - Position{ 1,2 };
 
@@ -121,7 +121,7 @@ void TetrisShape::Rotate()
 
 		Position nextPoint{ (0 * localVector.x) + (-1 * localVector.y),
 								(1 * localVector.x) + (0 * localVector.y) };
-		m_Block[i] = Position{ 1,2 } +nextPoint;
+		m_Block[i] = Position{ 1,2 } + nextPoint;
 	}
 }
 
@@ -145,7 +145,7 @@ void TetrisShape::ScaleDown()
 
 void TetrisShape::draw(sf::RenderTarget& target, sf::RenderStates states) const
 {
-	for (int i = 0; i < 9; i++)
+	for (int i = 0; i < 4; i++)
 	{
 		m_Sprite.setPosition((m_Block[i].x * 18) + (m_Position.x * 18), (m_Block[i].y * 18) + (m_Position.y * 18));
 		target.draw(m_Sprite);
