@@ -38,7 +38,12 @@ uint16_t TetrisShape::GetID() const
 
 std::array<TetrisShape::Position, 4> TetrisShape::GetBlockPosition() const
 {
-	return std::array<Position, 4>();
+	std::array<Position, 4> blockPosition;
+	for (int i = 0; i < 4; i++)
+	{
+		blockPosition[i] = Position{ m_Block[i].x + m_Position.x, m_Block[i].y + m_Position.y };
+	}
+	return blockPosition;
 }
 
 std::array<TetrisShape::Position, 4> TetrisShape::GetFutureBlockPosition(Direction direction) const
@@ -109,6 +114,12 @@ void TetrisShape::Rotate()
 
 void TetrisShape::Move(Direction direction)
 {
+	if (direction == Direction::Left)
+		m_Position.x--;
+	else if (direction == Direction::Right)
+		m_Position.x++;
+	else
+		m_Position.y++;
 }
 
 void TetrisShape::ScaleUp()
