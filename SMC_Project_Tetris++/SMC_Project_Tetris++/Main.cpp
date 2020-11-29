@@ -9,7 +9,7 @@ int main()
 	if (!texture.loadFromFile("Blocks.png"))
 		std::cout << "Can't load the texture from the file !" << std::endl;
 
-	TetrisShape shape(texture, 0);
+	TetrisShape shape(texture, 3);
 
 	while (window.isOpen())
 	{
@@ -38,6 +38,12 @@ int main()
 					break;
 				case(sf::Keyboard::Right):
 					shape.Move(Direction::Right);
+					break;
+				case(sf::Keyboard::A):
+					shape.ScaleUp();
+					break;
+				case(sf::Keyboard::Z):
+					shape.ScaleDown();
 					break;
 				default:
 					break;
