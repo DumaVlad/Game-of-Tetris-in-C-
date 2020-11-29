@@ -11,27 +11,27 @@
 */
 
 unsigned int BlockArray5x5[7][9] = {
-	{6, 7, 11, 12},   // SquareShape
-	{7, 12, 17, 18},  // LShape
-	{7, 12, 17, 16},  // JShape
-	{6, 11, 12, 17},  // SShape
-	{7, 12, 11, 16},  // ZShape
-	{7, 11, 12, 13},  // TShape
-	{7, 12, 17, 22}   // IShape
+	{6,7,11,12,6,6,6,6,6}, //SquareShape
+	{7,12,17,18,7,7,7,7,7}, // LShape
+	{7,12,17,16,7,7,7,7,7}, // JShape
+	{6,11,12,17,6,6,6,6,6}, // SShape
+	{7,12,11,16,7,7,7,7,7}, // ZShape
+	{7,11,12,13,7,7,7,7,7}, // TShape
+	{7,12,17,22,7,7,7,7,7} // IShape
 };
 
 unsigned int ScaledBlockArray5x5[7][9] = {
 	{6,7,8,11,12,13,16,17,18}, //SquareShape
-	{2,7,12,17,18,19}, // LShape
-	{2,7,12,17,16,15}, // JShape
-	{1,6,11,12,13,18,23}, // SShape
-	{2,7,12,11,10,15,20}, // ZShape
-	{2,7,10,11,12,13,14}, // TShape
-	{2,7,12,17,22} // IShape
+	{2,7,12,17,18,19,2,2,2}, // LShape
+	{2,7,12,17,16,15,2,2,2}, // JShape
+	{1,6,11,12,13,18,23,1,1}, // SShape
+	{2,7,12,11,10,15,20,2,2}, // ZShape
+	{2,7,10,11,12,13,14,7,7}, // TShape
+	{2,7,12,17,22,2,2,2,2} // IShape
 };
 
 TetrisShape::TetrisShape(sf::Texture& texture, uint16_t id)
-	: m_Position{Position{5,5}}, m_CurrentRotation{0}, m_ID{id}, m_Block{}, m_Sprite{texture, sf::IntRect{(id % 7) * 18, 0, 18, 18}}
+	: m_Position{ Position{5,5} }, m_CurrentRotation{ 0 }, m_ID{ id }, m_Block{}, m_Sprite{ texture, sf::IntRect{(id % 7) * 18, 0, 18, 18} }
 {
 	m_ID = m_ID % 7; // In case of an id > 6, we make sure that is not out of bounds
 	for (int index = 0; index < 9; index++)
@@ -111,7 +111,7 @@ void TetrisShape::Rotate()
 										 (-1 * localVector.x) + (0 * localVector.y) };
 
 			}
-			m_Block[i] = Position{ 1,2 } +nextPoint;
+			m_Block[i] = Position{ 1,2 } + nextPoint;
 
 		}
 		return;
@@ -156,6 +156,11 @@ void TetrisShape::ScaleUp()
 
 void TetrisShape::ScaleDown()
 {
+	for (int i = 0; i < 9; i++)
+	{
+		m_Block[i].x = BlockArray5x5[m_ID][i] % 5;
+		m_Block[i].y = BlockArray5x5[m_ID][i] / 5;
+	}
 }
 
 void TetrisShape::draw(sf::RenderTarget& target, sf::RenderStates states) const
