@@ -165,11 +165,13 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp" />
+    <ClCompile Include="Menu.cpp" />
     <ClCompile Include="TetrisShape.cpp" />
     <ClCompile Include="Utils.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Directions.h" />
+    <ClInclude Include="Menu.h" />
     <ClInclude Include="Shapes.h" />
     <ClInclude Include="TetrisShape.h" />
     <ClInclude Include="Utils.h" />

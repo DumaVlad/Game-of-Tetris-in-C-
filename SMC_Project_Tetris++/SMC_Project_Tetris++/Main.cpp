@@ -1,5 +1,6 @@
 #include <SFML/Graphics.hpp>
 #include "TetrisShape.h"
+#include "Menu.h"
 #include <iostream>
 
 int main()
@@ -10,6 +11,8 @@ int main()
 		std::cout << "Can't load the texture from the file !" << std::endl;
 
 	TetrisShape shape(texture, 3);
+
+	/*Menu menu(window.getSize().x, window.getSize().y);*/
 
 	while (window.isOpen())
 	{
@@ -45,6 +48,9 @@ int main()
 				case(sf::Keyboard::Z):
 					shape.ScaleDown();
 					break;
+				/*case(sf::Keyboard::Return):
+					menu.draw(window);
+					break;*/
 				default:
 					break;
 				}
