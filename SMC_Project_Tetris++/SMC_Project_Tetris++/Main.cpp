@@ -9,7 +9,7 @@ int main()
 	if (!texture.loadFromFile("Blocks.png"))
 		std::cout << "Can't load the texture from the file !" << std::endl;
 	
-	TetrisShape shape(texture, 3);
+	TetrisShape shape(texture, 6);
 
 	while (window.isOpen())
 	{
@@ -39,7 +39,7 @@ int main()
 		}
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
 		{
-			//shape.ScaleUp(); TO BE implemented
+			shape.ScaleUp();
 		}
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Z))
 		{
@@ -50,4 +50,4 @@ int main()
 	}
 	
 	return 0;
-}
+}        

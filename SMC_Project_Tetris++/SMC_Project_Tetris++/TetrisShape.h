@@ -15,8 +15,8 @@ public:
 	~TetrisShape() = default;
 
 	uint16_t GetID() const;
-	std::array<Position, 4> GetBlockPosition() const;
-	std::array<Position, 4> GetFutureBlockPosition(Direction) const;
+	std::array<Position, 9> GetBlockPosition() const;
+	std::array<Position, 9> GetFutureBlockPosition(Direction) const;
 	void RevertState();
 	void SetPosition(const Position&);
 	void Rotate();
@@ -31,8 +31,8 @@ private:
 	Position m_Position;
 	uint16_t m_CurrentRotation;
 	uint16_t m_ID;
-	std::array<Position, 4> m_Block;
-	std::array<Position, 4> m_OldBlock;
+	std::array<Position, 9> m_Block;
+	std::array<Position, 9> m_OldBlock;
 	mutable sf::Sprite m_Sprite;
 };
 
