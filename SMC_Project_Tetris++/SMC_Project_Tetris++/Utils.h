@@ -1,5 +1,9 @@
 #pragma once
 #include <random>
 
-int getRandomNumber(int max);
-int getRandomNumber(int min, int max);
+class Utils
+{
+public:
+	static int GetRandomNumber(int);
+	static int GetRanomNumber(int, int);
+};
