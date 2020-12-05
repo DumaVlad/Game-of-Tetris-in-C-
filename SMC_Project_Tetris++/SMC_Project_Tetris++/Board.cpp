@@ -60,6 +60,12 @@ void Board::Clean()
 
 void Board::AddBlock(uint16_t id, std::array<Position, 16> block)
 {
+	for (int i = 0; i < 9; i++)
+	{
+		auto field = GetField(block[i].x, block[i].y);
+		field->m_Occupied = true;
+		field->m_Info = m_FieldInfos[id].get();
+	}
 }
 
 bool Board::IsOccupied(std::array<Position, 16> block)

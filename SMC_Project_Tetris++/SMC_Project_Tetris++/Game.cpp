@@ -19,6 +19,27 @@ Game::Game()
 
 void Game::Run()
 {
+	//it is only used temporarily
+	const uint16_t testLevel=10;
+
+	sf::Clock clock; // turn on the timer
+	//std::cout << clock.getElapsedTime().asMilliseconds() << " -> ";
+	sf::Time deltaTime(sf::Time::Zero);
+	//std::cout << clock.getElapsedTime().asMilliseconds() << " -> ";
+	while (m_RenderWindow.isOpen())
+	{
+		sf::Time trigger(sf::seconds(85.f / (85.f + (testLevel * (testLevel * 5.f))))); // at the beginning it is 1
+		//std::cout << clock.getElapsedTime().asMilliseconds() << std::endl;
+		deltaTime = clock.restart(); // The timer is restarted and the time from the last restart is returned
+		m_ElapsedTime += deltaTime;
+		ProcessEvents();
+		Update(deltaTime);
+		if (m_ElapsedTime > trigger) {
+			m_ElapsedTime = sf::Time::Zero;
+			Proceed(Direction::Down);
+		}
+		Render();
+	}
 }
 
 void Game::Proceed(Direction direction)
