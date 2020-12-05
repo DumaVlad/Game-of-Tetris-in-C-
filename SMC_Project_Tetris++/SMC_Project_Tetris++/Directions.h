@@ -4,5 +4,6 @@ enum class Direction
 {
 	Left,
 	Right,
-	Down
+	Down,
+	UserPressedDown
 };

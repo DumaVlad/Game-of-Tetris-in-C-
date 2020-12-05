@@ -164,13 +164,17 @@
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Board.cpp" />
+    <ClCompile Include="Game.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Menu.cpp" />
     <ClCompile Include="TetrisShape.cpp" />
     <ClCompile Include="Utils.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Board.h" />
     <ClInclude Include="Directions.h" />
+    <ClInclude Include="Game.h" />
     <ClInclude Include="Menu.h" />
     <ClInclude Include="Shapes.h" />
     <ClInclude Include="TetrisShape.h" />
@@ -178,6 +182,10 @@
   </ItemGroup>
   <ItemGroup>
     <Image Include="Blocks.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Font Include="arial.ttf" />
+    <Font Include="Dong.ttf" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
