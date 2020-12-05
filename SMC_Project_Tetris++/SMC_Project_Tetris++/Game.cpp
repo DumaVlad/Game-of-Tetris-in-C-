@@ -19,8 +19,7 @@ Game::Game()
 
 void Game::Run()
 {
-	//it is only used temporarily
-	const uint16_t testLevel=10;
+	
 
 	sf::Clock clock; // turn on the timer
 	//std::cout << clock.getElapsedTime().asMilliseconds() << " -> ";
@@ -28,7 +27,11 @@ void Game::Run()
 	//std::cout << clock.getElapsedTime().asMilliseconds() << " -> ";
 	while (m_RenderWindow.isOpen())
 	{
-		sf::Time trigger(sf::seconds(85.f / (85.f + (testLevel * (testLevel * 5.f))))); // at the beginning it is 1
+		//it is only used temporarily for test
+		const uint16_t testScore = 10;
+
+
+		sf::Time trigger(sf::seconds(85.f / (85.f + (testScore * (testScore * 5.f))))); // at the beginning it is 1
 		//std::cout << clock.getElapsedTime().asMilliseconds() << std::endl;
 		deltaTime = clock.restart(); // The timer is restarted and the time from the last restart is returned
 		m_ElapsedTime += deltaTime;
@@ -44,14 +47,45 @@ void Game::Run()
 
 void Game::Proceed(Direction direction)
 {
+	if (!m_TetrisShape)
+		return;
+
+	if (!IsValidMovement(m_TetrisShape->GetFutureBlockPosition(direction)))
+	{
+		m_TetrisShape->Move(direction);
+	}
+	else
+	{
+		if (direction == Direction::Down || direction == Direction::UserPressedDown)
+		{
+			int id = m_TetrisShape->GetID();
+			m_Board->AddBlock(id, m_TetrisShape->GetBlockPosition());
+			m_TetrisShape.reset(nullptr);
+			
+		}
+	}
 }
 
 void Game::Update(const sf::Time& dt)
 {
+	m_Board->Update(dt);
+	if (!m_TetrisShape)
+	{
+		if (m_Board->IsToRemoveBlocks())
+			return;
+		CreateShape();
+	}
 }
+
 
 void Game::Rotate()
 {
+	if (!m_TetrisShape)
+		return;
+
+	m_TetrisShape->Rotate();
+	if (!IsValidMovement(m_TetrisShape->GetBlockPosition()))
+		m_TetrisShape->RevertState();
 }
 
 void Game::ScaleUp()
@@ -73,7 +107,7 @@ bool Game::IsValidMovement(std::array<Position, 16> block)
 
 bool Game::IsOccupied(int x, int y)
 {
-	return false;
+	return m_Board->GetField(x, y)->m_Occupied;
 }
 
 void Game::ProcessEvents()
@@ -82,4 +116,11 @@ void Game::ProcessEvents()
 
 void Game::Render()
 {
+	m_RenderWindow.clear(sf::Color::Black);
+	m_Board->Draw(m_RenderWindow);
+	if (m_TetrisShape)
+		m_RenderWindow.draw(*m_TetrisShape);
+	m_RenderWindow.draw(*m_Preview);
+	m_RenderWindow.draw(m_SeparationLine);
+	m_RenderWindow.display();
 }
