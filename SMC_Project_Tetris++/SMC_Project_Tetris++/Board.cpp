@@ -73,14 +73,27 @@ bool Board::IsOccupied(std::array<Position, 16> block)
 	return false;
 }
 
-void Board::Draw(sf::RenderWindow& window)
-{
-}
-
 Field* Board::GetField(uint16_t x, uint16_t y)
 {
-	return nullptr;
+	return m_Fields[Convert2DTo1D(x, y)].get();
 }
+
+void Board::Draw(sf::RenderWindow& window)
+{
+	for (int x = 0; x < m_Size.x; x++)
+		for (int y = 0; y < m_Size.y; y++)
+		{
+			auto field = GetField(x, y);
+
+			//if field isn't occupied yet, m_Info is set to nullptr
+			if (field->m_Occupied && field->m_Visible)
+			{
+				field->m_Info->m_Sprite.setPosition(x * 18.f, y * 18.f);
+				window.draw(field->m_Info->m_Sprite);
+			}
+		}
+}
+
 
 int Board::Convert2DTo1D(uint16_t x, uint16_t y)
 {
