@@ -97,17 +97,43 @@ void Board::Draw(sf::RenderWindow& window)
 
 int Board::Convert2DTo1D(uint16_t x, uint16_t y)
 {
-	return 0;
+	return (y * m_Size.x + x);
 }
 
 void Board::CleanLines()
 {
+	if (m_ToBeCleaned.empty())
+		return;
+
+	for (auto i : m_ToBeCleaned)
+	{
+		for (auto y = i; y >= 0; y--)
+		{
+			for (auto x = 0; x < m_Size.x; x++)
+			{
+				int up = y - 1;
+				if (up < 0)
+					continue;
+				*GetField(x, y) = *GetField(x, up);
+			}
+		}
+	}
+	m_ToBeCleaned.clear();
+	m_ToRemoveBlocks = false;
 }
 
 void Board::MarkLinesForRemoval()
 {
+	if (m_ToRemoveBlocks)
+		return;
 }
 
 void Board::Blink()
 {
+	//Speeds up blinking
+
+	int num = int(m_ElapsedTime * 5.f);
+	for (auto y : m_ToBeCleaned)
+		for (int x = 0; x < m_Size.x; x++)
+			GetField(x, y)->m_Visible = (num % 2 != 0);
 }
