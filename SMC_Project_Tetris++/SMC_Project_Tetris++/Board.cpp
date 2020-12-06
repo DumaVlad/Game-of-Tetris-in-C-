@@ -1,5 +1,6 @@
 #include "Board.h"
 #include <iostream>
+#include <fstream>
 #include <algorithm>
 
 FieldInfo::FieldInfo(sf::Texture& texture, uint16_t id)
@@ -136,4 +137,22 @@ void Board::Blink()
 	for (auto y : m_ToBeCleaned)
 		for (int x = 0; x < m_Size.x; x++)
 			GetField(x, y)->m_Visible = (num % 2 != 0);
+}
+
+void Board::PrintBoard()
+{
+	std::ofstream file;
+	file.open("Log.txt");
+	for (int y = 0; y < m_Size.y; y++)
+	{
+		for (int x = 0; x < m_Size.x; x++)
+		{
+			if (!GetField(x, y)->m_Occupied)
+				file << "O";
+			else
+				file << "X";
+		}
+		file << '\n';
+	}
+	file.close();
 }

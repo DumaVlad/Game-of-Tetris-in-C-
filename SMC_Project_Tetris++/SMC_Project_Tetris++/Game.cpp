@@ -90,19 +90,58 @@ void Game::Rotate()
 
 void Game::ScaleUp()
 {
+	if (!m_TetrisShape)
+		return;
+
+	m_TetrisShape->ScaleUp();
+	if (!IsValidMovement(m_TetrisShape->GetBlockPosition()))
+	{
+		m_TetrisShape->RevertState();
+	}
 }
 
 void Game::ScaleDown()
 {
+	if (!m_TetrisShape)
+		return;
+
+	m_TetrisShape->ScaleDown();
+	if (!IsValidMovement(m_TetrisShape->GetBlockPosition()))
+	{
+		m_TetrisShape->RevertState();
+	}
 }
 
 void Game::CreateShape()
 {
+	m_TetrisShape.reset(new TetrisShape(m_Texture, m_ID));
+	//create new game if necessary
+	if (m_Board->IsOccupied(m_TetrisShape->GetBlockPosition()))
+	{
+		m_Board->Clean();
+	}
+	m_ID = Utils::GetRandomNumber(7);
+	m_Preview.reset(new TetrisShape(m_Texture, m_ID));
+	m_Preview->SetPosition(sf::Vector2i{ 11,12 });
 }
 
 bool Game::IsValidMovement(std::array<Position, 16> block)
 {
-	return false;
+	for (int i = 0; i < 9; i++)
+	{
+		if (block[i].x < 0 || block[i].x > 9 || block[i].y > 17)
+		{
+			std::cout << "INVALID" << std::endl;
+			return false;
+		}
+		if (IsOccupied(block[i].x, block[i].y))
+		{
+			std::cout << "INVALID" << std::endl;
+			return false;
+		}
+	}
+	std::cout << "VALID" << std::endl;
+	return true;
 }
 
 bool Game::IsOccupied(int x, int y)
@@ -112,6 +151,29 @@ bool Game::IsOccupied(int x, int y)
 
 void Game::ProcessEvents()
 {
+	sf::Event e;
+	while (m_RenderWindow.pollEvent(e))
+	{
+		if (e.type == sf::Event::Closed)
+			m_RenderWindow.close();
+		else if (e.type == sf::Event::KeyPressed)
+		{
+			if (e.key.code == sf::Keyboard::Down)
+				Proceed(Direction::Down);
+			else if (e.key.code == sf::Keyboard::Left)
+				Proceed(Direction::Left);
+			else if (e.key.code == sf::Keyboard::Right)
+				Proceed(Direction::Right);
+			else if (e.key.code == sf::Keyboard::Space)
+				Rotate();
+			else if (e.key.code == sf::Keyboard::A)
+				ScaleUp();
+			else if (e.key.code == sf::Keyboard::Z)
+				ScaleDown();
+			else if (e.key.code == sf::Keyboard::P)
+				m_Board->PrintBoard();
+		}
+	}
 }
 
 void Game::Render()

@@ -39,6 +39,7 @@ public:
 	void AddBlock(uint16_t, std::array<Position, 16>);
 	bool IsOccupied(std::array<Position, 16>);
 	void Draw(sf::RenderWindow&);
+	void PrintBoard();
 	inline bool IsToRemoveBlocks() const { return m_ToRemoveBlocks; };
 	Field* GetField(uint16_t, uint16_t);
 
