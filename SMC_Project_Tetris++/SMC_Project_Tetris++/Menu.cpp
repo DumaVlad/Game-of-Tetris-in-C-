@@ -12,21 +12,21 @@ Menu::Menu(float width, float height)
 	m_menu[0].setOutlineColor(sf::Color::Black);
 	m_menu[0].setOutlineThickness(3);
 	m_menu[0].setString("Play");
-	m_menu[0].setPosition(sf::Vector2f(width / 2, height / (MAX_NUMBER_ELEMENTS + 1) * 1));
+	m_menu[0].setPosition(sf::Vector2f(width / 2.2, height / (MAX_NUMBER_ELEMENTS + 1) * 1));
 
 	m_menu[1].setFont(m_fontMenu);
 	m_menu[1].setFillColor(sf::Color::White);
 	m_menu[1].setOutlineColor(sf::Color::Black);
 	m_menu[1].setOutlineThickness(3);
 	m_menu[1].setString("Options");
-	m_menu[1].setPosition(sf::Vector2f(width / 2, height / (MAX_NUMBER_ELEMENTS + 1) * 2));
+	m_menu[1].setPosition(sf::Vector2f(width / 2.2, height / (MAX_NUMBER_ELEMENTS + 1) * 2));
 
 	m_menu[2].setFont(m_fontMenu);
 	m_menu[2].setFillColor(sf::Color::White);
 	m_menu[2].setOutlineColor(sf::Color::Black);
 	m_menu[2].setOutlineThickness(3);
 	m_menu[2].setString("Exit");
-	m_menu[2].setPosition(sf::Vector2f(width / 2, height / (MAX_NUMBER_ELEMENTS + 1) * 3));
+	m_menu[2].setPosition(sf::Vector2f(width / 2.2, height / (MAX_NUMBER_ELEMENTS + 1) * 3));
 
 	m_selectedItemIndex = 0;
 

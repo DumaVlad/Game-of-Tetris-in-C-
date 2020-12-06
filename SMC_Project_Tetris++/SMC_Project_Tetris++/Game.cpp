@@ -1,10 +1,11 @@
 #include "Game.h"
 #include "Utils.h"
+#include "Menu.h"
 #include <SFML/Window/Event.hpp>
 #include <iostream>
 
 Game::Game()
-	: m_RenderWindow{ sf::VideoMode{10 * 18 + 100, 18 * 18}, "Tetris", sf::Style::Default }, m_Texture{}, m_SeparationLine{}, m_TetrisShape{nullptr}, m_Preview{nullptr}, m_Board{}, m_ElapsedTime{sf::Time::Zero}, m_ID{Utils::GetRandomNumber(7)}
+	: m_RenderWindow{ sf::VideoMode{600, 600}, "TETRIS", sf::Style::Default }, m_Texture{}, m_SeparationLine{}, m_TetrisShape{ nullptr }, m_Preview{ nullptr }, m_Board{}, m_ElapsedTime{ sf::Time::Zero }, m_ID{ Utils::GetRandomNumber(7) }
 {
 	m_SeparationLine.setSize(sf::Vector2f{ 1.f, 18.f * 18.f });
 	m_SeparationLine.setPosition(sf::Vector2f{ 10.f * 18.f, 0 });
@@ -19,29 +20,95 @@ Game::Game()
 
 void Game::Run()
 {
-	
+
 
 	sf::Clock clock; // turn on the timer
 	//std::cout << clock.getElapsedTime().asMilliseconds() << " -> ";
 	sf::Time deltaTime(sf::Time::Zero);
 	//std::cout << clock.getElapsedTime().asMilliseconds() << " -> ";
+
+	sf::Texture textureMenu;
+	sf::Texture textureShape;
+	sf::Sprite spriteMenu;
+	bool menuOrGame = 1; // 1 for Menu, 0 for Game
+
+	if (!textureMenu.loadFromFile("tetris600x600.jpg"))
+	{
+		std::cout << "Can't load the texture from the file !" << std::endl;
+	}
+
+	textureMenu.setSmooth(true);
+	spriteMenu.setTexture(textureMenu);
+	spriteMenu.setOrigin(0, 0);
+
+	Menu menu(m_RenderWindow.getSize().x, m_RenderWindow.getSize().y);
+
 	while (m_RenderWindow.isOpen())
 	{
-		//it is only used temporarily for test
-		const uint16_t testScore = 10;
+		if (menuOrGame)
+		{
+			sf::Event event;
+			while (m_RenderWindow.pollEvent(event))
+			{
+				switch (event.type)
+				{
+				case::sf::Event::KeyReleased:
+					switch (event.key.code)
+					{
+					case sf::Keyboard::Up:
+						menu.MoveUp();
+						break;
 
+					case sf::Keyboard::Down:
+						menu.MoveDown();
+						break;
 
-		sf::Time trigger(sf::seconds(85.f / (85.f + (testScore * (testScore * 5.f))))); // at the beginning it is 1
-		//std::cout << clock.getElapsedTime().asMilliseconds() << std::endl;
-		deltaTime = clock.restart(); // The timer is restarted and the time from the last restart is returned
-		m_ElapsedTime += deltaTime;
-		ProcessEvents();
-		Update(deltaTime);
-		if (m_ElapsedTime > trigger) {
-			m_ElapsedTime = sf::Time::Zero;
-			Proceed(Direction::Down);
+					case sf::Keyboard::Return:
+						switch (menu.GetPressedItem())
+						{
+						case 0:
+							std::cout << "Play button has been pressed!" << std::endl;
+							menuOrGame = 0;
+							break;
+						case 1:
+							std::cout << "Options button has been pressed!" << std::endl;
+							break;
+						case 2:
+							m_RenderWindow.close();
+							break;
+						}
+						break;
+					}
+					break;
+				case sf::Event::Closed:
+					m_RenderWindow.close();
+					break;
+				}
+			}
 		}
-		Render();
+		else
+		{
+			//it is only used temporarily for test
+			const uint16_t testScore = 10;
+			sf::Time trigger(sf::seconds(85.f / (85.f + (testScore * (testScore * 5.f))))); // at the beginning it is 1
+			//std::cout << clock.getElapsedTime().asMilliseconds() << std::endl;
+			deltaTime = clock.restart(); // The timer is restarted and the time from the last restart is returned
+			m_ElapsedTime += deltaTime;
+			ProcessEvents();
+			Update(deltaTime);
+			if (m_ElapsedTime > trigger) {
+				m_ElapsedTime = sf::Time::Zero;
+				Proceed(Direction::Down);
+			}
+			Render();
+		}
+		m_RenderWindow.clear();
+		if (menuOrGame)
+		{
+			m_RenderWindow.draw(spriteMenu);
+			menu.draw(m_RenderWindow);
+		}
+		m_RenderWindow.display();
 	}
 }
 
@@ -61,7 +128,7 @@ void Game::Proceed(Direction direction)
 			int id = m_TetrisShape->GetID();
 			m_Board->AddBlock(id, m_TetrisShape->GetBlockPosition());
 			m_TetrisShape.reset(nullptr);
-			
+
 		}
 	}
 }
