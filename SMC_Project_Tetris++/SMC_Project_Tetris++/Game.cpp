@@ -237,8 +237,6 @@ void Game::ProcessEvents()
 				ScaleUp();
 			else if (e.key.code == sf::Keyboard::Z)
 				ScaleDown();
-			else if (e.key.code == sf::Keyboard::P)
-				m_Board->PrintBoard();
 		}
 	}
 }

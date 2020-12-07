@@ -139,20 +139,3 @@ void Board::Blink()
 			GetField(x, y)->m_Visible = (num % 2 != 0);
 }
 
-void Board::PrintBoard()
-{
-	std::ofstream file;
-	file.open("Log.txt");
-	for (int y = 0; y < m_Size.y; y++)
-	{
-		for (int x = 0; x < m_Size.x; x++)
-		{
-			if (!GetField(x, y)->m_Occupied)
-				file << "O";
-			else
-				file << "X";
-		}
-		file << '\n';
-	}
-	file.close();
-}
