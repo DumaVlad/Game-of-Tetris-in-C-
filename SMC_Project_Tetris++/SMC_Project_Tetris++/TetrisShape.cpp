@@ -140,9 +140,9 @@ void TetrisShape::Rotate()
 
 void TetrisShape::Move(Direction direction)
 {
-	if (direction == Direction::Left && m_Position.x > 0)
+	if (direction == Direction::Left)
 		m_Position.x--;
-	else if (direction == Direction::Right && m_Position.x < 30)
+	else if (direction == Direction::Right)
 		m_Position.x++;
 	else
 		m_Position.y++;

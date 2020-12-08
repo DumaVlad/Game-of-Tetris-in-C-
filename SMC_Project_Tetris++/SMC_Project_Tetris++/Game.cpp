@@ -5,7 +5,7 @@
 #include <iostream>
 
 Game::Game()
-	: m_RenderWindow{ sf::VideoMode{600, 600}, "TETRIS", sf::Style::Default }, m_Texture{}, m_SeparationLine{}, m_TetrisShape{ nullptr }, m_Preview{ nullptr }, m_Board{}, m_ElapsedTime{ sf::Time::Zero }, m_ID{ Utils::GetRandomNumber(7) }
+	: m_RenderWindow{ sf::VideoMode{600, 600}, "TETRIS++", sf::Style::Default }, m_Texture{}, m_SeparationLine{}, m_TetrisShape{ nullptr }, m_Preview{ nullptr }, m_Board{}, m_ElapsedTime{ sf::Time::Zero }, m_ID{ Utils::GetRandomNumber(7) }
 {
 	m_SeparationLine.setSize(sf::Vector2f{ 1.f, 18.f * 18.f });
 	m_SeparationLine.setPosition(sf::Vector2f{ 10.f * 18.f, 0 });
@@ -194,7 +194,7 @@ void Game::CreateShape()
 
 bool Game::IsValidMovement(std::array<Position, 16> block)
 {
-	for (int i = 0; i < 9; i++)
+	for (int i = 0; i < 16; i++)
 	{
 		if (block[i].x < 0 || block[i].x > 9 || block[i].y > 17)
 		{
