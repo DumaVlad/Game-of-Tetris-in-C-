@@ -71,6 +71,12 @@ void Board::AddBlock(uint16_t id, std::array<Position, 16> block)
 
 bool Board::IsOccupied(std::array<Position, 16> block)
 {
+	for (int i = 0; i < 16; i++)
+	{
+		auto field = GetField(block[i].x, block[i].y);
+		if (field->m_Occupied)
+			return true;
+	}
 	return false;
 }
 
@@ -127,6 +133,25 @@ void Board::MarkLinesForRemoval()
 {
 	if (m_ToRemoveBlocks)
 		return;
+	int countClearedLines = 0;
+	for (int y = m_Size.y - 1; y > 0; y--)
+	{
+		int counter = 0;
+		for (int x = 0; x < m_Size.x; x++)
+		{
+			auto field = GetField(x, y);
+			if (field -> m_Occupied)
+				counter++;
+			if (counter == 10) // Line full
+			{
+				m_ToBeCleaned.push_back(y);
+				m_ToRemoveBlocks = true;
+				countClearedLines++;
+			}
+		}
+		counter = 0;
+	}
+	std::sort(m_ToBeCleaned.begin(), m_ToBeCleaned.end(), [](int left, int right) { return left < right; });
 }
 
 void Board::Blink()
