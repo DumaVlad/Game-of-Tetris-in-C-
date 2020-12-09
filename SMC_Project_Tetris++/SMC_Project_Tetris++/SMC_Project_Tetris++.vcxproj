@@ -168,6 +168,7 @@
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Menu.cpp" />
+    <ClCompile Include="Score.cpp" />
     <ClCompile Include="TetrisShape.cpp" />
     <ClCompile Include="Utils.cpp" />
   </ItemGroup>
@@ -176,6 +177,7 @@
     <ClInclude Include="Directions.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="Menu.h" />
+    <ClInclude Include="Score.h" />
     <ClInclude Include="Shapes.h" />
     <ClInclude Include="TetrisShape.h" />
     <ClInclude Include="Utils.h" />
