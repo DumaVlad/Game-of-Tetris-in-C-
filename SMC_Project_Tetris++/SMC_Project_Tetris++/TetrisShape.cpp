@@ -34,7 +34,7 @@ unsigned int ScaledBlockArray5x5[7][16] = {
 };
 
 TetrisShape::TetrisShape(sf::Texture& texture, uint16_t id)
-	: m_Position{ Position{5,5} }, m_CurrentRotation{ 0 }, m_ID{ id }, m_Block{}, m_Sprite{ texture, sf::IntRect{(id % 7) * 18, 0, 18, 18} }
+	: m_Position{ Position{5,1} }, m_CurrentRotation{ 0 }, m_ID{ id }, m_Block{}, m_Sprite{ texture, sf::IntRect{(id % 7) * 18, 0, 18, 18} }
 {
 	m_ID = m_ID % 7; // In case of an id > 6, we make sure that is not out of bounds
 	for (int index = 0; index < 16; index++)
@@ -150,6 +150,7 @@ void TetrisShape::Move(Direction direction)
 
 void TetrisShape::ScaleUp()
 {
+	m_OldBlock = m_Block;
 	for (int i = 0; i < 16; i++)
 	{
 		m_Block[i].x = ScaledBlockArray5x5[m_ID][i] % 8;
@@ -159,6 +160,7 @@ void TetrisShape::ScaleUp()
 
 void TetrisShape::ScaleDown()
 {
+	m_OldBlock = m_Block;
 	for (int i = 0; i < 16; i++)
 	{
 		m_Block[i].x = BlockArray5x5[m_ID][i] % 8;

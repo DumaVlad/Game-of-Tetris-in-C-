@@ -1,6 +1,7 @@
 #pragma once
 #include "TetrisShape.h"
 #include "Board.h"
+#include "Score.h"
 #include <SFML/System/Time.hpp>
 #include <SFML/Graphics/RenderWindow.hpp>
 #include <SFML/Graphics/Texture.hpp>
@@ -37,6 +38,7 @@ private:
 	std::unique_ptr<TetrisShape> m_Preview;
 	std::unique_ptr<Board> m_Board;
 	sf::Time m_ElapsedTime;
+	Score m_Score;
 	int m_ID;
 };
 

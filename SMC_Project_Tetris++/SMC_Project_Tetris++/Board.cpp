@@ -142,7 +142,7 @@ void Board::MarkLinesForRemoval()
 			auto field = GetField(x, y);
 			if (field -> m_Occupied)
 				counter++;
-			if (counter == 10) // Line full
+			if (counter == 20) // Line full
 			{
 				m_ToBeCleaned.push_back(y);
 				m_ToRemoveBlocks = true;
@@ -151,6 +151,7 @@ void Board::MarkLinesForRemoval()
 		}
 		counter = 0;
 	}
+	m_Game.m_Score.AddClearedLines(countClearedLines);
 	std::sort(m_ToBeCleaned.begin(), m_ToBeCleaned.end(), [](int left, int right) { return left < right; });
 }
 

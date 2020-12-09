@@ -1,15 +1,14 @@
 #include <SFML/Graphics.hpp>
-#include <iostream>
-
-//#include "TetrisShape.h"
-//#include "Menu.h"
-#include "Game.h"
+#include "TetrisShape.h"
+#include "Utils.h"
+#include "Board.h"
+#include "Menu.h"
 
 int main()
 {
 
-	Game game;
-	game.Run();
+	Menu menu;
+	//menu.Select();
 
 	return 0;
 }
