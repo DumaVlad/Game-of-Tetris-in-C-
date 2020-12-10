@@ -7,7 +7,7 @@
 class Menu
 {
 public:
-	Menu();
+	Menu(unsigned int witdh, unsigned int height);
 	~Menu();
 
 	void draw(sf::RenderWindow& window);
@@ -22,7 +22,6 @@ private:
 	sf::Font m_fontMenu;
 	sf::Text m_menu[MAX_NUMBER_ELEMENTS];
 	sf::Texture m_textureMenu;
-	sf::Texture m_textureShape;
 	sf::Sprite m_spriteMenu;
 	bool m_menuOrGame;
 };

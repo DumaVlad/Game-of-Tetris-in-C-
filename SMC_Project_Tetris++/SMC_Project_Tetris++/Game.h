@@ -16,7 +16,7 @@ public:
 
 public:
 	Game();
-	void Run();
+	void Run(bool& menuOrGame);
 
 private:
 	void Proceed(Direction);
@@ -27,7 +27,7 @@ private:
 	void CreateShape();
 	bool IsValidMovement(std::array<Position, 16>);
 	bool IsOccupied(int, int);
-	void ProcessEvents();
+	void ProcessEvents(bool& menuOrGame);
 	void Render();
 
 private:

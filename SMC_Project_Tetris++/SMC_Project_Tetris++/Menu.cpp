@@ -2,34 +2,34 @@
 #include "Game.h"
 #include <iostream>
 
-Menu::Menu()
-	: m_window{ sf::VideoMode{600,600}, "Menu", sf::Style::Default }, m_selectedItemIndex{ 0 }, m_menu{}, m_menuOrGame{ 1 }, m_textureMenu{}, m_textureShape{}, m_spriteMenu{}
+Menu::Menu(unsigned int witdh, unsigned int height)
+	: m_window{ sf::VideoMode{witdh,height}, "Menu" }, m_selectedItemIndex{ 0 }, m_menu{}, m_menuOrGame{ 1 }, m_textureMenu{}, m_spriteMenu{}
 {
 	if (!m_fontMenu.loadFromFile("arial.ttf"))
 	{
 		//handle error
 	}
-	sf::Vector2u size = m_window.getSize();
+
 	m_menu[0].setFont(m_fontMenu);
 	m_menu[0].setFillColor(sf::Color::Red);
 	m_menu[0].setOutlineColor(sf::Color::Black);
 	m_menu[0].setOutlineThickness(3);
 	m_menu[0].setString("Play");
-	m_menu[0].setPosition(sf::Vector2f(size.x / 2.2, size.y / (MAX_NUMBER_ELEMENTS + 1) * 1));
+	m_menu[0].setPosition(sf::Vector2f(witdh / 2.2, height / (MAX_NUMBER_ELEMENTS + 1) * 1));
 
 	m_menu[1].setFont(m_fontMenu);
 	m_menu[1].setFillColor(sf::Color::White);
 	m_menu[1].setOutlineColor(sf::Color::Black);
 	m_menu[1].setOutlineThickness(3);
 	m_menu[1].setString("Options");
-	m_menu[1].setPosition(sf::Vector2f(size.x / 2.2, size.y / (MAX_NUMBER_ELEMENTS + 1) * 2));
+	m_menu[1].setPosition(sf::Vector2f(witdh / 2.2, height / (MAX_NUMBER_ELEMENTS + 1) * 2));
 
 	m_menu[2].setFont(m_fontMenu);
 	m_menu[2].setFillColor(sf::Color::White);
 	m_menu[2].setOutlineColor(sf::Color::Black);
 	m_menu[2].setOutlineThickness(3);
 	m_menu[2].setString("Exit");
-	m_menu[2].setPosition(sf::Vector2f(size.x / 2.2, size.y / (MAX_NUMBER_ELEMENTS + 1) * 3));
+	m_menu[2].setPosition(sf::Vector2f(witdh / 2.2, height / (MAX_NUMBER_ELEMENTS + 1) * 3));
 
 	if (!m_textureMenu.loadFromFile("tetris600x600.jpg"))
 	{
@@ -40,9 +40,6 @@ Menu::Menu()
 	m_spriteMenu.setTexture(m_textureMenu);
 	m_spriteMenu.setOrigin(0, 0);
 
-	m_window.draw(m_spriteMenu);
-	draw(m_window);
-	m_window.display();
 	Select();
 }
 
@@ -113,7 +110,7 @@ void Menu::Select()
 							std::cout << "Play button has been pressed!" << std::endl;
 							m_menuOrGame = 0;
 							Game game;
-							game.Run();
+							game.Run(m_menuOrGame);
 						}
 						break;
 						case 1:
@@ -131,6 +128,10 @@ void Menu::Select()
 					break;
 				}
 			}
+			m_window.clear();
+			m_window.draw(m_spriteMenu);
+			draw(m_window);
+			m_window.display();
 		}
 	}
 }

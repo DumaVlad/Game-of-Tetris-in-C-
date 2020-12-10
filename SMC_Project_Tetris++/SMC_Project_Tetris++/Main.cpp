@@ -7,8 +7,7 @@
 int main()
 {
 
-	Menu menu;
-	//menu.Select();
+	Menu menu(600,600);
 
 	return 0;
 }

@@ -16,7 +16,7 @@ Game::Game()
 	CreateShape();
 }
 
-void Game::Run()
+void Game::Run(bool& menuOrGame)
 {
 	sf::Clock clock; // starting the timer-ul
 	sf::Time deltaTime(sf::Time::Zero);
@@ -25,14 +25,14 @@ void Game::Run()
 
 	while (m_RenderWindow.isOpen())
 	{
-		
+
 		sf::Time trigger(sf::seconds(85.f / (85.f + (m_Score.GetLevel() * (m_Score.GetLevel() * 5.f))))); // la inceput este = 1;
 		std::cout << "Trigger =" << trigger.asMilliseconds() << std::endl;
 		deltaTime = clock.restart(); // restarting the timer and returning the time passed until this point
 		m_ElapsedTime += deltaTime;
 		std::cout << "m_ElapsedTime = " << m_ElapsedTime.asMilliseconds() << std::endl << std::endl;
 
-		ProcessEvents();
+		ProcessEvents(menuOrGame);
 		Update(deltaTime);
 
 		if (m_ElapsedTime > trigger)
@@ -152,13 +152,16 @@ bool Game::IsOccupied(int x, int y)
 	return m_Board->GetField(x, y)->m_Occupied;
 }
 
-void Game::ProcessEvents()
+void Game::ProcessEvents(bool& menuOrGame)
 {
 	sf::Event e;
 	while (m_RenderWindow.pollEvent(e))
 	{
 		if (e.type == sf::Event::Closed)
+		{
 			m_RenderWindow.close();
+			menuOrGame = 1;
+		}
 		else if (e.type == sf::Event::KeyPressed)
 		{
 			if (e.key.code == sf::Keyboard::Down)
@@ -173,6 +176,8 @@ void Game::ProcessEvents()
 				ScaleUp();
 			else if (e.key.code == sf::Keyboard::Z)
 				ScaleDown();
+			else if (e.key.code == sf::Keyboard::Tilde)
+				menuOrGame = 1;
 		}
 	}
 }
