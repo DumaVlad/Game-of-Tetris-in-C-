@@ -5,16 +5,16 @@ Score::Score()
 {
 	m_Font.loadFromFile("arial.ttf");
 	m_ScoreText.setFont(m_Font);
-	m_ScoreText.setCharacterSize(15);
+	m_ScoreText.setCharacterSize(20);
 
 	m_LevelText.setFont(m_Font);
-	m_LevelText.setCharacterSize(15);
-	m_ScoreText.setPosition(sf::Vector2f{ 20 * 18 + 3, 50.f });
-	m_LevelText.setPosition(sf::Vector2f{ 20 * 18 + 3, 100.f });
+	m_LevelText.setCharacterSize(20);
+	m_ScoreText.setPosition(sf::Vector2f{ BOARD_WIDTH * 18 + 20, 200.f });
+	m_LevelText.setPosition(sf::Vector2f{ BOARD_WIDTH * 18 + 20, 300.f });
 
 	m_ClearedLinesText.setFont(m_Font);
-	m_ClearedLinesText.setCharacterSize(15);
-	m_ClearedLinesText.setPosition(sf::Vector2f{ 20 * 18 + 3, 150.f });
+	m_ClearedLinesText.setCharacterSize(20);
+	m_ClearedLinesText.setPosition(sf::Vector2f{ BOARD_WIDTH * 18 + 20, 400.f });
 }
 
 void Score::Draw(sf::RenderWindow& window)
