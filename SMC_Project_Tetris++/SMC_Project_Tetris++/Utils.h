@@ -5,5 +5,5 @@ class Utils
 {
 public:
 	static int GetRandomNumber(int);
-	static int GetRanomNumber(int, int);
+	static int GetRandomNumber(int, int);
 };
