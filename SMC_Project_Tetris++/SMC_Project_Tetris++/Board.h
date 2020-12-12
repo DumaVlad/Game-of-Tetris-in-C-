@@ -6,6 +6,7 @@
 #include <array>
 #include <unordered_map>
 #include "Game.h"
+#include"Config.h"
 
 class Game; // for using methods from class Game
 

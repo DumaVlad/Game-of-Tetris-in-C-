@@ -5,14 +5,14 @@
 #include <iostream>
 
 Game::Game()
-	: m_RenderWindow{ sf::VideoMode{20 * 18 + 100, 18 * 18}, "TETRIS++", sf::Style::Default }, m_Texture{}, m_SeparationLine{}, m_TetrisShape{ nullptr }, m_Preview{ nullptr }, m_Board{}, m_Score{}, m_ElapsedTime{ sf::Time::Zero }, m_ID{ Utils::GetRandomNumber(7) }
+	: m_RenderWindow{ sf::VideoMode{BOARD_WIDTH * 18 + 100, BOARD_HEIGHT * 18}, "TETRIS++", sf::Style::Default }, m_Texture{}, m_SeparationLine{}, m_TetrisShape{ nullptr }, m_Preview{ nullptr }, m_Board{}, m_Score{}, m_ElapsedTime{ sf::Time::Zero }, m_ID{ Utils::GetRandomNumber(7) }
 {
-	m_SeparationLine.setSize(sf::Vector2f{ 1.f, 18.f * 18.f });
-	m_SeparationLine.setPosition(sf::Vector2f{ 20.f * 18.f, 0 });
+	m_SeparationLine.setSize(sf::Vector2f{ 2.f, BOARD_HEIGHT * 18.f });
+	m_SeparationLine.setPosition(sf::Vector2f{ BOARD_WIDTH * 18.f, 0 });
 	m_SeparationLine.setFillColor(sf::Color::Red);
 	if (!m_Texture.loadFromFile("Blocks.png"))
 		std::cout << "Could not load texture from file !! \n";
-	m_Board = std::make_unique<Board>(Position{ 20,18 }, *this);
+	m_Board = std::make_unique<Board>(Position{ BOARD_WIDTH,BOARD_HEIGHT }, *this);
 	CreateShape();
 }
 
@@ -125,14 +125,14 @@ void Game::CreateShape()
 	}
 	m_ID = Utils::GetRandomNumber(7);
 	m_Preview.reset(new TetrisShape(m_Texture, m_ID));
-	m_Preview->SetPosition(sf::Vector2i{ 20,12 });
+	m_Preview->SetPosition(sf::Vector2i{ BOARD_WIDTH,30 });
 }
 
 bool Game::IsValidMovement(std::array<Position, 16> block)
 {
 	for (int i = 0; i < 16; i++)
 	{
-		if (block[i].x < 0 || block[i].x > 19 || block[i].y > 17)
+		if (block[i].x < 0 || block[i].x > BOARD_WIDTH-1 || block[i].y > BOARD_HEIGHT-1)
 		{
 			std::cout << "INVALID" << std::endl;
 			return false;

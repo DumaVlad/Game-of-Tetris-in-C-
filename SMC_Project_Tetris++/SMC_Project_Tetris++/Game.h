@@ -2,6 +2,7 @@
 #include "TetrisShape.h"
 #include "Board.h"
 #include "Score.h"
+#include "Config.h"
 #include <SFML/System/Time.hpp>
 #include <SFML/Graphics/RenderWindow.hpp>
 #include <SFML/Graphics/Texture.hpp>

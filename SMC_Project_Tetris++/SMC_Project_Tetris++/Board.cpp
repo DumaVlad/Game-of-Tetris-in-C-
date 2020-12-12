@@ -142,7 +142,7 @@ void Board::MarkLinesForRemoval()
 			auto field = GetField(x, y);
 			if (field -> m_Occupied)
 				counter++;
-			if (counter == 20) // Line full
+			if (counter == BOARD_WIDTH) // Line full
 			{
 				m_ToBeCleaned.push_back(y);
 				m_ToRemoveBlocks = true;
