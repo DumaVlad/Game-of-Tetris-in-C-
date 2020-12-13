@@ -1,12 +1,12 @@
 #pragma once
+#include "Game.h"
+#include "Config.h"
 #include <SFML/System/Vector2.hpp>
 #include <SFML/Graphics/RectangleShape.hpp>
 #include <SFML/Graphics/RenderWindow.hpp>
 #include <SFML/Graphics/Sprite.hpp>
 #include <array>
 #include <unordered_map>
-#include "Game.h"
-#include"Config.h"
 
 class Game; // for using methods from class Game
 

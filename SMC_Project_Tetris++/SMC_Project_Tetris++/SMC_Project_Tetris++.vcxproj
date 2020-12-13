@@ -191,10 +191,17 @@
   </ItemGroup>
   <ItemGroup>
     <Image Include="Blocks.png" />
+    <Image Include="optionsTetrisEffect.jpg" />
+    <Image Include="tetris600x600.jpg" />
   </ItemGroup>
   <ItemGroup>
     <Font Include="arial.ttf" />
     <Font Include="Dong.ttf" />
+  </ItemGroup>
+  <ItemGroup>
+    <Media Include="clear.wav" />
+    <Media Include="gameover.wav" />
+    <Media Include="Tetris.wav" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

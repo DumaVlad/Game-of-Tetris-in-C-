@@ -5,13 +5,17 @@
 #include <iostream>
 
 Game::Game()
-	: m_RenderWindow{ sf::VideoMode{BOARD_WIDTH * 18 + 150, BOARD_HEIGHT * 18}, "TETRIS++", sf::Style::Default }, m_Texture{}, m_SeparationLine{}, m_TetrisShape{ nullptr }, m_Preview{ nullptr }, m_Board{}, m_Score{}, m_ElapsedTime{ sf::Time::Zero }, m_ID{ Utils::GetRandomNumber(7) }
+	: m_RenderWindow{ sf::VideoMode{BOARD_WIDTH * 18 + 150, BOARD_HEIGHT * 18}, "TETRIS++", sf::Style::Default }, m_Texture{}, m_SeparationLine{}, m_TetrisShape{ nullptr }, m_Preview{ nullptr }, m_Board{}, m_Score{}, m_ElapsedTime{ sf::Time::Zero }, m_ID{ Utils::GetRandomNumber(7) }, m_GameplayMusic{}
 {
 	m_SeparationLine.setSize(sf::Vector2f{ 2.f, BOARD_HEIGHT * 18.f });
 	m_SeparationLine.setPosition(sf::Vector2f{ BOARD_WIDTH * 18.f, 0 });
 	m_SeparationLine.setFillColor(sf::Color::Red);
+	
 	if (!m_Texture.loadFromFile("Blocks.png"))
 		std::cout << "Could not load texture from file !! \n";
+	if (!m_GameplayMusic.openFromFile("Tetris.wav"))
+		std::cout << "Could not load ~Tetris.wav~ from file!! \n";
+	
 	m_Board = std::make_unique<Board>(Position{ BOARD_WIDTH,BOARD_HEIGHT }, *this);
 	CreateShape();
 }
@@ -22,6 +26,9 @@ void Game::Run(bool& menuOrGame)
 	sf::Time deltaTime(sf::Time::Zero);
 
 	m_Board->Clean();
+
+	m_GameplayMusic.play();
+	m_GameplayMusic.setLoop(true);
 
 	while (m_RenderWindow.isOpen())
 	{
@@ -43,6 +50,7 @@ void Game::Run(bool& menuOrGame)
 		}
 		Render();
 	}
+	m_GameplayMusic.stop();
 }
 
 void Game::Proceed(Direction direction)
@@ -118,11 +126,24 @@ void Game::ScaleDown()
 void Game::CreateShape()
 {
 	m_TetrisShape.reset(new TetrisShape(m_Texture, m_ID));
+
 	//create new game if necessary
 	if (m_Board->IsOccupied(m_TetrisShape->GetBlockPosition()))
 	{
+		std::cout << "Game Over\n";
+
+		sf::Music gameoverMusic;
+		if (!gameoverMusic.openFromFile("gameover.wav"))
+			std::cout << "Could not load ~gameover.wav~ from file !! \n";
+
+		m_GameplayMusic.stop();
+		gameoverMusic.play();
+		system("pause");
+
 		m_Board->Clean();
+		m_GameplayMusic.play();
 	}
+
 	m_ID = Utils::GetRandomNumber(7);
 	m_Preview.reset(new TetrisShape(m_Texture, m_ID));
 	m_Preview->SetPosition(sf::Vector2i{ BOARD_WIDTH,30 });

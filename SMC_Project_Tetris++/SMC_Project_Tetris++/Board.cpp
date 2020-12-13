@@ -112,6 +112,13 @@ void Board::CleanLines()
 	if (m_ToBeCleaned.empty())
 		return;
 
+	sf::Music clearLinesMusic;
+	if (!clearLinesMusic.openFromFile("clear.wav"))
+		std::cout << "Could not load ~clear.wav~ from file !! \n";
+	m_Game.m_GameplayMusic.stop();
+	clearLinesMusic.play();
+	clearLinesMusic.setLoop(true);
+	
 	for (auto i : m_ToBeCleaned)
 	{
 		for (auto y = i; y >= 0; y--)
@@ -127,6 +134,9 @@ void Board::CleanLines()
 	}
 	m_ToBeCleaned.clear();
 	m_ToRemoveBlocks = false;
+
+	clearLinesMusic.stop();
+	m_Game.m_GameplayMusic.play();
 }
 
 void Board::MarkLinesForRemoval()

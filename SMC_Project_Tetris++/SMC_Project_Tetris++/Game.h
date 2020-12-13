@@ -7,6 +7,7 @@
 #include <SFML/Graphics/RenderWindow.hpp>
 #include <SFML/Graphics/Texture.hpp>
 #include <SFML/Graphics/RectangleShape.hpp>
+#include <SFML/Audio/Music.hpp>
 
 class Game
 {
@@ -39,6 +40,7 @@ private:
 	std::unique_ptr<TetrisShape> m_Preview;
 	std::unique_ptr<Board> m_Board;
 	sf::Time m_ElapsedTime;
+	sf::Music m_GameplayMusic;
 	Score m_Score;
 	int m_ID;
 };
