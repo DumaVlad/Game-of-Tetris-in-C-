@@ -1,9 +1,9 @@
+#include <iostream>
 #include "Menu.h"
 #include "Game.h"
-#include <iostream>
 
 Menu::Menu(unsigned int witdh, unsigned int height)
-	: m_window{ sf::VideoMode{witdh,height}, "Menu" }, m_selectedItemIndex{ 0 }, m_menu{}, m_menuOrGame{ 1 }, m_textureMenu{}, m_spriteMenu{}
+	: m_window{ sf::VideoMode{witdh,height}, "Menu" }, m_selectedItemIndex{ 0 }, m_selectedModeGame{ 0 }, m_menu{}, m_modeGame{}, m_menuOrGame{ 1 }, m_textureMenu{}, m_spriteMenu{}
 {
 	if (!m_fontMenu.loadFromFile("arial.ttf"))
 	{
@@ -31,6 +31,23 @@ Menu::Menu(unsigned int witdh, unsigned int height)
 	m_menu[2].setString("Exit");
 	m_menu[2].setPosition(sf::Vector2f(witdh / 2.2, height / (MAX_NUMBER_ELEMENTS + 1) * 3));
 
+	m_modeGame[0].setFont(m_fontMenu);
+	m_modeGame[0].setFillColor(sf::Color::Red);
+	m_modeGame[0].setOutlineColor(sf::Color::Black);
+	m_modeGame[0].setOutlineThickness(5);
+	m_modeGame[0].setString("Singleplayer");
+	m_modeGame[0].setCharacterSize(50);
+	m_modeGame[0].setPosition(sf::Vector2f(witdh / 3.8, height / 8 * 1.5));
+
+	m_modeGame[1].setFont(m_fontMenu);
+	m_modeGame[1].setFillColor(sf::Color::White);
+	m_modeGame[1].setOutlineColor(sf::Color::Black);
+	m_modeGame[1].setOutlineThickness(5);
+	m_modeGame[1].setString("Multiplayer");
+	m_modeGame[1].setCharacterSize(50);
+	m_modeGame[1].setPosition(sf::Vector2f(witdh / 3.7, height / 4 * 2.5));
+
+
 	if (!m_textureMenu.loadFromFile("tetris600x600.jpg"))
 	{
 		std::cout << "Can't load the texture from the file !" << std::endl;
@@ -49,35 +66,74 @@ Menu::~Menu()
 
 void Menu::draw(sf::RenderWindow& window)
 {
-	for (int i = 0; i < MAX_NUMBER_ELEMENTS; i++)
-	{
-		window.draw(m_menu[i]);
-	}
+	if (!m_selectedModeGame)
+		for (int i = 0; i < MAX_NUMBER_ELEMENTS; i++)
+		{
+			window.draw(m_menu[i]);
+		}
+	else
+		for (int i = 0;i < 2;i++)
+		{
+			window.draw(m_modeGame[i]);
+		}
 }
 
 void Menu::MoveUp()
 {
-	if (m_selectedItemIndex - 1 >= 0)
+	if (!m_selectedModeGame)
 	{
-		m_menu[m_selectedItemIndex].setFillColor(sf::Color::White);
-		m_selectedItemIndex--;
-		m_menu[m_selectedItemIndex].setFillColor(sf::Color::Red);
+		if (m_selectedItemIndex - 1 >= 0)
+		{
+			m_menu[m_selectedItemIndex].setFillColor(sf::Color::White);
+			m_selectedItemIndex--;
+			m_menu[m_selectedItemIndex].setFillColor(sf::Color::Red);
+		}
 	}
+	else
+		if (m_selectedModeGame > 2)
+		{
+			m_modeGame[m_selectedModeGame - 2].setFillColor(sf::Color::White);
+			m_selectedModeGame--;
+			m_modeGame[m_selectedModeGame - 2].setFillColor(sf::Color::Red);
+		}
 }
 
 void Menu::MoveDown()
 {
-	if (m_selectedItemIndex + 1 < MAX_NUMBER_ELEMENTS)
+	if (!m_selectedModeGame)
 	{
-		m_menu[m_selectedItemIndex].setFillColor(sf::Color::White);
-		m_selectedItemIndex++;
-		m_menu[m_selectedItemIndex].setFillColor(sf::Color::Red);
+		if (m_selectedItemIndex + 1 < MAX_NUMBER_ELEMENTS)
+		{
+			m_menu[m_selectedItemIndex].setFillColor(sf::Color::White);
+			m_selectedItemIndex++;
+			m_menu[m_selectedItemIndex].setFillColor(sf::Color::Red);
+		}
 	}
+	else
+		if (m_selectedModeGame < 3)
+		{
+			m_modeGame[m_selectedModeGame - 2].setFillColor(sf::Color::White);
+			m_selectedModeGame++;
+			m_modeGame[m_selectedModeGame - 2].setFillColor(sf::Color::Red);
+		}
 }
+
 
 int Menu::GetPressedItem()
 {
-	return m_selectedItemIndex;
+	if (!m_selectedModeGame)
+		return m_selectedItemIndex;
+	else
+		return m_selectedModeGame + 1;
+}
+
+void Menu::ModeGame()
+{
+	m_selectedModeGame = 2;
+	m_window.clear();
+	m_window.draw(m_spriteMenu);
+	draw(m_window);
+	m_window.display();
 }
 
 void Menu::Select()
@@ -107,18 +163,36 @@ void Menu::Select()
 						{
 						case 0:
 						{
-							std::cout << "Play button has been pressed!" << std::endl;
-							m_menuOrGame = 0;
-							Game game;
-							game.Run(m_menuOrGame);
+							std::cout << "\nPlay button has been pressed!" << std::endl;
+							ModeGame();
 						}
 						break;
 						case 1:
-							std::cout << "Options button has been pressed!" << std::endl;
-							break;
+						{
+							std::cout << "\nOptions button has been pressed!" << std::endl;
+						}
+						break;
 						case 2:
+						{
+							std::cout << "\nYou closed the game! \nGOOD BYE!! See You soon!" << std::endl;
 							m_window.close();
-							break;
+						}
+						break;
+						case 3:
+						{
+							std::cout << "\nSingleplayer button has been pressed!" << std::endl;
+							m_menuOrGame = 0;
+							Game game;
+							game.Run(m_menuOrGame);
+							m_selectedModeGame = 0;
+						}
+						break;
+						case 4:
+						{
+							std::cout << "\nMultiplayer button has been pressed!" << std::endl;
+							std::cout << "Still in Work!!" << std::endl;
+						}
+						break;
 						}
 						break;
 					}

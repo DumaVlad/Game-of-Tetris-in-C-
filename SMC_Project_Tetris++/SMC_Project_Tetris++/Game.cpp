@@ -170,7 +170,7 @@ void Game::ProcessEvents(bool& menuOrGame)
 				Proceed(Direction::Left);
 			else if (e.key.code == sf::Keyboard::Right)
 				Proceed(Direction::Right);
-			else if (e.key.code == sf::Keyboard::Space)
+			else if (e.key.code == sf::Keyboard::Up)
 				Rotate();
 			else if (e.key.code == sf::Keyboard::A)
 				ScaleUp();
