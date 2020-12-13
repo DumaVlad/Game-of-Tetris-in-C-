@@ -159,8 +159,8 @@ void Game::ProcessEvents(bool& menuOrGame)
 	{
 		if (e.type == sf::Event::Closed)
 		{
-			m_RenderWindow.close();
 			menuOrGame = 1;
+			m_RenderWindow.close();
 		}
 		else if (e.type == sf::Event::KeyPressed)
 		{
@@ -176,8 +176,11 @@ void Game::ProcessEvents(bool& menuOrGame)
 				ScaleUp();
 			else if (e.key.code == sf::Keyboard::Z)
 				ScaleDown();
-			else if (e.key.code == sf::Keyboard::Tilde)
+			else if (e.key.code == sf::Keyboard::Escape)
+			{
 				menuOrGame = 1;
+				m_RenderWindow.close();
+			}
 		}
 	}
 }

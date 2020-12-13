@@ -1,6 +1,7 @@
 #include <iostream>
 #include "Menu.h"
 #include "Game.h"
+#include "Options.h"
 
 Menu::Menu(unsigned int witdh, unsigned int height)
 	: m_window{ sf::VideoMode{witdh,height}, "Menu" }, m_selectedItemIndex{ 0 }, m_selectedModeGame{ 0 }, m_menu{}, m_modeGame{}, m_menuOrGame{ 1 }, m_textureMenu{}, m_spriteMenu{}
@@ -170,6 +171,8 @@ void Menu::Select()
 						case 1:
 						{
 							std::cout << "\nOptions button has been pressed!" << std::endl;
+							Options options;
+							options.RunOptions();
 						}
 						break;
 						case 2:
