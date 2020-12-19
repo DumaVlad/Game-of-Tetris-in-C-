@@ -29,7 +29,7 @@ private:
 	void CreateShape();
 	bool IsValidMovement(std::array<Position, 16>);
 	bool IsOccupied(int, int);
-	void ProcessEvents(bool& menuOrGame);
+	void ProcessEvents(bool& menuOrGame, uint16_t& levelSound);
 	void Render();
 
 private:
@@ -43,5 +43,6 @@ private:
 	sf::Music m_GameplayMusic;
 	Score m_Score;
 	int m_ID;
+	bool m_pause;
 };
 

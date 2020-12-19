@@ -1,12 +1,13 @@
 #include "Game.h"
 #include "Utils.h"
 #include "Menu.h"
+#include "Options.h"
 #include <SFML/Window/Event.hpp>
 #include <iostream>
 
 Game::Game()
 	: m_RenderWindow{ sf::VideoMode{BOARD_WIDTH * 18 + 150, BOARD_HEIGHT * 18}, "TETRIS++", sf::Style::Default }, m_Texture{}, m_SeparationLine{}, m_TetrisShape{ nullptr }, m_Preview{ nullptr },
-	m_Board{}, m_Score{}, m_ElapsedTime{ sf::Time::Zero }, m_ID{ Utils::GetRandomNumber(7) }, m_GameplayMusic{}
+	m_Board{}, m_Score{}, m_ElapsedTime{ sf::Time::Zero }, m_ID{ Utils::GetRandomNumber(7) }, m_GameplayMusic{}, m_pause{ false }
 {
 	m_SeparationLine.setSize(sf::Vector2f{ 2.f, BOARD_HEIGHT * 18.f });
 	m_SeparationLine.setPosition(sf::Vector2f{ BOARD_WIDTH * 18.f, 0 });
@@ -35,22 +36,29 @@ void Game::Run(bool& menuOrGame, uint16_t& levelSound)
 	{
 		m_GameplayMusic.setVolume((levelSound * 20.f));
 
-		sf::Time trigger(sf::seconds(85.f / (85.f + (m_Score.GetLevel() * (m_Score.GetLevel() * 5.f))))); // la inceput este = 1;
-		std::cout << "Trigger =" << trigger.asMilliseconds() << std::endl;
-		deltaTime = clock.restart(); // restarting the timer and returning the time passed until this point
-		m_ElapsedTime += deltaTime;
-		std::cout << "m_ElapsedTime = " << m_ElapsedTime.asMilliseconds() << std::endl << std::endl;
-
-		ProcessEvents(menuOrGame);
-		Update(deltaTime);
-
-		if (m_ElapsedTime > trigger)
+		if (!m_pause)
 		{
-			m_ElapsedTime = sf::Time::Zero;
-			Proceed(Direction::Down);
-			std::cout << "Should go Down" << std::endl;
+			sf::Time trigger(sf::seconds(85.f / (85.f + (m_Score.GetLevel() * (m_Score.GetLevel() * 5.f))))); // la inceput este = 1;
+			std::cout << "Trigger =" << trigger.asMilliseconds() << std::endl;
+			deltaTime = clock.restart(); // restarting the timer and returning the time passed until this point
+			m_ElapsedTime += deltaTime;
+			std::cout << "m_ElapsedTime = " << m_ElapsedTime.asMilliseconds() << std::endl << std::endl;
+
+			ProcessEvents(menuOrGame, levelSound);
+			Update(deltaTime);
+
+			if (m_ElapsedTime > trigger)
+			{
+				m_ElapsedTime = sf::Time::Zero;
+				Proceed(Direction::Down);
+				std::cout << "Should go Down" << std::endl;
+			}
+			Render();
 		}
-		Render();
+		else {
+			ProcessEvents(menuOrGame, levelSound);
+			Render();
+		}
 	}
 	m_GameplayMusic.stop();
 }
@@ -138,12 +146,14 @@ void Game::CreateShape()
 		if (!gameoverMusic.openFromFile("gameover.wav"))
 			std::cout << "Could not load ~gameover.wav~ from file !! \n";
 
-		m_GameplayMusic.stop();
+		//m_GameplayMusic.stop();
 		gameoverMusic.play();
-		system("pause");
+		//system("pause");
 
+		m_Score.Reset();
 		m_Board->Clean();
-		m_GameplayMusic.play();
+		//m_GameplayMusic.play();
+		m_pause = true;
 	}
 
 	m_ID = Utils::GetRandomNumber(7);
@@ -175,7 +185,7 @@ bool Game::IsOccupied(int x, int y)
 	return m_Board->GetField(x, y)->m_Occupied;
 }
 
-void Game::ProcessEvents(bool& menuOrGame)
+void Game::ProcessEvents(bool& menuOrGame, uint16_t& levelSound)
 {
 	sf::Event e;
 	while (m_RenderWindow.pollEvent(e))
@@ -187,23 +197,34 @@ void Game::ProcessEvents(bool& menuOrGame)
 		}
 		else if (e.type == sf::Event::KeyPressed)
 		{
-			if (e.key.code == sf::Keyboard::Down)
-				Proceed(Direction::Down);
-			else if (e.key.code == sf::Keyboard::Left)
-				Proceed(Direction::Left);
-			else if (e.key.code == sf::Keyboard::Right)
-				Proceed(Direction::Right);
-			else if (e.key.code == sf::Keyboard::Up)
-				Rotate();
-			else if (e.key.code == sf::Keyboard::A)
-				ScaleUp();
-			else if (e.key.code == sf::Keyboard::Z)
-				ScaleDown();
-			else if (e.key.code == sf::Keyboard::Escape)
+			if (!m_pause)
 			{
-				menuOrGame = 1;
-				m_RenderWindow.close();
+				if (e.key.code == sf::Keyboard::Down)
+					Proceed(Direction::Down);
+				else if (e.key.code == sf::Keyboard::Left)
+					Proceed(Direction::Left);
+				else if (e.key.code == sf::Keyboard::Right)
+					Proceed(Direction::Right);
+				else if (e.key.code == sf::Keyboard::Up)
+					Rotate();
+				else if (e.key.code == sf::Keyboard::A)
+					ScaleUp();
+				else if (e.key.code == sf::Keyboard::Z)
+					ScaleDown();
+				else if (e.key.code == sf::Keyboard::Escape)
+				{
+					menuOrGame = 1;
+					m_RenderWindow.close();
+				}
+				else if (e.key.code == sf::Keyboard::Space)
+				{
+					m_pause = true;
+					Options options;
+					options.RunOptions(levelSound);
+				}
 			}
+			else if (e.key.code == sf::Keyboard::Enter)
+				m_pause = false;
 		}
 	}
 }
