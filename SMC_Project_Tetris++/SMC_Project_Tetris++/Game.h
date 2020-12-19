@@ -44,5 +44,8 @@ private:
 	Score m_Score;
 	int m_ID;
 	bool m_pause;
+	sf::RectangleShape m_pauseMenu;
+	sf::Font m_fontOptions;
+	sf::Text m_textPauseMenu[4];
 };
 

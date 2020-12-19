@@ -7,11 +7,43 @@
 
 Game::Game()
 	: m_RenderWindow{ sf::VideoMode{BOARD_WIDTH * 18 + 150, BOARD_HEIGHT * 18}, "TETRIS++", sf::Style::Default }, m_Texture{}, m_SeparationLine{}, m_TetrisShape{ nullptr }, m_Preview{ nullptr },
-	m_Board{}, m_Score{}, m_ElapsedTime{ sf::Time::Zero }, m_ID{ Utils::GetRandomNumber(7) }, m_GameplayMusic{}, m_pause{ false }
+	m_Board{}, m_Score{}, m_ElapsedTime{ sf::Time::Zero }, m_ID{ Utils::GetRandomNumber(7) }, m_GameplayMusic{}, m_pause{ false }, m_pauseMenu{}, m_fontOptions{}, m_textPauseMenu{}
 {
 	m_SeparationLine.setSize(sf::Vector2f{ 2.f, BOARD_HEIGHT * 18.f });
 	m_SeparationLine.setPosition(sf::Vector2f{ BOARD_WIDTH * 18.f, 0 });
 	m_SeparationLine.setFillColor(sf::Color::Red);
+
+	m_pauseMenu.setSize(sf::Vector2f{ 250.f,150.f });
+	m_pauseMenu.setFillColor(sf::Color(0, 250, 154));
+	m_pauseMenu.setOutlineColor(sf::Color::White);
+	m_pauseMenu.setOutlineThickness(4);
+	m_pauseMenu.setPosition(sf::Vector2f{ (BOARD_WIDTH * 18 + 150) / 4.5,(BOARD_HEIGHT * 18) / 3 });
+
+	if (!m_fontOptions.loadFromFile("arial.ttf"))
+	{
+		// error...
+	}
+
+	m_textPauseMenu[0].setFont(m_fontOptions);
+	m_textPauseMenu[0].setFillColor(sf::Color(0, 191, 255));
+	m_textPauseMenu[0].setOutlineColor(sf::Color::Black);
+	m_textPauseMenu[0].setOutlineThickness(3);
+	m_textPauseMenu[0].setCharacterSize(25);
+	m_textPauseMenu[0].setString("Pause Menu");
+	m_textPauseMenu[0].setPosition(sf::Vector2f((BOARD_WIDTH * 18 + 150) / 3.1, (BOARD_HEIGHT * 18) / 3));
+
+	for (int i = 1;i < 4;i++)
+	{
+		m_textPauseMenu[i].setFont(m_fontOptions);
+		m_textPauseMenu[i].setFillColor(sf::Color::White);
+		m_textPauseMenu[i].setOutlineColor(sf::Color::Black);
+		m_textPauseMenu[i].setOutlineThickness(3);
+		m_textPauseMenu[i].setCharacterSize(15);
+		m_textPauseMenu[i].setPosition(sf::Vector2f((BOARD_WIDTH * 18 + 150) / 3.3, (BOARD_HEIGHT * 18) / 3 + 40 * i));
+	}
+	m_textPauseMenu[1].setString("Press Enter for Continue");
+	m_textPauseMenu[2].setString("Press O for Options");
+	m_textPauseMenu[3].setString("Press Escape for Exit");
 
 	if (!m_Texture.loadFromFile("Blocks.png"))
 		std::cout << "Could not load texture from file !! \n";
@@ -219,12 +251,23 @@ void Game::ProcessEvents(bool& menuOrGame, uint16_t& levelSound)
 				else if (e.key.code == sf::Keyboard::Space)
 				{
 					m_pause = true;
+				}
+			}
+			else
+			{
+				if (e.key.code == sf::Keyboard::Enter)
+					m_pause = false;
+				else if (e.key.code == sf::Keyboard::O)
+				{
 					Options options;
 					options.RunOptions(levelSound);
 				}
+				else if (e.key.code == sf::Keyboard::Escape)
+				{
+					menuOrGame = 1;
+					m_RenderWindow.close();
+				}
 			}
-			else if (e.key.code == sf::Keyboard::Enter)
-				m_pause = false;
 		}
 	}
 }
@@ -238,5 +281,11 @@ void Game::Render()
 		m_RenderWindow.draw(*m_TetrisShape);
 	m_RenderWindow.draw(*m_Preview);
 	m_RenderWindow.draw(m_SeparationLine);
+	if (m_pause)
+	{
+		m_RenderWindow.draw(m_pauseMenu);
+		for (int i = 0;i < 4;i++)
+			m_RenderWindow.draw(m_textPauseMenu[i]);
+	}
 	m_RenderWindow.display();
 }
