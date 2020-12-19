@@ -4,7 +4,7 @@
 #include "Options.h"
 
 Menu::Menu(unsigned int witdh, unsigned int height)
-	: m_window{ sf::VideoMode{witdh,height}, "Menu" }, m_selectedItemIndex{ 0 }, m_selectedModeGame{ 0 }, m_menu{}, m_modeGame{}, m_menuOrGame{ 1 }, m_textureMenu{}, m_spriteMenu{}
+	: m_window{ sf::VideoMode{witdh,height}, "Menu" }, m_selectedItemIndex{ 0 }, m_selectedModeGame{ 0 }, m_fontMenu{}, m_menu{}, m_modeGame{}, m_textureMenu{}, m_spriteMenu{}, m_menuOrGame{ 1 }, m_levelSound{ 2 }
 {
 	if (!m_fontMenu.loadFromFile("arial.ttf"))
 	{
@@ -159,6 +159,10 @@ void Menu::Select()
 						MoveDown();
 						break;
 
+					case sf::Keyboard::Escape:
+						m_selectedModeGame = 0;
+						break;
+
 					case sf::Keyboard::Return:
 						switch (GetPressedItem())
 						{
@@ -172,7 +176,7 @@ void Menu::Select()
 						{
 							std::cout << "\nOptions button has been pressed!" << std::endl;
 							Options options;
-							options.RunOptions();
+							options.RunOptions(m_levelSound);
 						}
 						break;
 						case 2:
@@ -186,7 +190,7 @@ void Menu::Select()
 							std::cout << "\nSingleplayer button has been pressed!" << std::endl;
 							m_menuOrGame = 0;
 							Game game;
-							game.Run(m_menuOrGame);
+							game.Run(m_menuOrGame, m_levelSound);
 							m_selectedModeGame = 0;
 						}
 						break;

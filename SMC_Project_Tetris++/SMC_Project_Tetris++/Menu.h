@@ -27,4 +27,5 @@ private:
 	sf::Texture m_textureMenu;
 	sf::Sprite m_spriteMenu;
 	bool m_menuOrGame;
+	uint16_t m_levelSound;
 };

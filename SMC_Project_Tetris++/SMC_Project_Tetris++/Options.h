@@ -2,14 +2,14 @@
 #include <SFML/Graphics.hpp>
 #include "Config.h"
 
-#define MAX_NUMBER_CONTROLS 8
+#define MAX_NUMBER_CONTROLS 9
 
 class Options
 {
 public:
 	Options();
-	void draw();
-	void RunOptions();
+	void draw(uint16_t& levelSound);
+	void RunOptions(uint16_t& levelSound);
 	~Options();
 
 private:
@@ -18,5 +18,6 @@ private:
 	sf::Font m_fontOptions;
 	sf::Sprite m_spriteOptions;
 	sf::Text m_controlsGame[MAX_NUMBER_CONTROLS];
+	sf::Text m_controlSound[6];
 };
 

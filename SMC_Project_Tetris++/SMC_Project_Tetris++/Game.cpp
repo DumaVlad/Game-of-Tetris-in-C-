@@ -5,22 +5,23 @@
 #include <iostream>
 
 Game::Game()
-	: m_RenderWindow{ sf::VideoMode{BOARD_WIDTH * 18 + 150, BOARD_HEIGHT * 18}, "TETRIS++", sf::Style::Default }, m_Texture{}, m_SeparationLine{}, m_TetrisShape{ nullptr }, m_Preview{ nullptr }, m_Board{}, m_Score{}, m_ElapsedTime{ sf::Time::Zero }, m_ID{ Utils::GetRandomNumber(7) }, m_GameplayMusic{}
+	: m_RenderWindow{ sf::VideoMode{BOARD_WIDTH * 18 + 150, BOARD_HEIGHT * 18}, "TETRIS++", sf::Style::Default }, m_Texture{}, m_SeparationLine{}, m_TetrisShape{ nullptr }, m_Preview{ nullptr },
+	m_Board{}, m_Score{}, m_ElapsedTime{ sf::Time::Zero }, m_ID{ Utils::GetRandomNumber(7) }, m_GameplayMusic{}
 {
 	m_SeparationLine.setSize(sf::Vector2f{ 2.f, BOARD_HEIGHT * 18.f });
 	m_SeparationLine.setPosition(sf::Vector2f{ BOARD_WIDTH * 18.f, 0 });
 	m_SeparationLine.setFillColor(sf::Color::Red);
-	
+
 	if (!m_Texture.loadFromFile("Blocks.png"))
 		std::cout << "Could not load texture from file !! \n";
 	if (!m_GameplayMusic.openFromFile("Tetris.wav"))
 		std::cout << "Could not load ~Tetris.wav~ from file!! \n";
-	
+
 	m_Board = std::make_unique<Board>(Position{ BOARD_WIDTH,BOARD_HEIGHT }, *this);
 	CreateShape();
 }
 
-void Game::Run(bool& menuOrGame)
+void Game::Run(bool& menuOrGame, uint16_t& levelSound)
 {
 	sf::Clock clock; // starting the timer-ul
 	sf::Time deltaTime(sf::Time::Zero);
@@ -32,6 +33,7 @@ void Game::Run(bool& menuOrGame)
 
 	while (m_RenderWindow.isOpen())
 	{
+		m_GameplayMusic.setVolume((levelSound * 20.f));
 
 		sf::Time trigger(sf::seconds(85.f / (85.f + (m_Score.GetLevel() * (m_Score.GetLevel() * 5.f))))); // la inceput este = 1;
 		std::cout << "Trigger =" << trigger.asMilliseconds() << std::endl;
@@ -153,7 +155,7 @@ bool Game::IsValidMovement(std::array<Position, 16> block)
 {
 	for (int i = 0; i < 16; i++)
 	{
-		if (block[i].x < 0 || block[i].x > BOARD_WIDTH-1 || block[i].y > BOARD_HEIGHT-1)
+		if (block[i].x < 0 || block[i].x > BOARD_WIDTH - 1 || block[i].y > BOARD_HEIGHT - 1)
 		{
 			std::cout << "INVALID" << std::endl;
 			return false;

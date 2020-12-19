@@ -43,17 +43,35 @@ Options::Options()
 	m_controlsGame[5].setString("A = piece scale up");
 	m_controlsGame[6].setString("Z = piece scale down");
 	m_controlsGame[7].setString("Escape = return to menu");
+
+	for (int i = 0;i < 6;i++)
+	{
+		m_controlSound[i].setFont(m_fontOptions);
+		m_controlSound[i].setFillColor(sf::Color::Red);
+		m_controlSound[i].setOutlineColor(sf::Color::Black);
+		m_controlSound[i].setOutlineThickness(5);
+		m_controlSound[i].setCharacterSize(25);
+		m_controlSound[i].setPosition(sf::Vector2f(OPTIONS_WIDTH / 12, OPTIONS_HEIGHT / 15 * (MAX_NUMBER_CONTROLS + 2)));
+	}
+
+	m_controlSound[0].setString("Sound mute");
+	m_controlSound[1].setString("Sound 20%");
+	m_controlSound[2].setString("Sound 40%");
+	m_controlSound[3].setString("Sound 60%");
+	m_controlSound[4].setString("Sound 80%");
+	m_controlSound[5].setString("Sound 100%");
 }
 
-void Options::draw()
+void Options::draw(uint16_t& levelSound)
 {
 	for (int i = 0; i < MAX_NUMBER_CONTROLS; i++)
 	{
 		m_renderWindowOptions.draw(m_controlsGame[i]);
 	}
+	m_renderWindowOptions.draw(m_controlSound[levelSound]);
 }
 
-void Options::RunOptions()
+void Options::RunOptions(uint16_t& levelSound)
 {
 	while (m_renderWindowOptions.isOpen())
 	{
@@ -71,11 +89,22 @@ void Options::RunOptions()
 				{
 					m_renderWindowOptions.close();
 				}
+				if (e.key.code == sf::Keyboard::Up)
+				{
+					if (levelSound < 5)
+						levelSound++;
+				}
+				if (e.key.code == sf::Keyboard::Down)
+				{
+					if (levelSound > 0)
+						levelSound--;
+				}
+
 			}
 		}
 		m_renderWindowOptions.clear();
 		m_renderWindowOptions.draw(m_spriteOptions);
-		draw();
+		draw(levelSound);
 		m_renderWindowOptions.display();
 	}
 }

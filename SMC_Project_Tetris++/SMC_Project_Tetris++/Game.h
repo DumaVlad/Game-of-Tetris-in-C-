@@ -18,7 +18,7 @@ public:
 
 public:
 	Game();
-	void Run(bool& menuOrGame);
+	void Run(bool& menuOrGame, uint16_t& levelSound);
 
 private:
 	void Proceed(Direction);
