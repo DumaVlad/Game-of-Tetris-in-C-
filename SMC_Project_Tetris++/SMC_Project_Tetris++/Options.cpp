@@ -43,6 +43,7 @@ Options::Options()
 	m_controlsGame[5].setString("A = piece scale up");
 	m_controlsGame[6].setString("Z = piece scale down");
 	m_controlsGame[7].setString("Escape = return to menu");
+	m_controlsGame[8].setString("Space = pause game");
 
 	for (int i = 0;i < 6;i++)
 	{

@@ -1,6 +1,7 @@
 #include <iostream>
 #include "Menu.h"
 #include "Game.h"
+#include "Game_2P.h"
 #include "Options.h"
 
 Menu::Menu(unsigned int witdh, unsigned int height)
@@ -197,7 +198,10 @@ void Menu::Select()
 						case 4:
 						{
 							std::cout << "\nMultiplayer button has been pressed!" << std::endl;
-							std::cout << "Still in Work!!" << std::endl;
+							m_menuOrGame = 0;
+							Game_2P game;
+							game.Run(m_menuOrGame, m_levelSound);
+							m_selectedModeGame = 0;
 						}
 						break;
 						}
