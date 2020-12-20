@@ -6,51 +6,9 @@
 #include <iostream>
 
 Game::Game()
-	: m_RenderWindow{ sf::VideoMode{BOARD_WIDTH * 18 + 150, BOARD_HEIGHT * 18}, "TETRIS++", sf::Style::Default }, m_Texture{}, m_SeparationLine{}, m_TetrisShape{ nullptr }, m_Preview{ nullptr },
-	m_Board{}, m_Score{}, m_ElapsedTime{ sf::Time::Zero }, m_ID{ Utils::GetRandomNumber(7) }, m_GameplayMusic{}, m_pause{ false }, m_pauseMenu{}, m_fontOptions{}, m_textPauseMenu{}
+	: IGame(BOARD_WIDTH, BOARD_HEIGHT)
 {
-	m_SeparationLine.setSize(sf::Vector2f{ 2.f, BOARD_HEIGHT * 18.f });
-	m_SeparationLine.setPosition(sf::Vector2f{ BOARD_WIDTH * 18.f, 0 });
-	m_SeparationLine.setFillColor(sf::Color::Red);
-
-	m_pauseMenu.setSize(sf::Vector2f{ 250.f,150.f });
-	m_pauseMenu.setFillColor(sf::Color(0, 250, 154));
-	m_pauseMenu.setOutlineColor(sf::Color::White);
-	m_pauseMenu.setOutlineThickness(4);
-	m_pauseMenu.setPosition(sf::Vector2f{ (BOARD_WIDTH * 18 + 150) / 4.5,(BOARD_HEIGHT * 18) / 3 });
-
-	if (!m_fontOptions.loadFromFile("arial.ttf"))
-	{
-		// error...
-	}
-
-	m_textPauseMenu[0].setFont(m_fontOptions);
-	m_textPauseMenu[0].setFillColor(sf::Color(0, 191, 255));
-	m_textPauseMenu[0].setOutlineColor(sf::Color::Black);
-	m_textPauseMenu[0].setOutlineThickness(3);
-	m_textPauseMenu[0].setCharacterSize(25);
-	m_textPauseMenu[0].setString("Pause Menu");
-	m_textPauseMenu[0].setPosition(sf::Vector2f((BOARD_WIDTH * 18 + 150) / 3.1, (BOARD_HEIGHT * 18) / 3));
-
-	for (int i = 1;i < 4;i++)
-	{
-		m_textPauseMenu[i].setFont(m_fontOptions);
-		m_textPauseMenu[i].setFillColor(sf::Color::White);
-		m_textPauseMenu[i].setOutlineColor(sf::Color::Black);
-		m_textPauseMenu[i].setOutlineThickness(3);
-		m_textPauseMenu[i].setCharacterSize(15);
-		m_textPauseMenu[i].setPosition(sf::Vector2f((BOARD_WIDTH * 18 + 150) / 3.3, (BOARD_HEIGHT * 18) / 3 + 40 * i));
-	}
-	m_textPauseMenu[1].setString("Press Enter for Continue");
-	m_textPauseMenu[2].setString("Press O for Options");
-	m_textPauseMenu[3].setString("Press Escape for Exit");
-
-	if (!m_Texture.loadFromFile("Blocks.png"))
-		std::cout << "Could not load texture from file !! \n";
-	if (!m_GameplayMusic.openFromFile("Tetris.wav"))
-		std::cout << "Could not load ~Tetris.wav~ from file!! \n";
-
-	m_Board = std::make_unique<Board>(Position{ BOARD_WIDTH,BOARD_HEIGHT }, *this);
+	m_board = std::make_unique<Board>(Position{ BOARD_WIDTH,BOARD_HEIGHT }, *this);
 	CreateShape();
 }
 
@@ -59,72 +17,73 @@ void Game::Run(bool& menuOrGame, uint16_t& levelSound)
 	sf::Clock clock; // starting the timer-ul
 	sf::Time deltaTime(sf::Time::Zero);
 
-	m_Board->Clean();
+	m_board->Clean();
 
-	m_GameplayMusic.play();
-	m_GameplayMusic.setLoop(true);
+	m_gameplayMusic.play();
+	m_gameplayMusic.setLoop(true);
 
-	while (m_RenderWindow.isOpen())
+	while (m_renderWindow.isOpen())
 	{
-		m_GameplayMusic.setVolume((levelSound * 20.f));
-
+		m_gameplayMusic.setVolume((levelSound * 20.f));
+		
 		if (!m_pause)
 		{
-			sf::Time trigger(sf::seconds(85.f / (85.f + (m_Score.GetLevel() * (m_Score.GetLevel() * 5.f))))); // la inceput este = 1;
+			sf::Time trigger(sf::seconds(85.f / (85.f + (m_score.GetLevel() * (m_score.GetLevel() * 5.f))))); // la inceput este = 1;
 			std::cout << "Trigger =" << trigger.asMilliseconds() << std::endl;
 			deltaTime = clock.restart(); // restarting the timer and returning the time passed until this point
-			m_ElapsedTime += deltaTime;
-			std::cout << "m_ElapsedTime = " << m_ElapsedTime.asMilliseconds() << std::endl << std::endl;
+			m_elapsedTime += deltaTime;
+			std::cout << "m_ElapsedTime = " << m_elapsedTime.asMilliseconds() << std::endl << std::endl;
 
 			ProcessEvents(menuOrGame, levelSound);
 			Update(deltaTime);
 
-			if (m_ElapsedTime > trigger)
+			if (m_elapsedTime > trigger)
 			{
-				m_ElapsedTime = sf::Time::Zero;
+				m_elapsedTime = sf::Time::Zero;
 				Proceed(Direction::Down);
 				std::cout << "Should go Down" << std::endl;
 			}
 			Render();
 		}
-		else {
+		else
+		{
 			ProcessEvents(menuOrGame, levelSound);
 			Render();
 		}
 	}
-	m_GameplayMusic.stop();
+	m_gameplayMusic.stop();
 }
 
 void Game::Proceed(Direction direction)
 {
-	if (!m_TetrisShape)
+	if (!m_tetrisShape)
 		return;
 
-	if (IsValidMovement(m_TetrisShape->GetFutureBlockPosition(direction)))
+	if (IsValidMovement(m_tetrisShape->GetFutureBlockPosition(direction)))
 	{
-		m_TetrisShape->Move(direction);
+		m_tetrisShape->Move(direction);
 		if (direction == Direction::UserPressedDown)
-			m_Score.AddPressedScore(1);
+			m_score.AddPressedScore(1);
 	}
 	else
 	{
 		if (direction == Direction::Down || direction == Direction::UserPressedDown)
 		{
-			int id = m_TetrisShape->GetID();
-			m_Board->AddBlock(id, m_TetrisShape->GetBlockPosition());
-			m_TetrisShape.reset(nullptr);
-			m_Score.SumPressedScore();
+			int id = m_tetrisShape->GetID();
+			m_board->AddBlock(id, m_tetrisShape->GetBlockPosition());
+			m_tetrisShape.reset(nullptr);
+			m_score.SumPressedScore();
 		}
 	}
 }
 
 void Game::Update(const sf::Time& dt)
 {
-	m_Board->Update(dt);
-	m_Score.Update(dt);
-	if (!m_TetrisShape)
+	m_board->Update(dt);
+	m_score.Update(dt);
+	if (!m_tetrisShape)
 	{
-		if (m_Board->IsToRemoveBlocks())
+		if (m_board->IsToRemoveBlocks())
 			return;
 		CreateShape();
 	}
@@ -133,64 +92,62 @@ void Game::Update(const sf::Time& dt)
 
 void Game::Rotate()
 {
-	if (!m_TetrisShape)
+	if (!m_tetrisShape)
 		return;
 
-	m_TetrisShape->Rotate();
-	if (!IsValidMovement(m_TetrisShape->GetBlockPosition()))
-		m_TetrisShape->RevertState();
+	m_tetrisShape->Rotate();
+	if (!IsValidMovement(m_tetrisShape->GetBlockPosition()))
+		m_tetrisShape->RevertState();
 }
 
 void Game::ScaleUp()
 {
-	if (!m_TetrisShape)
+	if (!m_tetrisShape)
 		return;
 
-	m_TetrisShape->ScaleUp();
-	if (!IsValidMovement(m_TetrisShape->GetBlockPosition()))
+	m_tetrisShape->ScaleUp();
+	if (!IsValidMovement(m_tetrisShape->GetBlockPosition()))
 	{
-		m_TetrisShape->RevertState();
+		m_tetrisShape->RevertState();
 	}
 }
 
 void Game::ScaleDown()
 {
-	if (!m_TetrisShape)
+	if (!m_tetrisShape)
 		return;
 
-	m_TetrisShape->ScaleDown();
-	if (!IsValidMovement(m_TetrisShape->GetBlockPosition()))
+	m_tetrisShape->ScaleDown();
+	if (!IsValidMovement(m_tetrisShape->GetBlockPosition()))
 	{
-		m_TetrisShape->RevertState();
+		m_tetrisShape->RevertState();
 	}
 }
 
 void Game::CreateShape()
 {
-	m_TetrisShape.reset(new TetrisShape(m_Texture, m_ID));
-
+	m_tetrisShape.reset(new TetrisShape(m_texture, m_ID));
 	//create new game if necessary
-	if (m_Board->IsOccupied(m_TetrisShape->GetBlockPosition()))
+	if (m_board->IsOccupied(m_tetrisShape->GetBlockPosition()))
 	{
-		std::cout << "Game Over\n";
+		std::cout << "Game Over" << std::endl;
 
 		sf::Music gameoverMusic;
 		if (!gameoverMusic.openFromFile("gameover.wav"))
-			std::cout << "Could not load ~gameover.wav~ from file !! \n";
+			std::cout << "Could not load the gameover sound from file !! \n";
 
-		//m_GameplayMusic.stop();
+		m_gameplayMusic.stop();
 		gameoverMusic.play();
+
 		//system("pause");
 
-		m_Score.Reset();
-		m_Board->Clean();
-		//m_GameplayMusic.play();
+		m_board->Clean();
+		m_gameplayMusic.play();
 		m_pause = true;
 	}
-
 	m_ID = Utils::GetRandomNumber(7);
-	m_Preview.reset(new TetrisShape(m_Texture, m_ID));
-	m_Preview->SetPosition(sf::Vector2i{ BOARD_WIDTH,30 });
+	m_preview.reset(new TetrisShape(m_texture, m_ID));
+	m_preview->SetPosition(Position{ BOARD_WIDTH, 30 });
 }
 
 bool Game::IsValidMovement(std::array<Position, 16> block)
@@ -214,18 +171,18 @@ bool Game::IsValidMovement(std::array<Position, 16> block)
 
 bool Game::IsOccupied(int x, int y)
 {
-	return m_Board->GetField(x, y)->m_Occupied;
+	return m_board->GetField(x, y)->m_Occupied;
 }
 
 void Game::ProcessEvents(bool& menuOrGame, uint16_t& levelSound)
 {
 	sf::Event e;
-	while (m_RenderWindow.pollEvent(e))
+	while (m_renderWindow.pollEvent(e))
 	{
 		if (e.type == sf::Event::Closed)
 		{
 			menuOrGame = 1;
-			m_RenderWindow.close();
+			m_renderWindow.close();
 		}
 		else if (e.type == sf::Event::KeyPressed)
 		{
@@ -246,12 +203,10 @@ void Game::ProcessEvents(bool& menuOrGame, uint16_t& levelSound)
 				else if (e.key.code == sf::Keyboard::Escape)
 				{
 					menuOrGame = 1;
-					m_RenderWindow.close();
+					m_renderWindow.close();
 				}
 				else if (e.key.code == sf::Keyboard::Space)
-				{
 					m_pause = true;
-				}
 			}
 			else
 			{
@@ -265,7 +220,7 @@ void Game::ProcessEvents(bool& menuOrGame, uint16_t& levelSound)
 				else if (e.key.code == sf::Keyboard::Escape)
 				{
 					menuOrGame = 1;
-					m_RenderWindow.close();
+					m_renderWindow.close();
 				}
 			}
 		}
@@ -274,18 +229,19 @@ void Game::ProcessEvents(bool& menuOrGame, uint16_t& levelSound)
 
 void Game::Render()
 {
-	m_RenderWindow.clear(sf::Color::Black);
-	m_Score.Draw(m_RenderWindow);
-	m_Board->Draw(m_RenderWindow);
-	if (m_TetrisShape)
-		m_RenderWindow.draw(*m_TetrisShape);
-	m_RenderWindow.draw(*m_Preview);
-	m_RenderWindow.draw(m_SeparationLine);
+	m_renderWindow.clear(sf::Color::Black);
+	m_score.Draw(m_renderWindow);
+	m_board->Draw(m_renderWindow);
+	if (m_tetrisShape)
+		m_renderWindow.draw(*m_tetrisShape);
+	m_renderWindow.draw(*m_preview);
+	m_renderWindow.draw(m_separationLine);
 	if (m_pause)
 	{
-		m_RenderWindow.draw(m_pauseMenu);
-		for (int i = 0;i < 4;i++)
-			m_RenderWindow.draw(m_textPauseMenu[i]);
+		m_renderWindow.draw(m_pauseMenu);
+		for (int i = 0; i < 4; i++)
+			m_renderWindow.draw(m_textPauseMenu[i]);
 	}
-	m_RenderWindow.display();
+	m_renderWindow.display();
 }
+
