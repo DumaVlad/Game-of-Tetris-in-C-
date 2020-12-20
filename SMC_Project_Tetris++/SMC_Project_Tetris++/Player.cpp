@@ -2,7 +2,7 @@
 #include"Utils.h"
 
 Player::Player(const std::string& playerName)
-    : m_playerName{ playerName }, m_score{}
+  : m_playerName{ playerName }, m_score{ 10,10 }
 {
 }
 

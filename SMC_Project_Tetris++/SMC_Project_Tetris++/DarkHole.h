@@ -1,6 +1,5 @@
 #pragma once
 #include "Utils.h"
-#include "Config.h"
 #include <SFML/System/Vector2.hpp>
 
 class DarkHole

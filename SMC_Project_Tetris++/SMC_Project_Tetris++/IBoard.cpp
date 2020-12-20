@@ -2,7 +2,6 @@
 #include <iostream>
 #include <fstream>
 #include <algorithm>
-#include <SFML/Audio/Music.hpp>
 #include "Utils.h"
 
 FieldInfo::FieldInfo(sf::Texture& texture, uint16_t id)

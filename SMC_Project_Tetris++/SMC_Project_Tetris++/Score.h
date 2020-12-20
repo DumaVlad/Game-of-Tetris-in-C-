@@ -2,12 +2,11 @@
 #include <SFML/Graphics/RenderWindow.hpp>
 #include <SFML/Graphics/Font.hpp>
 #include <SFML/Graphics/Text.hpp>
-#include "Config.h"
 
 class Score
 {
 public:
-	Score();
+	Score(const unsigned int width, const unsigned int height);
 	Score(const Score& score) = delete;
 	Score& operator=(const Score& score) = delete;
 

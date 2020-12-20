@@ -1,6 +1,6 @@
 #include "Score.h"
 
-Score::Score()
+Score::Score(const unsigned int width, const unsigned int height)
 	:m_Font{}, m_LevelText{}, m_ScoreText{}, m_ClearedLinesText{}, m_Score{0}, m_LoadPressedScore{0}, m_LinesCleared{0}
 {
 	m_Font.loadFromFile("arial.ttf");
@@ -9,12 +9,12 @@ Score::Score()
 
 	m_LevelText.setFont(m_Font);
 	m_LevelText.setCharacterSize(20);
-	m_ScoreText.setPosition(sf::Vector2f{ BOARD_WIDTH * 18 + 20, 200.f });
-	m_LevelText.setPosition(sf::Vector2f{ BOARD_WIDTH * 18 + 20, 300.f });
+	m_ScoreText.setPosition(sf::Vector2f{ (float) width * 18 + 20, 200.f });
+	m_LevelText.setPosition(sf::Vector2f{ (float) height * 18 + 20, 300.f });
 
 	m_ClearedLinesText.setFont(m_Font);
 	m_ClearedLinesText.setCharacterSize(20);
-	m_ClearedLinesText.setPosition(sf::Vector2f{ BOARD_WIDTH * 18 + 20, 400.f });
+	m_ClearedLinesText.setPosition(sf::Vector2f{ (float) width * 18 + 20, 400.f });
 }
 
 void Score::Draw(sf::RenderWindow& window)
@@ -77,7 +77,7 @@ void Score::Update(const sf::Time& dt)
 {
 	m_LevelText.setString(std::string("Level:\n" + std::to_string(m_LinesCleared / 10)));
 	m_ScoreText.setString(std::string("Score:\n" + std::to_string(m_Score)));
-	m_ClearedLinesText.setString(std::string("Lines cleared:\n" + std::to_string(m_LinesCleared)));
+	m_ClearedLinesText.setString(std::string("Lines:\n" + std::to_string(m_LinesCleared)));
 }
 
 int Score::GetLevel() const

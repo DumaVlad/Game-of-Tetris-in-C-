@@ -1,6 +1,6 @@
 #pragma once
 #include <SFML/Graphics.hpp>
-#include "Config.h"
+#include "Utils.h"
 
 #define MAX_NUMBER_CONTROLS 9
 
