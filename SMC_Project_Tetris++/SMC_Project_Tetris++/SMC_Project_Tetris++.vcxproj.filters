@@ -75,6 +75,9 @@
     <ClCompile Include="IBoard.cpp">
       <Filter>Source Files\Implementation</Filter>
     </ClCompile>
+    <ClCompile Include="Board_2P.cpp">
+      <Filter>Source Files\Implementation</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Board.h">
@@ -114,6 +117,9 @@
       <Filter>Header Files\Utils</Filter>
     </ClInclude>
     <ClInclude Include="IBoard.h">
+      <Filter>Header Files\Implementation</Filter>
+    </ClInclude>
+    <ClInclude Include="Board_2P.h">
       <Filter>Header Files\Implementation</Filter>
     </ClInclude>
   </ItemGroup>
