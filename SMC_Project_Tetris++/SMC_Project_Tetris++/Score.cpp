@@ -84,3 +84,8 @@ int Score::GetLevel() const
 {
 	return m_LinesCleared / 10;
 }
+
+int Score::GetScore() const
+{
+	return m_Score;
+}

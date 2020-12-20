@@ -2,13 +2,17 @@
 #include"Utils.h"
 
 Player::Player(const std::string& playerName)
-    : m_playerId{}, m_playerName{ playerName }
+    : m_playerName{ playerName }, m_score{}
 {
-    m_playerId = Utils::GetRandomNumber(100);
-
 }
 
-uint16_t Player::GetplayerId()
+std::string Player::GetPlayerName()
 {
-    return m_playerId;
+    return m_playerName;
 }
+
+uint16_t Player::GetScore()
+{
+    return m_score.GetScore();
+}
+

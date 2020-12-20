@@ -18,6 +18,7 @@ public:
 	void AddClearedLines(int number);
 	void Update(const sf::Time& dt);
 	int GetLevel() const;
+	int GetScore() const;
 
 private:
 	sf::Font m_Font;
