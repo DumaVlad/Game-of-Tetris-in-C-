@@ -211,7 +211,7 @@ void Game_2P::CreateShape_2P()
 
 bool Game_2P::IsValidMovement(std::array<Position, 16> block)
 {
-	for (int i = 0; i < 16; i++)
+	for (uint16_t i = 0; i < 16; i++)
 	{
 		if (block[i].x < 0 || block[i].x > BOARD_WIDTH_2P - 1 || block[i].y > BOARD_HEIGHT_2P - 1)
 		{
@@ -228,7 +228,7 @@ bool Game_2P::IsValidMovement(std::array<Position, 16> block)
 	return true;
 }
 
-bool Game_2P::IsOccupied(int x, int y)
+bool Game_2P::IsOccupied(uint16_t x, uint16_t y)
 {
 	return IGame::IsOccupied(x, y);
 }
@@ -317,13 +317,13 @@ void Game_2P::Render()
 	if (m_pause == 1)
 	{
 		m_renderWindow.draw(m_pauseMenu);
-		for (int i = 0;i < 4;i++)
+		for (uint16_t i = 0;i < 4;i++)
 			m_renderWindow.draw(m_textPauseMenu[i]);
 	}
 	else if (m_pause == 2)
 	{
 		m_renderWindow.draw(m_pauseMenu);
-		for (int i = 0;i < 5;i++)
+		for (uint16_t i = 0;i < 5;i++)
 			m_renderWindow.draw(m_textGameOverMenu[i]);
 	}
 	m_renderWindow.display();

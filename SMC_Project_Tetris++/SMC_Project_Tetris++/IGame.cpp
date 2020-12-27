@@ -40,7 +40,7 @@ IGame::IGame(const unsigned int width, const unsigned int height)
 	m_textPauseMenu[0].setString("Pause Menu");
 	m_textPauseMenu[0].setPosition(sf::Vector2f((width * 18.f + 150.f) / 3.1f, (height * 18.f) / 3.f));
 
-	for (int i = 1; i < 4; i++)
+	for (uint16_t i = 1; i < 4; i++)
 	{
 		m_textPauseMenu[i].setFont(m_fontOptions);
 		m_textPauseMenu[i].setFillColor(sf::Color::White);
@@ -59,16 +59,16 @@ IGame::IGame(const unsigned int width, const unsigned int height)
 	m_textGameOverMenu[0].setOutlineThickness(3);
 	m_textGameOverMenu[0].setCharacterSize(25);
 	m_textGameOverMenu[0].setString("GAME OVER");
-	m_textGameOverMenu[0].setPosition(sf::Vector2f((width * 18 + 150) / 3.1, (height * 18) / 3));
+	m_textGameOverMenu[0].setPosition(sf::Vector2f((width * 18.f + 150) / 3.1, (height * 18) / 3));
 
-	for (int i = 1;i < 5;i++)
+	for (uint16_t i = 1;i < 5;i++)
 	{
 		m_textGameOverMenu[i].setFont(m_fontOptions);
 		m_textGameOverMenu[i].setFillColor(sf::Color::White);
 		m_textGameOverMenu[i].setOutlineColor(sf::Color::Black);
 		m_textGameOverMenu[i].setOutlineThickness(3);
 		m_textGameOverMenu[i].setCharacterSize(15);
-		m_textGameOverMenu[i].setPosition(sf::Vector2f((width * 18 + 150) / 3.3, (height * 18) / 3 + 40 * i));
+		m_textGameOverMenu[i].setPosition(sf::Vector2f((width * 18.f + 150) / 3.3, (height * 18) / 3 + 40 * i));
 	}
 	m_textGameOverMenu[1].setString("Press Enter for Continue");
 	m_textGameOverMenu[2].setString("Press O for Options");
@@ -140,7 +140,7 @@ void IGame::ScaleDown()
 		m_tetrisShape->ScaleDown();
 }
 
-bool IGame::IsOccupied(int x, int y)
+bool IGame::IsOccupied(uint16_t x, uint16_t y)
 {
 	return m_board->GetField(x, y)->m_Occupied;
 }

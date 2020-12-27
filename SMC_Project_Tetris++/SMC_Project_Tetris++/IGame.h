@@ -24,7 +24,7 @@ protected:
 	void Rotate();
 	void ScaleUp();
 	void ScaleDown();
-	bool IsOccupied(int, int);
+	bool IsOccupied(uint16_t, uint16_t);
 	virtual void CreateShape() = 0;
 	virtual bool IsValidMovement(std::array<Position, 16>) = 0;
 	virtual void Update(const sf::Time&) = 0;

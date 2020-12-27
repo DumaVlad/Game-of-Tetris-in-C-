@@ -25,7 +25,7 @@ private:
 	void ScaleDown();
 	void CreateShape();
 	bool IsValidMovement(std::array<Position, 16>);
-	bool IsOccupied(int, int);
+	bool IsOccupied(uint16_t, uint16_t);
 	void ProcessEvents(bool&, uint16_t& levelSound);
 	void Render();
 	void FileWriter(std::string file);

@@ -116,7 +116,7 @@ void Game::CreateShape()
 
 bool Game::IsValidMovement(std::array<Position, 16> block)
 {
-	for (int i = 0; i < 16; i++)
+	for (uint16_t i = 0; i < 16; i++)
 	{
 		if (block[i].x < 0 || block[i].x > BOARD_WIDTH - 1 || block[i].y > BOARD_HEIGHT - 1)
 		{
@@ -133,7 +133,7 @@ bool Game::IsValidMovement(std::array<Position, 16> block)
 	return true;
 }
 
-bool Game::IsOccupied(int x, int y)
+bool Game::IsOccupied(uint16_t x, uint16_t y)
 {
 	return IGame::IsOccupied(x, y);
 }
@@ -208,13 +208,13 @@ void Game::Render()
 	if (m_pause == 1)
 	{
 		m_renderWindow.draw(m_pauseMenu);
-		for (int i = 0;i < 4;i++)
+		for (uint16_t i = 0;i < 4;i++)
 			m_renderWindow.draw(m_textPauseMenu[i]);
 	}
 	else if (m_pause == 2)
 	{
 		m_renderWindow.draw(m_pauseMenu);
-		for (int i = 0;i < 5;i++)
+		for (uint16_t i = 0;i < 5;i++)
 			m_renderWindow.draw(m_textGameOverMenu[i]);
 	}
 	m_renderWindow.display();
