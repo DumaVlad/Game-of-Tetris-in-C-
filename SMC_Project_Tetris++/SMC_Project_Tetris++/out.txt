@@ -1,1 +1,3 @@
 Player1 80
+Player1 0
+Player1 0

@@ -107,7 +107,7 @@ void Game::CreateShape()
 
 		m_board->Clean();
 		m_gameplayMusic.play();
-		m_pause = true;
+		m_pause = 2;
 	}
 	m_ID = Utils::GetRandomNumber(7);
 	m_preview.reset(new TetrisShape(m_texture, m_ID, STARTING_POSITION_1P));
@@ -170,16 +170,20 @@ void Game::ProcessEvents(bool& menuOrGame, uint16_t& levelSound)
 					m_renderWindow.close();
 				}
 				else if (e.key.code == sf::Keyboard::Space)
-					m_pause = true;
+					m_pause = 1;
 			}
 			else
 			{
 				if (e.key.code == sf::Keyboard::Enter)
-					m_pause = false;
+					m_pause = 0;
 				else if (e.key.code == sf::Keyboard::O)
 				{
 					Options options;
 					options.RunOptions(levelSound);
+				}
+				else if (e.key.code == sf::Keyboard::H)
+				{
+					std::cout << "You are number ONE!" << std::endl;
 				}
 				else if (e.key.code == sf::Keyboard::Escape)
 				{
@@ -201,11 +205,17 @@ void Game::Render()
 		m_renderWindow.draw(*m_tetrisShape);
 	m_renderWindow.draw(*m_preview);
 	m_renderWindow.draw(m_separationLine);
-	if (m_pause)
+	if (m_pause == 1)
 	{
 		m_renderWindow.draw(m_pauseMenu);
-		for (int i = 0; i < 4; i++)
+		for (int i = 0;i < 4;i++)
 			m_renderWindow.draw(m_textPauseMenu[i]);
+	}
+	else if (m_pause == 2)
+	{
+		m_renderWindow.draw(m_pauseMenu);
+		for (int i = 0;i < 5;i++)
+			m_renderWindow.draw(m_textGameOverMenu[i]);
 	}
 	m_renderWindow.display();
 }

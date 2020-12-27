@@ -41,8 +41,9 @@ protected:
 	std::unique_ptr<IBoard> m_board;
 	sf::Time m_elapsedTime;
 	int m_ID;
-	bool m_pause;
+	uint16_t m_pause;
 	sf::RectangleShape m_pauseMenu;
 	sf::Font m_fontOptions;
 	sf::Text m_textPauseMenu[4];
+	sf::Text m_textGameOverMenu[5];
 };
