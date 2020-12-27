@@ -1,7 +1,7 @@
 #pragma once
 #include "TetrisShape.h"
 #include "IBoard.h"
-#include "Score.h"
+#include "Player.h"
 #include "Utils.h"
 
 class IGame
@@ -15,7 +15,7 @@ public:
 	virtual void Run(bool&, uint16_t&) = 0;
 
 	sf::Music m_gameplayMusic;
-	Score m_score;
+	std::unique_ptr<Player> m_player;
 	sf::Texture m_texture;
 
 protected:

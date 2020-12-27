@@ -30,7 +30,7 @@ void Game_2P::Run(bool& menuOrGame, uint16_t& levelSound)
 
 		if (!m_pause)
 		{
-			sf::Time trigger(sf::seconds(85.f / (85.f + (m_score.GetLevel() * (m_score.GetLevel() * 5.f))))); // la inceput este = 1;
+			sf::Time trigger(sf::seconds(85.f / (85.f + (m_player->GetLevel() * (m_player->GetLevel() * 5.f))))); // la inceput este = 1;
 			std::cout << "Trigger =" << trigger.asMilliseconds() << std::endl;
 			deltaTime = clock.restart(); // restarting the timer and returning the time passed until this point
 			m_elapsedTime += deltaTime;
@@ -71,7 +71,7 @@ void Game_2P::Proceed_2P(Direction direction)
 	{
 		m_tetrisShape_2P->Move(direction);
 		if (direction == Direction::UserPressedDown)
-			m_score.AddPressedScore(1);
+			m_player->AddPressedScore(1);
 	}
 	else
 	{
@@ -80,7 +80,7 @@ void Game_2P::Proceed_2P(Direction direction)
 			int id = m_tetrisShape_2P->GetID();
 			m_board->AddBlock(id, m_tetrisShape_2P->GetBlockPosition());
 			m_tetrisShape_2P.reset(nullptr);
-			m_score.SumPressedScore();
+			m_player->SumPressedScore();
 		}
 	}
 }
@@ -88,7 +88,7 @@ void Game_2P::Proceed_2P(Direction direction)
 void Game_2P::Update(const sf::Time& dt)
 {
 	m_board->Update(dt);
-	m_score.Update(dt);
+	m_player->Update(dt);
 	if (!m_tetrisShape)
 	{
 		if (m_board->IsToRemoveBlocks())
@@ -300,7 +300,7 @@ void Game_2P::ProcessEvents(bool& menuOrGame, uint16_t& levelSound)
 void Game_2P::Render()
 {
 	m_renderWindow.clear(sf::Color::Black);
-	m_score.Draw(m_renderWindow);
+	m_player->Draw(m_renderWindow);
 	m_board->Draw(m_renderWindow);
 	if (m_tetrisShape)
 		m_renderWindow.draw(*m_tetrisShape);

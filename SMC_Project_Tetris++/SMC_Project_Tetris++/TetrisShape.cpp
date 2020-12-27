@@ -77,11 +77,6 @@ std::array<TetrisShape::Position, 16> TetrisShape::GetFutureBlockPosition(Direct
 	return blockPositions;
 }
 
-void TetrisShape::RevertState()
-{
-	m_Block = m_OldBlock;
-}
-
 void TetrisShape::SetPosition(const Position& position)
 {
 	m_Position = position;
@@ -89,8 +84,6 @@ void TetrisShape::SetPosition(const Position& position)
 
 void TetrisShape::Rotate()
 {
-	m_OldBlock = m_Block; //store state of Block in case rotation turns out to be invalid
-
 	if (m_ID == 0) { //SquareShape: does not need rotation
 		return;
 	}
@@ -101,9 +94,6 @@ void TetrisShape::Rotate()
 			Position localVector = oldPoint - Position{ 1, 2 };
 			Position nextPoint{};
 			if (m_CurrentRotation % 2 == 1) {
-				/* counter-clockwise
-				 * [0  -1]
-				 * [-1  0]*/
 				nextPoint = Position{ (0 * localVector.x) + (-1 * localVector.y),
 										 (1 * localVector.x) + (0 * localVector.y) };
 
@@ -123,15 +113,6 @@ void TetrisShape::Rotate()
 		Position oldPoint = m_Block[i];    //pivot
 		Position localVector = oldPoint - Position{ 1,2 };
 
-		/*//Rotation Matrix
-		 * [cos Degree    -sin Degree]
-		 * [sin Degree     cos Degree]
-		 * translates to
-		 * clockwise
-		 * [0   -1]
-		 * [1    0]
-		 * */
-
 		Position nextPoint{ (0 * localVector.x) + (-1 * localVector.y),
 								(1 * localVector.x) + (0 * localVector.y) };
 		m_Block[i] = Position{ 1,2 } + nextPoint;
@@ -150,7 +131,6 @@ void TetrisShape::Move(Direction direction)
 
 void TetrisShape::ScaleUp()
 {
-	m_OldBlock = m_Block;
 	for (int i = 0; i < 16; i++)
 	{
 		m_Block[i].x = ScaledBlockArray5x5[m_ID][i] % 8;
@@ -160,7 +140,6 @@ void TetrisShape::ScaleUp()
 
 void TetrisShape::ScaleDown()
 {
-	m_OldBlock = m_Block;
 	for (int i = 0; i < 16; i++)
 	{
 		m_Block[i].x = BlockArray5x5[m_ID][i] % 8;

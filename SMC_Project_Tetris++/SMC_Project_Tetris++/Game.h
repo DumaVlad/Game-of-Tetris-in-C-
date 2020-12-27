@@ -1,7 +1,6 @@
 #pragma once
 #include "TetrisShape.h"
 #include "Board.h"
-#include "Score.h"
 #include "IGame.h"
 #include <SFML/System/Time.hpp>
 #include <SFML/Graphics/RenderWindow.hpp>

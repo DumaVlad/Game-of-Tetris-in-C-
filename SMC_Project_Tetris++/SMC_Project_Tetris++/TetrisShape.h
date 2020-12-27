@@ -17,7 +17,6 @@ public:
 	uint16_t GetID() const;
 	std::array<Position, 16> GetBlockPosition() const;
 	std::array<Position, 16> GetFutureBlockPosition(Direction) const;
-	void RevertState();
 	void SetPosition(const Position&);
 	void Rotate();
 	void Move(Direction);
@@ -32,7 +31,6 @@ private:
 	uint16_t m_CurrentRotation;
 	uint16_t m_ID;
 	std::array<Position, 16> m_Block;
-	std::array<Position, 16> m_OldBlock;
 	mutable sf::Sprite m_Sprite;
 };
 

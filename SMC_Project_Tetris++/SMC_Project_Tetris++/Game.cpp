@@ -28,7 +28,7 @@ void Game::Run(bool& menuOrGame, uint16_t& levelSound)
 		
 		if (!m_pause)
 		{
-			sf::Time trigger(sf::seconds(85.f / (85.f + (m_score.GetLevel() * (m_score.GetLevel() * 5.f))))); // la inceput este = 1;
+			sf::Time trigger(sf::seconds(85.f / (85.f + (m_player->GetLevel() * (m_player->GetLevel() * 5.f)))));
 			std::cout << "Trigger =" << trigger.asMilliseconds() << std::endl;
 			deltaTime = clock.restart(); // restarting the timer and returning the time passed until this point
 			m_elapsedTime += deltaTime;
@@ -62,7 +62,7 @@ void Game::Proceed(Direction direction)
 void Game::Update(const sf::Time& dt)
 {
 	m_board->Update(dt);
-	m_score.Update(dt);
+	m_player->Update(dt);
 	if (!m_tetrisShape)
 	{
 		if (m_board->IsToRemoveBlocks())
@@ -193,7 +193,7 @@ void Game::ProcessEvents(bool& menuOrGame, uint16_t& levelSound)
 void Game::Render()
 {
 	m_renderWindow.clear(sf::Color::Black);
-	m_score.Draw(m_renderWindow);
+	m_player->Draw(m_renderWindow);
 	m_board->Draw(m_renderWindow);
 	if (m_tetrisShape)
 		m_renderWindow.draw(*m_tetrisShape);

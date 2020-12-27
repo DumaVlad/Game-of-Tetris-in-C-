@@ -175,7 +175,6 @@
     <ClCompile Include="Menu.cpp" />
     <ClCompile Include="Options.cpp" />
     <ClCompile Include="Player.cpp" />
-    <ClCompile Include="Score.cpp" />
     <ClCompile Include="TetrisShape.cpp" />
     <ClCompile Include="Utils.cpp" />
   </ItemGroup>
@@ -191,7 +190,6 @@
     <ClInclude Include="Menu.h" />
     <ClInclude Include="Options.h" />
     <ClInclude Include="Player.h" />
-    <ClInclude Include="Score.h" />
     <ClInclude Include="Shapes.h" />
     <ClInclude Include="TetrisShape.h" />
     <ClInclude Include="Utils.h" />

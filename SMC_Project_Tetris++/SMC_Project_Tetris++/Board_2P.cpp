@@ -28,7 +28,7 @@ void Board_2P::MarkLinesForRemoval()
 		}
 		counter = 0;
 	}
-	m_Game.m_score.AddClearedLines(countClearedLines);
+	m_Game.m_player->AddClearedLines(countClearedLines);
 	std::sort(m_ToBeCleaned.begin(), m_ToBeCleaned.end(), [](int left, int right) { return left < right; });
 }
 

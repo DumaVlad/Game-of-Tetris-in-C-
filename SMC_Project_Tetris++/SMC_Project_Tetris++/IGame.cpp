@@ -4,7 +4,7 @@
 
 IGame::IGame(const unsigned int width, const unsigned int height)
 	: m_renderWindow{ sf::VideoMode {width * 18 + 120, height * 18}, "TETRIS++", sf::Style::Default }, m_texture{}, m_separationLine{}, m_tetrisShape{ nullptr }, m_preview{ nullptr }, m_board{}, 
-	m_score{ width, height }, m_elapsedTime{ sf::Time::Zero }, m_ID{ Utils::GetRandomNumber(7) }, m_gameplayMusic{}, m_pause{false}, m_pauseMenu{}, m_fontOptions{}, m_textPauseMenu{}
+	m_elapsedTime{ sf::Time::Zero }, m_ID{ Utils::GetRandomNumber(7) }, m_gameplayMusic{}, m_pause{false}, m_pauseMenu{}, m_fontOptions{}, m_textPauseMenu{}, m_player {nullptr}
 {
 	m_separationLine.setSize(sf::Vector2f{ 2.f, height * 18.f });
 	m_separationLine.setPosition(sf::Vector2f{ width * 18.f, 0 });
@@ -43,6 +43,8 @@ IGame::IGame(const unsigned int width, const unsigned int height)
 	m_textPauseMenu[1].setString("Press Enter for Continue");
 	m_textPauseMenu[2].setString("Press O for Options");
 	m_textPauseMenu[3].setString("Press Escape for Exit");
+
+	m_player = std::make_unique<Player>("Player1", width, height);
 }
 
 void IGame::Proceed(Direction direction)
@@ -54,7 +56,7 @@ void IGame::Proceed(Direction direction)
 	{
 		m_tetrisShape->Move(direction);
 		if (direction == Direction::UserPressedDown)
-			m_score.AddPressedScore(1);
+			m_player->AddPressedScore(1);
 	}
 	else
 	{
@@ -63,7 +65,7 @@ void IGame::Proceed(Direction direction)
 			int id = m_tetrisShape->GetID();
 			m_board->AddBlock(id, m_tetrisShape->GetBlockPosition());
 			m_tetrisShape.reset(nullptr);
-			m_score.SumPressedScore();
+			m_player->SumPressedScore();
 		}
 	}
 }
