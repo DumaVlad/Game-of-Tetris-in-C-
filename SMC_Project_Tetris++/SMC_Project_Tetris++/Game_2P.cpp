@@ -193,6 +193,7 @@ void Game_2P::CreateShape_2P()
 		sf::Music gameoverMusic;
 		if (!gameoverMusic.openFromFile("..Resources/Sounds/gameover.wav"))
 			std::cout << "Could not load the gameover sound from file !! \n";
+		FileWriter("out.txt");
 
 		m_gameplayMusic.stop();
 		gameoverMusic.play();
@@ -316,4 +317,16 @@ void Game_2P::Render()
 			m_renderWindow.draw(m_textPauseMenu[i]);
 	}
 	m_renderWindow.display();
+}
+
+void Game_2P::FileWriter(std::string file)
+{
+	std::fstream fileOut;
+	fileOut.open(file, std::fstream::app);
+	if (!fileOut.is_open())
+	{
+		std::cout << "File cannot be opened!\n";
+		return;
+	}
+	fileOut << m_player->GetPlayerName() << " " << m_player->GetScore() << "\n";
 }

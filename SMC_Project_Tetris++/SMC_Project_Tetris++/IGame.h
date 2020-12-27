@@ -3,6 +3,7 @@
 #include "IBoard.h"
 #include "Player.h"
 #include "Utils.h"
+#include <fstream>
 
 class IGame
 {
@@ -28,6 +29,7 @@ protected:
 	virtual bool IsValidMovement(std::array<Position, 16>) = 0;
 	virtual void Update(const sf::Time&) = 0;
 	virtual void ProcessEvents(bool&, uint16_t& levelSound) = 0;
+	virtual void FileWriter(std::string file) = 0;
 
 protected:
 	sf::RenderWindow m_renderWindow;

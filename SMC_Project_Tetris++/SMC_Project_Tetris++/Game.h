@@ -28,6 +28,7 @@ private:
 	bool IsOccupied(int, int);
 	void ProcessEvents(bool&, uint16_t& levelSound);
 	void Render();
+	void FileWriter(std::string file);
 
 private:
 };

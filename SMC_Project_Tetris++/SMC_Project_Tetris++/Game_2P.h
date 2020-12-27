@@ -32,6 +32,7 @@ private:
 	bool IsOccupied(int, int);
 	void ProcessEvents(bool&, uint16_t&);
 	void Render();
+	void FileWriter(std::string file);
 
 private:
 	std::unique_ptr<TetrisShape> m_tetrisShape_2P;
