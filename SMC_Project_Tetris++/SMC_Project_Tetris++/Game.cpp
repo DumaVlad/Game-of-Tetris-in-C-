@@ -56,25 +56,7 @@ void Game::Run(bool& menuOrGame, uint16_t& levelSound)
 
 void Game::Proceed(Direction direction)
 {
-	if (!m_tetrisShape)
-		return;
-
-	if (IsValidMovement(m_tetrisShape->GetFutureBlockPosition(direction)))
-	{
-		m_tetrisShape->Move(direction);
-		if (direction == Direction::UserPressedDown)
-			m_score.AddPressedScore(1);
-	}
-	else
-	{
-		if (direction == Direction::Down || direction == Direction::UserPressedDown)
-		{
-			int id = m_tetrisShape->GetID();
-			m_board->AddBlock(id, m_tetrisShape->GetBlockPosition());
-			m_tetrisShape.reset(nullptr);
-			m_score.SumPressedScore();
-		}
-	}
+	IGame::Proceed(direction);
 }
 
 void Game::Update(const sf::Time& dt)
@@ -92,41 +74,22 @@ void Game::Update(const sf::Time& dt)
 
 void Game::Rotate()
 {
-	if (!m_tetrisShape)
-		return;
-
-	m_tetrisShape->Rotate();
-	if (!IsValidMovement(m_tetrisShape->GetBlockPosition()))
-		m_tetrisShape->RevertState();
+	IGame::Rotate();
 }
 
 void Game::ScaleUp()
 {
-	if (!m_tetrisShape)
-		return;
-
-	m_tetrisShape->ScaleUp();
-	if (!IsValidMovement(m_tetrisShape->GetBlockPosition()))
-	{
-		m_tetrisShape->RevertState();
-	}
+	IGame::ScaleUp();
 }
 
 void Game::ScaleDown()
 {
-	if (!m_tetrisShape)
-		return;
-
-	m_tetrisShape->ScaleDown();
-	if (!IsValidMovement(m_tetrisShape->GetBlockPosition()))
-	{
-		m_tetrisShape->RevertState();
-	}
+	IGame::ScaleDown();
 }
 
 void Game::CreateShape()
 {
-	m_tetrisShape.reset(new TetrisShape(m_texture, m_ID,STARTING_POSITION_1P));
+	m_tetrisShape.reset(new TetrisShape(m_texture, m_ID, STARTING_POSITION_1P));
 	//create new game if necessary
 	if (m_board->IsOccupied(m_tetrisShape->GetBlockPosition()))
 	{
@@ -146,7 +109,7 @@ void Game::CreateShape()
 		m_pause = true;
 	}
 	m_ID = Utils::GetRandomNumber(7);
-	m_preview.reset(new TetrisShape(m_texture, m_ID,STARTING_POSITION_1P));
+	m_preview.reset(new TetrisShape(m_texture, m_ID, STARTING_POSITION_1P));
 	m_preview->SetPosition(Position{ BOARD_WIDTH, 30 });
 }
 
@@ -171,7 +134,7 @@ bool Game::IsValidMovement(std::array<Position, 16> block)
 
 bool Game::IsOccupied(int x, int y)
 {
-	return m_board->GetField(x, y)->m_Occupied;
+	return IGame::IsOccupied(x, y);
 }
 
 void Game::ProcessEvents(bool& menuOrGame, uint16_t& levelSound)

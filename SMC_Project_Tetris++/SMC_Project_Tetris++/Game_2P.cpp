@@ -59,25 +59,7 @@ void Game_2P::Run(bool& menuOrGame, uint16_t& levelSound)
 
 void Game_2P::Proceed(Direction direction)
 {
-	if (!m_tetrisShape)
-		return;
-
-	if (IsValidMovement(m_tetrisShape->GetFutureBlockPosition(direction)))
-	{
-		m_tetrisShape->Move(direction);
-		if (direction == Direction::UserPressedDown)
-			m_score.AddPressedScore(1);
-	}
-	else
-	{
-		if (direction == Direction::Down || direction == Direction::UserPressedDown)
-		{
-			int id = m_tetrisShape->GetID();
-			m_board->AddBlock(id, m_tetrisShape->GetBlockPosition());
-			m_tetrisShape.reset(nullptr);
-			m_score.SumPressedScore();
-		}
-	}
+	IGame::Proceed(direction);
 }
 
 void Game_2P::Proceed_2P(Direction direction)
@@ -124,12 +106,7 @@ void Game_2P::Update(const sf::Time& dt)
 
 void Game_2P::Rotate()
 {
-	if (!m_tetrisShape)
-		return;
-
-	m_tetrisShape->Rotate();
-	if (!IsValidMovement(m_tetrisShape->GetBlockPosition()))
-		m_tetrisShape->RevertState();
+	IGame::Rotate();
 }
 
 void Game_2P::Rotate_2P()
@@ -137,21 +114,17 @@ void Game_2P::Rotate_2P()
 	if (!m_tetrisShape_2P)
 		return;
 
-	m_tetrisShape_2P->Rotate();
-	if (!IsValidMovement(m_tetrisShape_2P->GetBlockPosition()))
-		m_tetrisShape_2P->RevertState();
+	TetrisShape temp = *m_tetrisShape_2P;
+	temp.Rotate();
+	if (!IsValidMovement(temp.GetBlockPosition()))
+		return;
+	else
+		m_tetrisShape_2P->Rotate();
 }
 
 void Game_2P::ScaleUp()
 {
-	if (!m_tetrisShape)
-		return;
-
-	m_tetrisShape->ScaleUp();
-	if (!IsValidMovement(m_tetrisShape->GetBlockPosition()))
-	{
-		m_tetrisShape->RevertState();
-	}
+	IGame::ScaleUp();
 }
 
 void Game_2P::ScaleUp_2P()
@@ -159,23 +132,17 @@ void Game_2P::ScaleUp_2P()
 	if (!m_tetrisShape_2P)
 		return;
 
-	m_tetrisShape_2P->ScaleUp();
-	if (!IsValidMovement(m_tetrisShape_2P->GetBlockPosition()))
-	{
-		m_tetrisShape_2P->RevertState();
-	}
+	TetrisShape temp = *m_tetrisShape_2P;
+	temp.ScaleUp();
+	if (!IsValidMovement(temp.GetBlockPosition()))
+		return;
+	else
+		m_tetrisShape_2P->ScaleUp();
 }
 
 void Game_2P::ScaleDown()
 {
-	if (!m_tetrisShape)
-		return;
-
-	m_tetrisShape->ScaleDown();
-	if (!IsValidMovement(m_tetrisShape->GetBlockPosition()))
-	{
-		m_tetrisShape->RevertState();
-	}
+	IGame::ScaleDown();
 }
 
 void Game_2P::ScaleDown_2P()
@@ -183,11 +150,12 @@ void Game_2P::ScaleDown_2P()
 	if (!m_tetrisShape_2P)
 		return;
 
-	m_tetrisShape_2P->ScaleDown();
-	if (!IsValidMovement(m_tetrisShape_2P->GetBlockPosition()))
-	{
-		m_tetrisShape_2P->RevertState();
-	}
+	TetrisShape temp = *m_tetrisShape_2P;
+	temp.ScaleDown();
+	if (!IsValidMovement(temp.GetBlockPosition()))
+		return;
+	else
+		m_tetrisShape_2P->ScaleDown();
 }
 
 void Game_2P::CreateShape()
@@ -261,7 +229,7 @@ bool Game_2P::IsValidMovement(std::array<Position, 16> block)
 
 bool Game_2P::IsOccupied(int x, int y)
 {
-	return m_board->GetField(x, y)->m_Occupied;
+	return IGame::IsOccupied(x, y);
 }
 
 void Game_2P::ProcessEvents(bool& menuOrGame, uint16_t& levelSound)

@@ -19,14 +19,14 @@ public:
 	sf::Texture m_texture;
 
 protected:
-	virtual void Proceed(Direction) = 0;
-	virtual void Update(const sf::Time&) = 0;
-	virtual void Rotate() = 0;
-	virtual void ScaleUp() = 0;
-	virtual void ScaleDown() = 0;
+	void Proceed(Direction);
+	void Rotate();
+	void ScaleUp();
+	void ScaleDown();
+	bool IsOccupied(int, int);
 	virtual void CreateShape() = 0;
 	virtual bool IsValidMovement(std::array<Position, 16>) = 0;
-	virtual bool IsOccupied(int, int) = 0;
+	virtual void Update(const sf::Time&) = 0;
 	virtual void ProcessEvents(bool&, uint16_t& levelSound) = 0;
 
 protected:

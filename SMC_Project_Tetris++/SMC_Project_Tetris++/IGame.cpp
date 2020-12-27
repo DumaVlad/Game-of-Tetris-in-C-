@@ -44,3 +44,70 @@ IGame::IGame(const unsigned int width, const unsigned int height)
 	m_textPauseMenu[2].setString("Press O for Options");
 	m_textPauseMenu[3].setString("Press Escape for Exit");
 }
+
+void IGame::Proceed(Direction direction)
+{
+	if (!m_tetrisShape)
+		return;
+
+	if (IsValidMovement(m_tetrisShape->GetFutureBlockPosition(direction)))
+	{
+		m_tetrisShape->Move(direction);
+		if (direction == Direction::UserPressedDown)
+			m_score.AddPressedScore(1);
+	}
+	else
+	{
+		if (direction == Direction::Down || direction == Direction::UserPressedDown)
+		{
+			int id = m_tetrisShape->GetID();
+			m_board->AddBlock(id, m_tetrisShape->GetBlockPosition());
+			m_tetrisShape.reset(nullptr);
+			m_score.SumPressedScore();
+		}
+	}
+}
+
+void IGame::Rotate()
+{
+	if (!m_tetrisShape)
+		return;
+
+	TetrisShape temp = *m_tetrisShape;
+	temp.Rotate();
+	if (!IsValidMovement(temp.GetBlockPosition()))
+		return;
+	else
+		m_tetrisShape->Rotate();
+}
+
+void IGame::ScaleUp()
+{
+	if (!m_tetrisShape)
+		return;
+
+	TetrisShape temp = *m_tetrisShape;
+	temp.ScaleUp();
+	if (!IsValidMovement(temp.GetBlockPosition()))
+		return;
+	else
+		m_tetrisShape->ScaleUp();
+}
+
+void IGame::ScaleDown()
+{
+	if (!m_tetrisShape)
+		return;
+
+	TetrisShape temp = *m_tetrisShape;
+	temp.ScaleDown();
+	if (!IsValidMovement(temp.GetBlockPosition()))
+		return;
+	else
+		m_tetrisShape->ScaleDown();
+}
+
+bool IGame::IsOccupied(int x, int y)
+{
+	return m_board->GetField(x, y)->m_Occupied;
+}
