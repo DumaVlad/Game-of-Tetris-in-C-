@@ -3,15 +3,11 @@
 Options::Options()
 	: m_renderWindowOptions{ sf::VideoMode{OPTIONS_WIDTH, OPTIONS_HEIGHT}, "OPTIONS" }, m_page{ 1 }
 {
-	if (!m_textureOptions.loadFromFile("optionsTetrisEffect.jpg"))
-	{
-		// error..
-	}
+	if (!m_textureOptions.loadFromFile("../Resources/Images/optionsTetrisEffect.jpg"))
+		std::cout << "Could not load image in Options Class !! \n";
 
-	if (!m_fontOptions.loadFromFile("arial.ttf"))
-	{
-		// error...
-	}
+	if (!m_fontOptions.loadFromFile("../Resources/Fonts/arial.ttf"))
+		std::cout << "Could not load font in Options class !! \n";
 
 	m_textureOptions.setSmooth(true);
 	m_spriteOptions.setTexture(m_textureOptions);

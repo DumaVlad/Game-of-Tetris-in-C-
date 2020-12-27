@@ -7,9 +7,9 @@
 Menu::Menu(unsigned int witdh, unsigned int height)
 	: m_window{ sf::VideoMode{witdh,height}, "Menu" }, m_selectedItemIndex{ 0 }, m_selectedModeGame{ 0 }, m_fontMenu{}, m_menu{}, m_modeGame{}, m_textureMenu{}, m_spriteMenu{}, m_menuOrGame{ 1 }, m_levelSound{ 2 }
 {
-	if (!m_fontMenu.loadFromFile("arial.ttf"))
+	if (!m_fontMenu.loadFromFile("../Resources/Fonts/arial.ttf"))
 	{
-		//handle error
+		std::cout << "Could not load font in Menu class !! \n";
 	}
 
 	m_menu[0].setFont(m_fontMenu);
@@ -50,9 +50,9 @@ Menu::Menu(unsigned int witdh, unsigned int height)
 	m_modeGame[1].setPosition(sf::Vector2f(witdh / 3.7, height / 4 * 2.5));
 
 
-	if (!m_textureMenu.loadFromFile("tetris600x600.jpg"))
+	if (!m_textureMenu.loadFromFile("../Resources/Images/tetris600x600.jpg"))
 	{
-		std::cout << "Can't load the texture from the file !" << std::endl;
+		std::cout << "Can't load the texture from the file in Menu class !!\n";
 	}
 
 	m_textureMenu.setSmooth(true);

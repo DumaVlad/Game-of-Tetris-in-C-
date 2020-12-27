@@ -3,7 +3,7 @@
 #include <iostream>
 
 IGame::IGame(const unsigned int width, const unsigned int height)
-	: m_renderWindow{ sf::VideoMode {width * 18 + 100, height * 18}, "TETRIS++", sf::Style::Default }, m_texture{}, m_separationLine{}, m_tetrisShape{ nullptr }, m_preview{ nullptr }, m_board{}, 
+	: m_renderWindow{ sf::VideoMode {width * 18 + 120, height * 18}, "TETRIS++", sf::Style::Default }, m_texture{}, m_separationLine{}, m_tetrisShape{ nullptr }, m_preview{ nullptr }, m_board{}, 
 	m_score{ width, height }, m_elapsedTime{ sf::Time::Zero }, m_ID{ Utils::GetRandomNumber(7) }, m_gameplayMusic{}, m_pause{false}, m_pauseMenu{}, m_fontOptions{}, m_textPauseMenu{}
 {
 	m_separationLine.setSize(sf::Vector2f{ 2.f, height * 18.f });
@@ -16,11 +16,11 @@ IGame::IGame(const unsigned int width, const unsigned int height)
 	m_pauseMenu.setOutlineThickness(4);
 	m_pauseMenu.setPosition(sf::Vector2f{(width * 18.f + 150.f) / 4.5f,(height * 18.f) / 3.f });
 
-	if (!m_fontOptions.loadFromFile("arial.ttf"))
+	if (!m_fontOptions.loadFromFile("../Resources/Fonts/arial.ttf"))
 		std::cout << "Could not load font in Game Interface !! \n";
-	if (!m_texture.loadFromFile("Blocks.png"))
+	if (!m_texture.loadFromFile("../Resources/Images/Blocks.png"))
 		std::cout << "Could not load texture in Game Interface !! \n";
-	if (!m_gameplayMusic.openFromFile("Tetris.wav"))
+	if (!m_gameplayMusic.openFromFile("../Resources/Sounds/Tetris.wav"))
 		std::cout << "Could not load music in Game Interface !! \n";
 
 	m_textPauseMenu[0].setFont(m_fontOptions);

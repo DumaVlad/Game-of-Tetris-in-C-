@@ -199,7 +199,7 @@ void Game_2P::CreateShape()
 		std::cout << "Game Over" << std::endl;
 
 		sf::Music gameoverMusic;
-		if (!gameoverMusic.openFromFile("gameover.wav"))
+		if (!gameoverMusic.openFromFile("../Resources/Sounds/gameover.wav"))
 			std::cout << "Could not load the gameover sound from file !! \n";
 
 		m_gameplayMusic.stop();
@@ -223,7 +223,7 @@ void Game_2P::CreateShape_2P()
 		std::cout << "Game Over" << std::endl;
 
 		sf::Music gameoverMusic;
-		if (!gameoverMusic.openFromFile("gameover.wav"))
+		if (!gameoverMusic.openFromFile("..Resources/Sounds/gameover.wav"))
 			std::cout << "Could not load the gameover sound from file !! \n";
 
 		m_gameplayMusic.stop();

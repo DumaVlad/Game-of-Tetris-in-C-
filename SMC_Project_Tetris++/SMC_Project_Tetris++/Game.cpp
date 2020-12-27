@@ -133,7 +133,7 @@ void Game::CreateShape()
 		std::cout << "Game Over" << std::endl;
 
 		sf::Music gameoverMusic;
-		if (!gameoverMusic.openFromFile("gameover.wav"))
+		if (!gameoverMusic.openFromFile("../Resources/Sounds/gameover.wav"))
 			std::cout << "Could not load the gameover sound from file !! \n";
 
 		m_gameplayMusic.stop();

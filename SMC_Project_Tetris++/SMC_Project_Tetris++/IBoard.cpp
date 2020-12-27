@@ -114,7 +114,7 @@ void IBoard::CleanLines()
 		return;
 
 	sf::Music clearLinesMusic;
-	if (!clearLinesMusic.openFromFile("clear.wav"))
+	if (!clearLinesMusic.openFromFile("../Resources/Sounds/clear.wav"))
 		std::cout << "Could not load clear.wav from file !! \n";
 
 	//m_Game.m_gameplayMusic.stop();

@@ -3,7 +3,7 @@
 Score::Score(const unsigned int width, const unsigned int height)
 	:m_Font{}, m_LevelText{}, m_ScoreText{}, m_ClearedLinesText{}, m_Score{0}, m_LoadPressedScore{0}, m_LinesCleared{0}
 {
-	m_Font.loadFromFile("arial.ttf");
+	m_Font.loadFromFile("../Resources/Fonts/arial.ttf");
 	m_ScoreText.setFont(m_Font);
 	m_ScoreText.setCharacterSize(20);
 
