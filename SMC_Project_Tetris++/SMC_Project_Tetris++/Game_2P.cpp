@@ -192,7 +192,7 @@ void Game_2P::ScaleDown_2P()
 
 void Game_2P::CreateShape()
 {
-	m_tetrisShape.reset(new TetrisShape(m_texture, m_ID));
+	m_tetrisShape.reset(new TetrisShape(m_texture, m_ID, STARTING_POSITION_1P));
 	//create new game if necessary
 	if (m_board->IsOccupied(m_tetrisShape->GetBlockPosition()))
 	{
@@ -210,13 +210,13 @@ void Game_2P::CreateShape()
 		m_pause = true;
 	}
 	m_ID = Utils::GetRandomNumber(7);
-	m_preview.reset(new TetrisShape(m_texture, m_ID));
+	m_preview.reset(new TetrisShape(m_texture, m_ID, STARTING_POSITION_1P));
 	m_preview->SetPosition(Position{ BOARD_WIDTH_2P, 30 });
 }
 
 void Game_2P::CreateShape_2P()
 {
-	m_tetrisShape_2P.reset(new TetrisShape(m_texture, m_ID_2P));
+	m_tetrisShape_2P.reset(new TetrisShape(m_texture, m_ID_2P, STARTING_POSITION_2P));
 	//create new game if necessary
 	if (m_board->IsOccupied(m_tetrisShape_2P->GetBlockPosition()))
 	{
@@ -236,7 +236,7 @@ void Game_2P::CreateShape_2P()
 		m_pause = true;
 	}
 	m_ID_2P = Utils::GetRandomNumber(7);
-	m_preview_2P.reset(new TetrisShape(m_texture, m_ID_2P));
+	m_preview_2P.reset(new TetrisShape(m_texture, m_ID_2P, STARTING_POSITION_2P));
 	m_preview_2P->SetPosition(Position{ BOARD_WIDTH_2P, 0 });
 }
 

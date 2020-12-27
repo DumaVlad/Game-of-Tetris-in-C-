@@ -33,8 +33,8 @@ unsigned int ScaledBlockArray5x5[7][16] = {
 	{ 3, 4,11,12,19,20,27,28,35,36,43,44,51,52,59,60} // IShape
 };
 
-TetrisShape::TetrisShape(sf::Texture& texture, uint16_t id)
-	: m_Position{ Position{5,1} }, m_CurrentRotation{ 0 }, m_ID{ id }, m_Block{}, m_Sprite{ texture, sf::IntRect{(id % 7) * 18, 0, 18, 18} }
+TetrisShape::TetrisShape(sf::Texture& texture, uint16_t id, Position start)
+	: m_Position{ start }, m_CurrentRotation{ 0 }, m_ID{ id }, m_Block{}, m_Sprite{ texture, sf::IntRect{(id % 7) * 18, 0, 18, 18} }
 {
 	m_ID = m_ID % 7; // In case of an id > 6, we make sure that is not out of bounds
 	for (int index = 0; index < 16; index++)

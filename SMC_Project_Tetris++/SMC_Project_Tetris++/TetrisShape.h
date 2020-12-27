@@ -11,7 +11,7 @@ public:
 	using Position = sf::Vector2i;
 
 public:
-	TetrisShape(sf::Texture&, uint16_t);
+	TetrisShape(sf::Texture&, uint16_t, Position);
 	~TetrisShape() = default;
 
 	uint16_t GetID() const;

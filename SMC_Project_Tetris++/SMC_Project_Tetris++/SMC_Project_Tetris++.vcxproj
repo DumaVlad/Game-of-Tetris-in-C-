@@ -197,18 +197,17 @@
     <ClInclude Include="Utils.h" />
   </ItemGroup>
   <ItemGroup>
-    <Image Include="Blocks.png" />
-    <Image Include="optionsTetrisEffect.jpg" />
-    <Image Include="tetris600x600.jpg" />
+    <Font Include="..\Resources\Fonts\arial.ttf" />
   </ItemGroup>
   <ItemGroup>
-    <Font Include="arial.ttf" />
-    <Font Include="Dong.ttf" />
+    <Image Include="..\Resources\Images\Blocks.png" />
+    <Image Include="..\Resources\Images\optionsTetrisEffect.jpg" />
+    <Image Include="..\Resources\Images\tetris600x600.jpg" />
   </ItemGroup>
   <ItemGroup>
-    <Media Include="clear.wav" />
-    <Media Include="gameover.wav" />
-    <Media Include="Tetris.wav" />
+    <Media Include="..\Resources\Sounds\clear.wav" />
+    <Media Include="..\Resources\Sounds\gameover.wav" />
+    <Media Include="..\Resources\Sounds\Tetris.wav" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
