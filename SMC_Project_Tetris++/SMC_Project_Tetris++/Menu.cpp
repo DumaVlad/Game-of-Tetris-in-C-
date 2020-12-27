@@ -69,10 +69,14 @@ Menu::~Menu()
 void Menu::draw(sf::RenderWindow& window)
 {
 	if (!m_selectedModeGame)
+	{
+		m_modeGame[0].setFillColor(sf::Color::Red);
+		m_modeGame[1].setFillColor(sf::Color::White);
 		for (int i = 0; i < MAX_NUMBER_ELEMENTS; i++)
 		{
 			window.draw(m_menu[i]);
 		}
+	}
 	else
 		for (int i = 0;i < 2;i++)
 		{

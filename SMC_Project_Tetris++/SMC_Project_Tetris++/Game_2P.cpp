@@ -296,11 +296,11 @@ void Game_2P::ProcessEvents(bool& menuOrGame, uint16_t& levelSound)
 					Rotate_2P();
 				else if (e.key.code == sf::Keyboard::Numpad1)
 					ScaleUp();
-				else if (e.key.code == sf::Keyboard::E)
+				else if (e.key.code == sf::Keyboard::R)
 					ScaleUp_2P();
 				else if (e.key.code == sf::Keyboard::Numpad0)
 					ScaleDown();
-				else if (e.key.code == sf::Keyboard::Q)
+				else if (e.key.code == sf::Keyboard::F)
 					ScaleDown_2P();
 				else if (e.key.code == sf::Keyboard::Escape)
 				{
