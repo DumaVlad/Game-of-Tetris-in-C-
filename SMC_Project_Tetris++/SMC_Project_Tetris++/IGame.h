@@ -34,6 +34,8 @@ protected:
 protected:
 	sf::RenderWindow m_renderWindow;
 	sf::RectangleShape m_separationLine;
+	sf::Texture m_backGroundTexture;
+	sf::Sprite m_backGroundSprite;
 	std::unique_ptr<TetrisShape> m_tetrisShape;
 	std::unique_ptr<TetrisShape> m_preview;
 	std::unique_ptr<IBoard> m_board;

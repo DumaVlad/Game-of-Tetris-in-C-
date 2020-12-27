@@ -193,7 +193,8 @@ void Game::ProcessEvents(bool& menuOrGame, uint16_t& levelSound)
 
 void Game::Render()
 {
-	m_renderWindow.clear(sf::Color::Black);
+	m_renderWindow.clear(sf::Color(107, 142, 35));
+	m_renderWindow.draw(m_backGroundSprite);
 	m_player->Draw(m_renderWindow);
 	m_board->Draw(m_renderWindow);
 	if (m_tetrisShape)
