@@ -22,6 +22,7 @@ private:
 	sf::Text m_controlsSingleplayerGame[MAX_NUMBER_CONTROLS];
 	sf::Text m_controlsMultiplayerGame[MAX_NUMBER_CONTROLS_MP];
 	uint16_t m_page;
+	sf::Text m_textPage[2];
 	sf::Text m_controlSound[6];
 };
 

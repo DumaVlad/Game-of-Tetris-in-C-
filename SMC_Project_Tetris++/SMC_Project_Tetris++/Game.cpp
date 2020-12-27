@@ -8,6 +8,11 @@
 Game::Game()
 	: IGame(BOARD_WIDTH, BOARD_HEIGHT)
 {
+	if (!m_backGroundTexture.loadFromFile("../Resources/Images/tetris_board.png"))
+	{
+		std::cout << "Could not load texture from file in Game !! \n";
+	}
+
 	m_board = std::make_unique<Board>(Position{ BOARD_WIDTH,BOARD_HEIGHT }, *this);
 	CreateShape();
 }

@@ -7,8 +7,10 @@ IGame::IGame(const unsigned int width, const unsigned int height)
 	m_elapsedTime{ sf::Time::Zero }, m_ID{ Utils::GetRandomNumber(7) }, m_gameplayMusic{}, m_pause{ 0 }, m_pauseMenu{}, m_fontOptions{}, m_textPauseMenu{}, m_player{ nullptr }
 {
 
-	if (!m_backGroundTexture.loadFromFile("../Resources/Images/tetris_board.png"))
+	if (!m_backGroundTexture.loadFromFile("../Resources/Images/tetris_board_2P.png"))
+	{
 		std::cout << "Could not load texture from file in IGame !! \n";
+	}
 
 	m_backGroundTexture.setSmooth(true);
 	m_backGroundSprite.setTexture(m_backGroundTexture);

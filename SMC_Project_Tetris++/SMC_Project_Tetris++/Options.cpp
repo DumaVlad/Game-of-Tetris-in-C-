@@ -128,20 +128,39 @@ Options::Options()
 	m_controlSound[3].setString("Sound 60%");
 	m_controlSound[4].setString("Sound 80%");
 	m_controlSound[5].setString("Sound 100%");
+
+	for (int i = 0;i < 2;i++)
+	{
+		m_textPage[i].setFont(m_fontOptions);
+		m_textPage[i].setFillColor(sf::Color::White);
+		m_textPage[i].setOutlineColor(sf::Color::Black);
+		m_textPage[i].setOutlineThickness(5);
+		m_textPage[i].setCharacterSize(10);
+		m_textPage[i].setPosition(sf::Vector2f(OPTIONS_WIDTH / 2.5, OPTIONS_HEIGHT / 15 * 14));
+	}
+
+	m_textPage[0].setString("Page 1/2");
+	m_textPage[1].setString("Page 2/2");
 }
 
 void Options::draw(uint16_t& levelSound)
 {
 	if (m_page == 1)
+	{
 		for (int i = 0; i < MAX_NUMBER_CONTROLS; i++)
 		{
 			m_renderWindowOptions.draw(m_controlsSingleplayerGame[i]);
 		}
-	else
+		m_renderWindowOptions.draw(m_textPage[0]);
+	}
+	else 
+	{
 		for (int i = 0; i < MAX_NUMBER_CONTROLS_MP; i++)
 		{
 			m_renderWindowOptions.draw(m_controlsMultiplayerGame[i]);
 		}
+		m_renderWindowOptions.draw(m_textPage[1]);
+	}
 	m_renderWindowOptions.draw(m_controlSound[levelSound]);
 }
 
