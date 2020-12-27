@@ -72,13 +72,13 @@ void Menu::draw(sf::RenderWindow& window)
 	{
 		m_modeGame[0].setFillColor(sf::Color::Red);
 		m_modeGame[1].setFillColor(sf::Color::White);
-		for (int i = 0; i < MAX_NUMBER_ELEMENTS; i++)
+		for (uint16_t i = 0; i < MAX_NUMBER_ELEMENTS; i++)
 		{
 			window.draw(m_menu[i]);
 		}
 	}
 	else
-		for (int i = 0;i < 2;i++)
+		for (uint8_t i = 0;i < 2;i++)
 		{
 			window.draw(m_modeGame[i]);
 		}

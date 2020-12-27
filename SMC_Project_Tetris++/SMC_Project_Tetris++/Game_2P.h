@@ -37,6 +37,7 @@ private:
 private:
 	std::unique_ptr<TetrisShape> m_tetrisShape_2P;
 	std::unique_ptr<TetrisShape> m_preview_2P;
+	std::unique_ptr<Player> m_player2;
 	int m_ID_2P;
 };
 
