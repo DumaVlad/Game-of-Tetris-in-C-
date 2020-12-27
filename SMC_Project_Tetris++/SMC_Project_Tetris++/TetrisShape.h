@@ -17,6 +17,7 @@ public:
 	uint16_t GetID() const;
 	std::array<Position, 16> GetBlockPosition() const;
 	std::array<Position, 16> GetFutureBlockPosition(Direction) const;
+	void Read();
 	void SetPosition(const Position&);
 	void Rotate();
 	void Move(Direction);

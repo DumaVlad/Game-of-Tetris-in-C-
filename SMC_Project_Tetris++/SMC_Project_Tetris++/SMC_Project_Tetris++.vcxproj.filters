@@ -165,4 +165,9 @@
       <Filter>Resource Files\Sounds</Filter>
     </Media>
   </ItemGroup>
+  <ItemGroup>
+    <Text Include="Input.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
+  </ItemGroup>
 </Project>
