@@ -8,10 +8,14 @@
 Game::Game()
 	: IGame(BOARD_WIDTH, BOARD_HEIGHT)
 {
-	if (!m_backGroundTexture.loadFromFile("../Resources/Images/tetris_board.png"))
+	if (!m_backGroundTexture.loadFromFile("../Resources/Images/tetris_board1P.jpg"))
 	{
 		std::cout << "Could not load texture from file in Game !! \n";
 	}
+	m_backGroundTexture.setSmooth(true);
+	m_backGroundSprite.setTexture(m_backGroundTexture);
+	m_backGroundSprite.setColor(sf::Color(255, 255, 255, 160));
+	m_backGroundSprite.setOrigin(0.75, 0);
 
 	m_board = std::make_unique<Board>(Position{ BOARD_WIDTH,BOARD_HEIGHT }, *this);
 	CreateShape();
@@ -30,7 +34,7 @@ void Game::Run(bool& menuOrGame, uint16_t& levelSound)
 	while (m_renderWindow.isOpen())
 	{
 		m_gameplayMusic.setVolume((levelSound * 20.f));
-		
+
 		if (!m_pause)
 		{
 			sf::Time trigger(sf::seconds(85.f / (85.f + (m_player->GetLevel() * (m_player->GetLevel() * 5.f)))));
@@ -202,7 +206,7 @@ void Game::ProcessEvents(bool& menuOrGame, uint16_t& levelSound)
 
 void Game::Render()
 {
-	m_renderWindow.clear(sf::Color(107, 142, 35));
+	m_renderWindow.clear(sf::Color::Black);
 	m_renderWindow.draw(m_backGroundSprite);
 	m_player->Draw(m_renderWindow);
 	m_board->Draw(m_renderWindow);
@@ -235,6 +239,6 @@ void Game::FileWriter(std::string file)
 		return;
 	}
 	fileOut << m_player->GetPlayerName() << " " << m_player->GetScore() << "\n";
-	
+
 }
 

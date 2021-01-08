@@ -8,6 +8,14 @@
 Game_2P::Game_2P()
 	: IGame(BOARD_WIDTH_2P, BOARD_HEIGHT_2P), m_ID_2P{ Utils::GetRandomNumber(7) }, m_tetrisShape_2P{ nullptr }, m_preview_2P{ nullptr }
 {
+	if (!m_backGroundTexture.loadFromFile("../Resources/Images/tetris_board2P.jpg"))
+	{
+		std::cout << "Could not load texture from file in IGame !! \n";
+	}
+	m_backGroundTexture.setSmooth(true);
+	m_backGroundSprite.setTexture(m_backGroundTexture);
+	m_backGroundSprite.setColor(sf::Color(255, 255, 255, 160));
+	m_backGroundSprite.setOrigin(0, 0);
 
 	m_board = std::make_unique<Board_2P>(Position{ BOARD_WIDTH_2P,BOARD_HEIGHT_2P }, *this);
 	CreateShape();
@@ -305,7 +313,7 @@ void Game_2P::ProcessEvents(bool& menuOrGame, uint16_t& levelSound)
 void Game_2P::Render()
 {
 	m_pauseMenu.setSize(sf::Vector2f{ 310.f,200.f });
-	m_renderWindow.clear(sf::Color(107, 142, 35));
+	m_renderWindow.clear(sf::Color::Black);
 	m_renderWindow.draw(m_backGroundSprite);
 	m_player->Draw(m_renderWindow);
 	m_board->Draw(m_renderWindow);

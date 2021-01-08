@@ -11,13 +11,13 @@ Player::Player(const std::string& playerName, const uint16_t width, const uint16
 	m_levelText.setCharacterSize(20);
 	m_playerNameText.setFont(m_font);
 	m_playerNameText.setCharacterSize(20);
-	m_playerNameText.setPosition(sf::Vector2f{ (float)width * 18 + 10 , 100.f });
-	m_scoreText.setPosition(sf::Vector2f{ (float)width * 18 + 10, 200.f });
-	m_levelText.setPosition(sf::Vector2f{ (float)width * 18 + 10, 300.f });
+	m_playerNameText.setPosition(sf::Vector2f{ (float)width * 18 + 10 , 120.f });
+	m_scoreText.setPosition(sf::Vector2f{ (float)width * 18 + 10, 220.f });
+	m_levelText.setPosition(sf::Vector2f{ (float)width * 18 + 10, 320.f });
 
 	m_clearedLinesText.setFont(m_font);
 	m_clearedLinesText.setCharacterSize(20);
-	m_clearedLinesText.setPosition((float)width * 18 + 10, 400.f);
+	m_clearedLinesText.setPosition((float)width * 18 + 10, 420.f);
 }
 
 std::string Player::GetPlayerName()

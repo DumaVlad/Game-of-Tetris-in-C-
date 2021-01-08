@@ -29,7 +29,7 @@ Options::Options()
 		m_controlsSingleplayerGame[i].setOutlineColor(sf::Color::Black);
 		m_controlsSingleplayerGame[i].setOutlineThickness(3);
 		m_controlsSingleplayerGame[i].setCharacterSize(15);
-		m_controlsSingleplayerGame[i].setPosition(sf::Vector2f(OPTIONS_WIDTH / 8, OPTIONS_HEIGHT / 15 * (i + 1)));
+		m_controlsSingleplayerGame[i].setPosition(sf::Vector2f(OPTIONS_WIDTH / 8, OPTIONS_HEIGHT / 15 * (i + 1.5)));
 	}
 
 	m_controlsSingleplayerGame[1].setString("Arrow Down = piece go down");
@@ -73,7 +73,7 @@ Options::Options()
 		m_controlsMultiplayerGame[i].setOutlineColor(sf::Color::Black);
 		m_controlsMultiplayerGame[i].setOutlineThickness(3);
 		m_controlsMultiplayerGame[i].setCharacterSize(15);
-		m_controlsMultiplayerGame[i].setPosition(sf::Vector2f(OPTIONS_WIDTH / 10, OPTIONS_HEIGHT / 19 * (i + 1)));
+		m_controlsMultiplayerGame[i].setPosition(sf::Vector2f(OPTIONS_WIDTH / 10, OPTIONS_HEIGHT / 20 * (i + 2)));
 	}
 
 	for (int i = MAX_NUMBER_CONTROLS_MP / 2 + 1;i < MAX_NUMBER_CONTROLS_MP - 2;i++)
@@ -83,7 +83,7 @@ Options::Options()
 		m_controlsMultiplayerGame[i].setOutlineColor(sf::Color::Black);
 		m_controlsMultiplayerGame[i].setOutlineThickness(3);
 		m_controlsMultiplayerGame[i].setCharacterSize(15);
-		m_controlsMultiplayerGame[i].setPosition(sf::Vector2f(OPTIONS_WIDTH / 10 * 6, OPTIONS_HEIGHT / 19 * (i - 6 + 1)));
+		m_controlsMultiplayerGame[i].setPosition(sf::Vector2f(OPTIONS_WIDTH / 10 * 6, OPTIONS_HEIGHT / 20 * (i - 6 + 2)));
 	}
 
 	for (int i = MAX_NUMBER_CONTROLS_MP - 2;i < MAX_NUMBER_CONTROLS_MP;i++)
@@ -93,7 +93,7 @@ Options::Options()
 		m_controlsMultiplayerGame[i].setOutlineColor(sf::Color::Black);
 		m_controlsMultiplayerGame[i].setOutlineThickness(3);
 		m_controlsMultiplayerGame[i].setCharacterSize(15);
-		m_controlsMultiplayerGame[i].setPosition(sf::Vector2f(OPTIONS_WIDTH / 3, OPTIONS_HEIGHT / 19 * (i - 6 + 1)));
+		m_controlsMultiplayerGame[i].setPosition(sf::Vector2f(OPTIONS_WIDTH / 3, OPTIONS_HEIGHT / 20 * (i - 6 + 2)));
 	}
 
 	m_controlsMultiplayerGame[3].setString("Arrow Down = piece go down");
@@ -135,7 +135,7 @@ Options::Options()
 		m_textPage[i].setFillColor(sf::Color::White);
 		m_textPage[i].setOutlineColor(sf::Color::Black);
 		m_textPage[i].setOutlineThickness(5);
-		m_textPage[i].setCharacterSize(10);
+		m_textPage[i].setCharacterSize(13);
 		m_textPage[i].setPosition(sf::Vector2f(OPTIONS_WIDTH / 2.5, OPTIONS_HEIGHT / 15 * 14));
 	}
 
@@ -153,7 +153,7 @@ void Options::draw(uint16_t& levelSound)
 		}
 		m_renderWindowOptions.draw(m_textPage[0]);
 	}
-	else 
+	else
 	{
 		for (int i = 0; i < MAX_NUMBER_CONTROLS_MP; i++)
 		{

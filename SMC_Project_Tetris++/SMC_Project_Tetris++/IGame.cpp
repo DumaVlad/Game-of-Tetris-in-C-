@@ -3,20 +3,9 @@
 #include <iostream>
 
 IGame::IGame(const unsigned int width, const unsigned int height)
-	: m_renderWindow{ sf::VideoMode {width * 18 + 120, height * 18}, "TETRIS++", sf::Style::Default }, m_texture{}, m_separationLine{}, m_tetrisShape{ nullptr }, m_preview{ nullptr }, m_board{},
+	: m_renderWindow{ sf::VideoMode {width * 18 + 130, height * 18}, "TETRIS++", sf::Style::Default }, m_texture{}, m_separationLine{}, m_tetrisShape{ nullptr }, m_preview{ nullptr }, m_board{},
 	m_elapsedTime{ sf::Time::Zero }, m_ID{ Utils::GetRandomNumber(7) }, m_gameplayMusic{}, m_pause{ 0 }, m_pauseMenu{}, m_fontOptions{}, m_textPauseMenu{}, m_player{ nullptr }
 {
-
-	if (!m_backGroundTexture.loadFromFile("../Resources/Images/tetris_board_2P.png"))
-	{
-		std::cout << "Could not load texture from file in IGame !! \n";
-	}
-
-	m_backGroundTexture.setSmooth(true);
-	m_backGroundSprite.setTexture(m_backGroundTexture);
-	m_backGroundSprite.setColor(sf::Color(255, 255, 255, 140));
-	m_backGroundSprite.setOrigin(0, 0);
-
 	m_separationLine.setSize(sf::Vector2f{ 2.f, height * 18.f });
 	m_separationLine.setPosition(sf::Vector2f{ width * 18.f, 0 });
 	m_separationLine.setFillColor(sf::Color::Red);
