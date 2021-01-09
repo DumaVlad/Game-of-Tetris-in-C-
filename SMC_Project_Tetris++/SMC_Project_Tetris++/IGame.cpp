@@ -4,7 +4,7 @@
 
 IGame::IGame(const unsigned int width, const unsigned int height)
 	: m_renderWindow{ sf::VideoMode {width * 18 + 130, height * 18}, "TETRIS++", sf::Style::Default }, m_texture{}, m_separationLine{}, m_tetrisShape{ nullptr }, m_preview{ nullptr }, m_board{},
-	m_elapsedTime{ sf::Time::Zero }, m_ID{ Utils::GetRandomNumber(7) }, m_gameplayMusic{}, m_pause{ 0 }, m_pauseMenu{}, m_fontOptions{}, m_textPauseMenu{}, m_player{ nullptr }
+	m_elapsedTime{ sf::Time::Zero }, m_ID{ Utils::GetRandomNumber(7) }, m_gameplayMusic{}, m_pause{ 3 }, m_pauseMenu{}, m_fontOptions{}, m_textPauseMenu{}, m_player{ nullptr }
 {
 	m_separationLine.setSize(sf::Vector2f{ 2.f, height * 18.f });
 	m_separationLine.setPosition(sf::Vector2f{ width * 18.f, 0 });
@@ -50,7 +50,7 @@ IGame::IGame(const unsigned int width, const unsigned int height)
 	m_textGameOverMenu[0].setOutlineThickness(3);
 	m_textGameOverMenu[0].setCharacterSize(25);
 	m_textGameOverMenu[0].setString("GAME OVER");
-	m_textGameOverMenu[0].setPosition(sf::Vector2f((width * 18.f + 150) / 3.1, (height * 18) / 3));
+	m_textGameOverMenu[0].setPosition(sf::Vector2f((width * 18.f + 150.f) / 3.1f, (height * 18.f) / 3.f));
 
 	for (uint16_t i = 1;i < 5;i++)
 	{
@@ -59,14 +59,28 @@ IGame::IGame(const unsigned int width, const unsigned int height)
 		m_textGameOverMenu[i].setOutlineColor(sf::Color::Black);
 		m_textGameOverMenu[i].setOutlineThickness(3);
 		m_textGameOverMenu[i].setCharacterSize(15);
-		m_textGameOverMenu[i].setPosition(sf::Vector2f((width * 18.f + 150) / 3.3, (height * 18) / 3 + 40 * i));
+		m_textGameOverMenu[i].setPosition(sf::Vector2f((width * 18.f + 150.f) / 3.3f, (height * 18.f) / 3.f + 40.f * i));
 	}
 	m_textGameOverMenu[1].setString("Press Enter for Continue");
 	m_textGameOverMenu[2].setString("Press O for Options");
 	m_textGameOverMenu[3].setString("Press H for Highscore");
 	m_textGameOverMenu[4].setString("Press Escape for Exit");
 
-	m_player = std::make_unique<Player>("Player1", width, height);
+	m_playerNameBox.setFont(m_fontOptions);
+	m_playerNameBox.setFillColor(sf::Color::Red);
+	m_playerNameBox.setOutlineColor(sf::Color::Black);
+	m_playerNameBox.setOutlineThickness(3);
+	m_playerNameBox.setCharacterSize(30);
+	m_playerNameBox.setString("Insert your name:");
+	m_playerNameBox.setPosition(sf::Vector2f((width * 18.f + 25.f) / 3.1f, (height * 18.f) / 3.f));
+
+	m_playerNameText.setFont(m_fontOptions);
+	m_playerNameText.setFillColor(sf::Color::White);
+	m_playerNameText.setOutlineColor(sf::Color::Black);
+	m_playerNameText.setOutlineThickness(3);
+	m_playerNameText.setCharacterSize(25);
+	m_playerNameText.setPosition(sf::Vector2f((width * 18.f + 70.f) / 3.1f, (height * 18.f) / 3.f + 70.f));
+
 }
 
 void IGame::Proceed(Direction direction)

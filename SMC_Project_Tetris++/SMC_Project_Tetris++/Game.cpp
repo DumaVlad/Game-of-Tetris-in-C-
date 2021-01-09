@@ -157,9 +157,33 @@ void Game::ProcessEvents(bool& menuOrGame, uint16_t& levelSound)
 			menuOrGame = 1;
 			m_renderWindow.close();
 		}
+
+		if (m_pause == 3) {
+			if (e.type == sf::Event::TextEntered)
+			{
+				if (e.text.unicode == 13)
+				{
+					m_pause = 0;
+				}
+				if (e.text.unicode == 8 && !m_playerNameInput.isEmpty())
+				{
+					m_playerNameInput.erase(m_playerNameInput.getSize() - 1, 1);
+					m_playerNameText.setString(m_playerNameInput);
+				}
+				else if (e.text.unicode > 64 && e.text.unicode < 91 || e.text.unicode > 96 && e.text.unicode < 123)
+				{
+					if (m_playerNameInput == "Player1")
+						m_playerNameInput.clear();
+					if (m_playerNameInput.getSize() < 15)
+						m_playerNameInput += e.text.unicode;
+					m_playerNameText.setString(m_playerNameInput);
+				}
+			}
+			m_renderWindow.draw(m_playerNameText);
+		}
 		else if (e.type == sf::Event::KeyPressed)
 		{
-			if (!m_pause)
+			if (m_pause == 0)
 			{
 				if (e.key.code == sf::Keyboard::Down)
 					Proceed(Direction::Down);
@@ -206,15 +230,18 @@ void Game::ProcessEvents(bool& menuOrGame, uint16_t& levelSound)
 
 void Game::Render()
 {
-	m_renderWindow.clear(sf::Color::Black);
-	m_renderWindow.draw(m_backGroundSprite);
-	m_player->Draw(m_renderWindow);
-	m_board->Draw(m_renderWindow);
-	if (m_tetrisShape)
-		m_renderWindow.draw(*m_tetrisShape);
-	m_renderWindow.draw(*m_preview);
-	m_renderWindow.draw(m_separationLine);
-	if (m_pause == 1)
+	if (m_pause == 0)
+	{
+		m_renderWindow.clear(sf::Color::Black);
+		m_renderWindow.draw(m_backGroundSprite);
+		m_player->Draw(m_renderWindow);
+		m_board->Draw(m_renderWindow);
+		if (m_tetrisShape)
+			m_renderWindow.draw(*m_tetrisShape);
+		m_renderWindow.draw(*m_preview);
+		m_renderWindow.draw(m_separationLine);
+	}
+	else if (m_pause == 1)
 	{
 		m_renderWindow.draw(m_pauseMenu);
 		for (uint16_t i = 0;i < 4;i++)
@@ -225,6 +252,15 @@ void Game::Render()
 		m_renderWindow.draw(m_pauseMenu);
 		for (uint16_t i = 0;i < 5;i++)
 			m_renderWindow.draw(m_textGameOverMenu[i]);
+	}
+	else if (m_pause == 3)
+	{
+		m_renderWindow.draw(m_pauseMenu);
+		m_renderWindow.draw(m_playerNameBox);
+		m_renderWindow.draw(m_playerNameText);
+		if (m_playerNameInput.isEmpty())
+			m_playerNameInput = "Player1";
+		m_player = std::make_unique<Player>(m_playerNameInput, BOARD_WIDTH, BOARD_HEIGHT);
 	}
 	m_renderWindow.display();
 }

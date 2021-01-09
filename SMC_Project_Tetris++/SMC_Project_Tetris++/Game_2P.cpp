@@ -17,6 +17,8 @@ Game_2P::Game_2P()
 	m_backGroundSprite.setColor(sf::Color(255, 255, 255, 160));
 	m_backGroundSprite.setOrigin(0, 0);
 
+	m_pauseMenu.setSize(sf::Vector2f{ 310.f,200.f });
+
 	m_board = std::make_unique<Board_2P>(Position{ BOARD_WIDTH_2P,BOARD_HEIGHT_2P }, *this);
 	CreateShape();
 	CreateShape_2P();
@@ -251,6 +253,30 @@ void Game_2P::ProcessEvents(bool& menuOrGame, uint16_t& levelSound)
 			menuOrGame = 1;
 			m_renderWindow.close();
 		}
+
+		if (m_pause == 3) {
+			if (e.type == sf::Event::TextEntered)
+			{
+				if (e.text.unicode == 13)
+				{
+					m_pause = 0;
+				}
+				if (e.text.unicode == 8 && !m_playerNameInput.isEmpty())
+				{
+					m_playerNameInput.erase(m_playerNameInput.getSize() - 1, 1);
+					m_playerNameText.setString(m_playerNameInput);
+				}
+				else if (e.text.unicode > 64 && e.text.unicode < 91 || e.text.unicode > 96 && e.text.unicode < 123)
+				{
+					if (m_playerNameInput == "Player1")
+						m_playerNameInput.clear();
+					if (m_playerNameInput.getSize() < 15)
+						m_playerNameInput += e.text.unicode;
+					m_playerNameText.setString(m_playerNameInput);
+				}
+			}
+			m_renderWindow.draw(m_playerNameText);
+		}
 		else if (e.type == sf::Event::KeyPressed)
 		{
 			if (!m_pause)
@@ -312,19 +338,21 @@ void Game_2P::ProcessEvents(bool& menuOrGame, uint16_t& levelSound)
 
 void Game_2P::Render()
 {
-	m_pauseMenu.setSize(sf::Vector2f{ 310.f,200.f });
-	m_renderWindow.clear(sf::Color::Black);
-	m_renderWindow.draw(m_backGroundSprite);
-	m_player->Draw(m_renderWindow);
-	m_board->Draw(m_renderWindow);
-	if (m_tetrisShape)
-		m_renderWindow.draw(*m_tetrisShape);
-	if (m_tetrisShape_2P)
-		m_renderWindow.draw(*m_tetrisShape_2P);
-	m_renderWindow.draw(*m_preview);
-	m_renderWindow.draw(*m_preview_2P);
-	m_renderWindow.draw(m_separationLine);
-	if (m_pause == 1)
+	if (m_pause == 0)
+	{
+		m_renderWindow.clear(sf::Color::Black);
+		m_renderWindow.draw(m_backGroundSprite);
+		m_player->Draw(m_renderWindow);
+		m_board->Draw(m_renderWindow);
+		if (m_tetrisShape)
+			m_renderWindow.draw(*m_tetrisShape);
+		if (m_tetrisShape_2P)
+			m_renderWindow.draw(*m_tetrisShape_2P);
+		m_renderWindow.draw(*m_preview);
+		m_renderWindow.draw(*m_preview_2P);
+		m_renderWindow.draw(m_separationLine);
+	}
+	else if (m_pause == 1)
 	{
 		m_renderWindow.draw(m_pauseMenu);
 		for (uint16_t i = 0;i < 4;i++)
@@ -335,6 +363,15 @@ void Game_2P::Render()
 		m_renderWindow.draw(m_pauseMenu);
 		for (uint16_t i = 0;i < 5;i++)
 			m_renderWindow.draw(m_textGameOverMenu[i]);
+	}
+	else if (m_pause == 3)
+	{
+		m_renderWindow.draw(m_pauseMenu);
+		m_renderWindow.draw(m_playerNameBox);
+		m_renderWindow.draw(m_playerNameText);
+		if (m_playerNameInput.isEmpty())
+			m_playerNameInput = "Player1";
+		m_player = std::make_unique<Player>(m_playerNameInput, BOARD_WIDTH_2P, BOARD_HEIGHT_2P);
 	}
 	m_renderWindow.display();
 }

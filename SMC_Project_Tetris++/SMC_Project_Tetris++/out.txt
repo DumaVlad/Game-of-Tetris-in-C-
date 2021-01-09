@@ -1,3 +1,2 @@
-Player1 80
-Player1 0
-Player1 0
+Vladimir 2860
+Vladimir 2123514324
