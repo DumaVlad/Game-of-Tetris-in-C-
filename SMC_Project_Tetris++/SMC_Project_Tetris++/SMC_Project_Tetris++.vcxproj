@@ -169,6 +169,7 @@
     <ClCompile Include="DarkHole.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="Game_2P.cpp" />
+    <ClCompile Include="Highscore.cpp" />
     <ClCompile Include="IBoard.cpp" />
     <ClCompile Include="IGame.cpp" />
     <ClCompile Include="Main.cpp" />
@@ -185,6 +186,7 @@
     <ClInclude Include="Directions.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="Game_2P.h" />
+    <ClInclude Include="Highscore.h" />
     <ClInclude Include="IBoard.h" />
     <ClInclude Include="IGame.h" />
     <ClInclude Include="Menu.h" />

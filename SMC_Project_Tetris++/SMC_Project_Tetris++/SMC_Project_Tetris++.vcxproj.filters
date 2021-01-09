@@ -93,6 +93,9 @@
     <ClCompile Include="Game_2P.cpp">
       <Filter>Source Files\Implementation\Game Cpp%27s</Filter>
     </ClCompile>
+    <ClCompile Include="Highscore.cpp">
+      <Filter>Source Files\Graphics</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="DarkHole.h">
@@ -136,6 +139,9 @@
     </ClInclude>
     <ClInclude Include="Shapes.h">
       <Filter>Header Files\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="Highscore.h">
+      <Filter>Header Files\Graphics</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

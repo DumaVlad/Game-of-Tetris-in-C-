@@ -1,4 +1,5 @@
 #include "Options.h"
+#include "Highscore.h"
 
 Options::Options()
 	: m_renderWindowOptions{ sf::VideoMode{OPTIONS_WIDTH, OPTIONS_HEIGHT}, "OPTIONS" }, m_page{ 1 }
@@ -201,6 +202,11 @@ void Options::RunOptions(uint16_t& levelSound)
 				{
 					if (m_page < 2)
 						m_page++;
+				}
+				if (e.key.code == sf::Keyboard::H)
+				{
+					Highscore highscore;
+					highscore.runHighscore();
 				}
 			}
 		}

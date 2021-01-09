@@ -11,6 +11,8 @@ constexpr int OPTIONS_WIDTH = 480;
 constexpr int OPTIONS_HEIGHT = 600;
 constexpr int BOARD_WIDTH_2P = 40;
 constexpr int BOARD_HEIGHT_2P = 40;
+constexpr int HIGHSCORE_WIDTH = 600;
+constexpr int HIGHSCORE_HEIGHT = 800;
 
 class Utils
 {

@@ -2,6 +2,7 @@
 #include "Utils.h"
 #include "Menu.h"
 #include "Options.h"
+#include "Highscore.h"
 #include <SFML/Window/Event.hpp>
 #include <iostream>
 
@@ -268,9 +269,7 @@ void Game_2P::ProcessEvents(bool& menuOrGame, uint16_t& levelSound)
 				}
 				else if (e.text.unicode > 64 && e.text.unicode < 91 || e.text.unicode > 96 && e.text.unicode < 123)
 				{
-					if (m_playerNameInput == "Player1")
-						m_playerNameInput.clear();
-					if (m_playerNameInput.getSize() < 15)
+					if (m_playerNameInput.getSize() < 10)
 						m_playerNameInput += e.text.unicode;
 					m_playerNameText.setString(m_playerNameInput);
 				}
@@ -324,7 +323,8 @@ void Game_2P::ProcessEvents(bool& menuOrGame, uint16_t& levelSound)
 				}
 				else if (e.key.code == sf::Keyboard::H)
 				{
-					std::cout << "You are number ONE!" << std::endl;
+					Highscore highscore;
+					highscore.runHighscore();
 				}
 				else if (e.key.code == sf::Keyboard::Escape)
 				{
@@ -369,8 +369,6 @@ void Game_2P::Render()
 		m_renderWindow.draw(m_pauseMenu);
 		m_renderWindow.draw(m_playerNameBox);
 		m_renderWindow.draw(m_playerNameText);
-		if (m_playerNameInput.isEmpty())
-			m_playerNameInput = "Player1";
 		m_player = std::make_unique<Player>(m_playerNameInput, BOARD_WIDTH_2P, BOARD_HEIGHT_2P);
 	}
 	m_renderWindow.display();

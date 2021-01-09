@@ -3,6 +3,11 @@
 Player::Player(const std::string& playerName, const uint16_t width, const uint16_t height)
 	: m_playerName{ playerName }, m_font{}, m_levelText{}, m_scoreText{}, m_clearedLinesText{}, m_playerNameText{}, m_score{ 0 }, m_loadSoftScore{ 0 }, m_linesCleared{ 0 }
 {
+	if (m_playerName == "")
+	{
+		m_playerName = "Player1";
+	}
+
 	m_font.loadFromFile("../Resources/Fonts/arial.ttf");
 	m_scoreText.setFont(m_font);
 	m_scoreText.setCharacterSize(20);
@@ -84,7 +89,7 @@ void Player::AddClearedLines(uint16_t num)
 
 void Player::Update(const sf::Time& dt)
 {
-	m_playerNameText.setString(std::string("Good Luck, \n" + m_playerName));
+	m_playerNameText.setString(std::string("Have Fun, \n" + m_playerName));
 	m_levelText.setString(std::string("Level:\n" + std::to_string(m_linesCleared / 10)));
 	m_scoreText.setString(std::string("Score:\n" + std::to_string(m_score)));
 	m_clearedLinesText.setString(std::string("Lines:\n" + std::to_string(m_linesCleared)));
