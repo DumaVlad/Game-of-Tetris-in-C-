@@ -3,7 +3,7 @@
 #include <iostream>
 #include "Utils.h"
 
-#define MAX_NUMBER_NAMES 10
+#define MAX_NUMBER_PLAYERS 10
 
 class Highscore
 {
@@ -21,6 +21,9 @@ private:
 	sf::Texture m_textureHighscore;
 	sf::Font m_fontHighscore;
 	sf::Sprite m_spriteHighscore;
-	sf::Text m_scorePlayersList[MAX_NUMBER_NAMES];
+	sf::Text m_playersList[MAX_NUMBER_PLAYERS];
 	void FileReader();
+	static bool m_comparePlayers(const std::pair<std::string, std::string>& Player1, const std::pair<std::string, std::string>& Player2) {
+		return (std::stoi(Player1.second) > std::stoi(Player2.second));
+	}
 };
