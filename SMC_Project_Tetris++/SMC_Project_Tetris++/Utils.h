@@ -13,6 +13,8 @@ constexpr int BOARD_WIDTH_2P = 40;
 constexpr int BOARD_HEIGHT_2P = 40;
 constexpr int HIGHSCORE_WIDTH = 600;
 constexpr int HIGHSCORE_HEIGHT = 800;
+constexpr uint16_t BLOCK_ARRAY_ROWS = 7;
+constexpr uint16_t BLOCK_ARRAY_COLUMNS = 16;
 
 class Utils
 {

@@ -147,9 +147,9 @@ void Game::CreateShape()
 	m_preview->SetPosition(Position{ BOARD_WIDTH, 30 });
 }
 
-bool Game::IsValidMovement(std::array<Position, 16> block)
+bool Game::IsValidMovement(std::array<Position, BLOCK_ARRAY_COLUMNS> block)
 {
-	for (uint16_t i = 0; i < 16; i++)
+	for (uint16_t i = 0; i < BLOCK_ARRAY_COLUMNS; i++)
 	{
 		if (block[i].x < 0 || block[i].x > BOARD_WIDTH - 1 || block[i].y > BOARD_HEIGHT - 1)
 		{
@@ -286,7 +286,7 @@ void Game::Render()
 	m_renderWindow.display();
 }
 
-void Game::FileWriter(std::string file)
+void Game::FileWriter(const std::string& file)
 {
 	std::fstream fileOut;
 	fileOut.open(file, std::fstream::app);

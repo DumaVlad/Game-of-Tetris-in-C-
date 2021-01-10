@@ -4,19 +4,19 @@
 #include <fstream>
 
 
-unsigned int BlockArray[7][16];
-unsigned int ScaledBlockArray[7][16];
+unsigned int BlockArray[BLOCK_ARRAY_ROWS][BLOCK_ARRAY_COLUMNS];
+unsigned int ScaledBlockArray[BLOCK_ARRAY_ROWS][BLOCK_ARRAY_COLUMNS];
 
 void TetrisShape::Read()
 {
 	std::ifstream readFile("input.txt");
 	if (readFile.is_open())
 	{
-		for (uint16_t index = 0; index < 7; index++)
-			for (uint16_t index1 = 0; index1 < 16; index1++)
+		for (uint16_t index = 0; index < BLOCK_ARRAY_ROWS; index++)
+			for (uint16_t index1 = 0; index1 < BLOCK_ARRAY_COLUMNS; index1++)
 				readFile >> BlockArray[index][index1];
-		for (uint16_t index = 0; index < 7; index++)
-			for (uint16_t index1 = 0; index1 < 16; index1++)
+		for (uint16_t index = 0; index < BLOCK_ARRAY_ROWS; index++)
+			for (uint16_t index1 = 0; index1 < BLOCK_ARRAY_COLUMNS; index1++)
 				readFile >> ScaledBlockArray[index][index1];
 	}
 	else
@@ -28,7 +28,7 @@ TetrisShape::TetrisShape(sf::Texture& texture, uint16_t id, Position start)
 {
 	Read();
 	m_ID = m_ID % 7; // In case of an id > 6, we make sure that is not out of bounds
-	for (uint16_t index = 0; index < 16; index++)
+	for (uint16_t index = 0; index < BLOCK_ARRAY_COLUMNS; index++)
 	{
 		m_Block[index].x = BlockArray[m_ID][index] % 8;
 		m_Block[index].y = BlockArray[m_ID][index] / 8;
@@ -40,19 +40,19 @@ uint16_t TetrisShape::GetID() const
 	return m_ID;
 }
 
-std::array<TetrisShape::Position, 16> TetrisShape::GetBlockPosition() const
+std::array<TetrisShape::Position, BLOCK_ARRAY_COLUMNS> TetrisShape::GetBlockPosition() const
 {
-	std::array<Position, 16> blockPosition;
-	for (uint16_t i = 0; i < 16; i++)
+	std::array<Position, BLOCK_ARRAY_COLUMNS> blockPosition;
+	for (uint16_t i = 0; i < BLOCK_ARRAY_COLUMNS; i++)
 	{
 		blockPosition[i] = Position{ m_Block[i].x + m_Position.x, m_Block[i].y + m_Position.y };
 	}
 	return blockPosition;
 }
 
-std::array<TetrisShape::Position, 16> TetrisShape::GetFutureBlockPosition(Direction direction) const
+std::array<TetrisShape::Position, BLOCK_ARRAY_COLUMNS> TetrisShape::GetFutureBlockPosition(Direction direction) const
 {
-	std::array<Position, 16> blockPositions;
+	std::array<Position, BLOCK_ARRAY_COLUMNS> blockPositions;
 	Position tempPosition{ m_Position };
 
 	if (direction == Direction::Left)
@@ -62,7 +62,7 @@ std::array<TetrisShape::Position, 16> TetrisShape::GetFutureBlockPosition(Direct
 	else
 		tempPosition.y++;
 
-	for (auto i = 0; i < 16; ++i) {
+	for (auto i = 0; i < BLOCK_ARRAY_COLUMNS; ++i) {
 		blockPositions[i] = Position{ m_Block[i].x + tempPosition.x, m_Block[i].y + tempPosition.y };
 	}
 	return blockPositions;
@@ -80,7 +80,7 @@ void TetrisShape::Rotate()
 	}
 	if (m_ID == 6) { // IShape: restrict "rotation" to two states (horizontal/vertical)
 		m_CurrentRotation++;
-		for (auto i = 0; i < 16; ++i) {
+		for (auto i = 0; i < BLOCK_ARRAY_COLUMNS; ++i) {
 			Position oldPoint = m_Block[i];    //pivot
 			Position localVector = oldPoint - Position{ 1, 2 };
 			Position nextPoint{};
@@ -100,7 +100,7 @@ void TetrisShape::Rotate()
 		}
 		return;
 	}
-	for (auto i = 0; i < 16; ++i) {
+	for (auto i = 0; i < BLOCK_ARRAY_COLUMNS; ++i) {
 		Position oldPoint = m_Block[i];    //pivot
 		Position localVector = oldPoint - Position{ 1,2 };
 
@@ -122,7 +122,7 @@ void TetrisShape::Move(Direction direction)
 
 void TetrisShape::ScaleUp()
 {
-	for (uint16_t i = 0; i < 16; i++)
+	for (uint16_t i = 0; i < BLOCK_ARRAY_COLUMNS; i++)
 	{
 		m_Block[i].x = ScaledBlockArray[m_ID][i] % 8;
 		m_Block[i].y = ScaledBlockArray[m_ID][i] / 8;
@@ -131,7 +131,7 @@ void TetrisShape::ScaleUp()
 
 void TetrisShape::ScaleDown()
 {
-	for (uint16_t i = 0; i < 16; i++)
+	for (uint16_t i = 0; i < BLOCK_ARRAY_COLUMNS; i++)
 	{
 		m_Block[i].x = BlockArray[m_ID][i] % 8;
 		m_Block[i].y = BlockArray[m_ID][i] / 8;
@@ -140,7 +140,7 @@ void TetrisShape::ScaleDown()
 
 void TetrisShape::draw(sf::RenderTarget& target, sf::RenderStates states) const
 {
-	for (uint16_t i = 0; i < 16; i++)
+	for (uint16_t i = 0; i < BLOCK_ARRAY_COLUMNS; i++)
 	{
 		m_Sprite.setPosition((m_Block[i].x * 18) + (m_Position.x * 18), (m_Block[i].y * 18) + (m_Position.y * 18));
 		target.draw(m_Sprite);

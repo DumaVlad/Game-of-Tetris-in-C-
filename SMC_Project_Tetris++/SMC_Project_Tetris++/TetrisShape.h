@@ -4,6 +4,7 @@
 #include <SFML/Graphics/Sprite.hpp>
 #include <SFML/Graphics/Drawable.hpp>
 #include <array>
+#include "Utils.h"
 
 class TetrisShape : public sf::Drawable
 {
@@ -15,8 +16,8 @@ public:
 	~TetrisShape() = default;
 
 	uint16_t GetID() const;
-	std::array<Position, 16> GetBlockPosition() const;
-	std::array<Position, 16> GetFutureBlockPosition(Direction) const;
+	std::array<Position, BLOCK_ARRAY_COLUMNS> GetBlockPosition() const;
+	std::array<Position, BLOCK_ARRAY_COLUMNS> GetFutureBlockPosition(Direction) const;
 	void Read();
 	void SetPosition(const Position&);
 	void Rotate();
@@ -31,7 +32,7 @@ private:
 	Position m_Position;
 	uint16_t m_CurrentRotation;
 	uint16_t m_ID;
-	std::array<Position, 16> m_Block;
+	std::array<Position, BLOCK_ARRAY_COLUMNS> m_Block;
 	mutable sf::Sprite m_Sprite;
 };
 

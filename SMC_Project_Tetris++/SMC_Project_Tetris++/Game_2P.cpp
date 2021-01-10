@@ -243,9 +243,9 @@ void Game_2P::CreateShape_2P()
 	m_preview_2P->SetPosition(Position{ BOARD_WIDTH_2P, 0 });
 }
 
-bool Game_2P::IsValidMovement(std::array<Position, 16> block)
+bool Game_2P::IsValidMovement(std::array<Position, BLOCK_ARRAY_COLUMNS> block)
 {
-	for (uint16_t i = 0; i < 16; i++)
+	for (uint16_t i = 0; i < BLOCK_ARRAY_COLUMNS; i++)
 	{
 		if (block[i].x < 0 || block[i].x > BOARD_WIDTH_2P - 1 || block[i].y > BOARD_HEIGHT_2P - 1)
 		{
@@ -397,7 +397,7 @@ void Game_2P::Render()
 	m_renderWindow.display();
 }
 
-void Game_2P::FileWriter(std::string file)
+void Game_2P::FileWriter(const std::string& file)
 {
 	std::fstream fileOut;
 	fileOut.open(file, std::fstream::app);

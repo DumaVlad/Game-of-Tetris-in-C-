@@ -29,11 +29,11 @@ private:
 	void AddSpecialShape();
 	void CreateShape();
 	void CreateShape_2P();
-	bool IsValidMovement(std::array<Position, 16>);
+	bool IsValidMovement(std::array<Position, BLOCK_ARRAY_COLUMNS>);
 	bool IsOccupied(uint16_t, uint16_t);
 	void ProcessEvents(bool&, uint16_t&);
 	void Render();
-	void FileWriter(std::string file);
+	void FileWriter(const std::string& file);
 
 private:
 	std::unique_ptr<TetrisShape> m_tetrisShape_2P;

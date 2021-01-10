@@ -25,11 +25,11 @@ private:
 	void ScaleDown();
 	void AddSpecialShape();
 	void CreateShape();
-	bool IsValidMovement(std::array<Position, 16>);
+	bool IsValidMovement(std::array<Position, BLOCK_ARRAY_COLUMNS>);
 	bool IsOccupied(uint16_t, uint16_t);
 	void ProcessEvents(bool&, uint16_t& levelSound);
 	void Render();
-	void FileWriter(std::string file);
+	void FileWriter(const std::string& file);
 
 private:
 };
