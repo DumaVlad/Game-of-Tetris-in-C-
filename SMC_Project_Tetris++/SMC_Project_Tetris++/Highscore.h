@@ -11,7 +11,10 @@ public:
 	Highscore();
 	void draw();
 	void runHighscore();
-	~Highscore();
+	~Highscore() = default;
+
+private:
+	void InitializeScorePlayerList();
 
 private:
 	sf::RenderWindow m_renderWindowHighscore;

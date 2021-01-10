@@ -3,7 +3,7 @@
 #include <fstream>
 #include <algorithm>
 
-FieldInfo::FieldInfo(sf::Texture& texture, uint16_t id)
+FieldData::FieldData(sf::Texture& texture, uint16_t id)
 {
 	sf::IntRect rectangle{ (id % 7) * 18, 0, 18, 18 };
 	m_Sprite.setTexture(texture);
@@ -20,14 +20,14 @@ Field& Field::operator=(const Field& field)
 }
 
 IBoard::IBoard(Position size, IGame& game)
-	: m_Game{ game }, m_Fields{}, m_FieldInfos{}, m_Size{ size }, m_ToBeCleaned{}, m_ElapsedTime{ 0.f }, m_ToRemoveBlocks{ false }
+	: m_Game{ game }, m_Fields{}, m_FieldDatas{}, m_Size{ size }, m_ToBeCleaned{}, m_ElapsedTime{ 0.f }, m_ToRemoveBlocks{ false }
 {
 	for (int x = 0; x < size.x; x++)
 		for (int y = 0; y < size.y; y++)
 			m_Fields[Convert2DTo1D(x, y)] = std::make_unique<Field>();
 
 	for (int id = 0; id < 7; id++)
-		m_FieldInfos[id] = std::make_unique<FieldInfo>(m_Game.m_texture, id);
+		m_FieldDatas[id] = std::make_unique<FieldData>(m_Game.m_texture, id);
 }
 
 void IBoard::Update(const sf::Time& dt)
@@ -65,7 +65,7 @@ void IBoard::AddBlock(uint16_t id, std::array<Position, 16> block)
 	{
 		auto field = GetField(block[i].x, block[i].y);
 		field->m_Occupied = true;
-		field->m_Info = m_FieldInfos[id].get();
+		field->m_Info = m_FieldDatas[id].get();
 	}
 }
 
@@ -151,5 +151,5 @@ void IBoard::AddSpecialBlock(uint16_t id, Position block)
 {
 	auto field = GetField(block.x, block.y);
 	field->m_Occupied = true;
-	field->m_Info = m_FieldInfos[id].get();
+	field->m_Info = m_FieldDatas[id].get();
 }

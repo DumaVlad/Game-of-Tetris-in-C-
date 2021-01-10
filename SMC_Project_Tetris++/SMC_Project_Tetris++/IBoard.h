@@ -10,9 +10,9 @@
 
 class IGame; // for using methods from class Game
 
-struct FieldInfo
+struct FieldData
 {
-	FieldInfo(sf::Texture&, uint16_t);
+	FieldData(sf::Texture&, uint16_t);
 	sf::Sprite m_Sprite;
 };
 
@@ -21,7 +21,7 @@ struct Field
 	Field& operator=(const Field&);
 	bool m_Occupied = false;
 	bool m_Visible = false;
-	FieldInfo* m_Info = nullptr;
+	FieldData* m_Info = nullptr;
 };
 
 
@@ -54,7 +54,7 @@ private:
 protected:
 	IGame& m_Game;
 	std::unordered_map<uint16_t, std::unique_ptr<Field>> m_Fields;
-	std::unordered_map<uint16_t, std::unique_ptr<FieldInfo>> m_FieldInfos;
+	std::unordered_map<uint16_t, std::unique_ptr<FieldData>> m_FieldDatas;
 	Position m_Size;
 	std::vector<int> m_ToBeCleaned;
 	float m_ElapsedTime;
