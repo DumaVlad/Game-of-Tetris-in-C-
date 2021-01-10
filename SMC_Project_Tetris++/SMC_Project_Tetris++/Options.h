@@ -13,6 +13,11 @@ public:
 	void draw(uint16_t& levelSound);
 	void RunOptions(uint16_t& levelSound);
 	~Options();
+private:
+	void InitializeControlsSingleplayerGame();
+	void InitializeControlsMultiplayerGame();
+	void InitializeControlSound();
+	void InitializeTextPage();
 
 private:
 	sf::RenderWindow m_renderWindowOptions;
