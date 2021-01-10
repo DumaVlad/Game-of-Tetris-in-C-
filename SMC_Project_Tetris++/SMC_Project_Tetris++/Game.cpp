@@ -5,6 +5,7 @@
 #include "Highscore.h"
 #include <SFML/Window/Event.hpp>
 #include <iostream>
+#include <chrono>
 
 Game::Game()
 	: IGame(BOARD_WIDTH, BOARD_HEIGHT)
@@ -32,6 +33,9 @@ void Game::Run(bool& menuOrGame, uint16_t& levelSound)
 	m_gameplayMusic.play();
 	m_gameplayMusic.setLoop(true);
 
+	auto start = std::chrono::system_clock::now();
+	auto randomTime = Utils::GetRandomNumber(10,20);
+
 	while (m_renderWindow.isOpen())
 	{
 		m_gameplayMusic.setVolume((levelSound * 20.f));
@@ -43,6 +47,17 @@ void Game::Run(bool& menuOrGame, uint16_t& levelSound)
 			deltaTime = clock.restart(); // restarting the timer and returning the time passed until this point
 			m_elapsedTime += deltaTime;
 			std::cout << "m_ElapsedTime = " << m_elapsedTime.asMilliseconds() << std::endl << std::endl;
+
+			auto end = std::chrono::system_clock::now();
+			std::chrono::duration<double> duration = end - start;
+			if (duration.count() >= randomTime)
+			{
+				std::cout << std::endl << duration.count();
+				start = std::chrono::system_clock::now();
+				AddSpecialShape();
+				randomTime = Utils::GetRandomNumber(10, 20);
+				std::cout << std::endl << randomTime;
+			}
 
 			ProcessEvents(menuOrGame, levelSound);
 			Update(deltaTime);
