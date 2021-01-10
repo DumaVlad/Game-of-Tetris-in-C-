@@ -146,3 +146,10 @@ void IBoard::Blink()
 		for (int x = 0; x < m_Size.x; x++)
 			GetField(x, y)->m_Visible = (num % 2 != 0);
 }
+
+void IBoard::AddSpecialBlock(uint16_t id, Position block)
+{
+	auto field = GetField(block.x, block.y);
+	field->m_Occupied = true;
+	field->m_Info = m_FieldInfos[id].get();
+}

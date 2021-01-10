@@ -48,6 +48,7 @@ private:
 	void CleanLines();
 	virtual void MarkLinesForRemoval() = 0;
 	void Blink();
+	void AddSpecialBlock(uint16_t, Position);
 
 protected:
 	IGame& m_Game;
