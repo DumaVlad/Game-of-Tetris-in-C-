@@ -4,50 +4,17 @@
 #include "Game_2P.h"
 #include "Options.h"
 
-Menu::Menu(unsigned int witdh, unsigned int height)
-	: m_window{ sf::VideoMode{witdh,height}, "Menu" }, m_selectedItemIndex{ 0 }, m_selectedModeGame{ 0 }, m_fontMenu{}, m_menu{}, m_modeGame{}, m_textureMenu{}, m_spriteMenu{}, m_menuOrGame{ 1 }, m_levelSound{ 2 }
+Menu::Menu(unsigned int width, unsigned int height)
+	: m_window{ sf::VideoMode{width,height}, "Menu" }, m_selectedItemIndex{ 0 }, m_selectedModeGame{ 0 }, m_fontMenu{}, m_menu{}, m_modeGame{}, m_textureMenu{}, m_spriteMenu{}, m_menuOrGame{ 1 }, m_levelSound{ 2 }
 {
 	if (!m_fontMenu.loadFromFile("../Resources/Fonts/arial.ttf"))
 	{
 		std::cout << "Could not load font in Menu class !! \n";
 	}
 
-	m_menu[0].setFont(m_fontMenu);
-	m_menu[0].setFillColor(sf::Color::Red);
-	m_menu[0].setOutlineColor(sf::Color::Black);
-	m_menu[0].setOutlineThickness(3);
-	m_menu[0].setString("Play");
-	m_menu[0].setPosition(sf::Vector2f(witdh / 2.2, height / (MAX_NUMBER_ELEMENTS + 1) * 1));
-
-	m_menu[1].setFont(m_fontMenu);
-	m_menu[1].setFillColor(sf::Color::White);
-	m_menu[1].setOutlineColor(sf::Color::Black);
-	m_menu[1].setOutlineThickness(3);
-	m_menu[1].setString("Options");
-	m_menu[1].setPosition(sf::Vector2f(witdh / 2.2, height / (MAX_NUMBER_ELEMENTS + 1) * 2));
-
-	m_menu[2].setFont(m_fontMenu);
-	m_menu[2].setFillColor(sf::Color::White);
-	m_menu[2].setOutlineColor(sf::Color::Black);
-	m_menu[2].setOutlineThickness(3);
-	m_menu[2].setString("Exit");
-	m_menu[2].setPosition(sf::Vector2f(witdh / 2.2, height / (MAX_NUMBER_ELEMENTS + 1) * 3));
-
-	m_modeGame[0].setFont(m_fontMenu);
-	m_modeGame[0].setFillColor(sf::Color::Red);
-	m_modeGame[0].setOutlineColor(sf::Color::Black);
-	m_modeGame[0].setOutlineThickness(5);
-	m_modeGame[0].setString("Singleplayer");
-	m_modeGame[0].setCharacterSize(50);
-	m_modeGame[0].setPosition(sf::Vector2f(witdh / 3.8, height / 8 * 1.5));
-
-	m_modeGame[1].setFont(m_fontMenu);
-	m_modeGame[1].setFillColor(sf::Color::White);
-	m_modeGame[1].setOutlineColor(sf::Color::Black);
-	m_modeGame[1].setOutlineThickness(5);
-	m_modeGame[1].setString("Multiplayer");
-	m_modeGame[1].setCharacterSize(50);
-	m_modeGame[1].setPosition(sf::Vector2f(witdh / 3.7, height / 4 * 2.5));
+	
+	InitializeMenu(width, height);
+	InitializeModeGame(width, height);
 
 
 	if (!m_textureMenu.loadFromFile("../Resources/Images/tetris600x600.jpg"))
@@ -223,4 +190,48 @@ void Menu::Select()
 			m_window.display();
 		}
 	}
+}
+
+void Menu::InitializeMenu(unsigned int width, unsigned int height)
+{
+	m_menu[0].setFont(m_fontMenu);
+	m_menu[0].setFillColor(sf::Color::Red);
+	m_menu[0].setOutlineColor(sf::Color::Black);
+	m_menu[0].setOutlineThickness(3);
+	m_menu[0].setString("Play");
+	m_menu[0].setPosition(sf::Vector2f(width / 2.2, height / (MAX_NUMBER_ELEMENTS + 1) * 1));
+
+	m_menu[1].setFont(m_fontMenu);
+	m_menu[1].setFillColor(sf::Color::White);
+	m_menu[1].setOutlineColor(sf::Color::Black);
+	m_menu[1].setOutlineThickness(3);
+	m_menu[1].setString("Options");
+	m_menu[1].setPosition(sf::Vector2f(width / 2.2, height / (MAX_NUMBER_ELEMENTS + 1) * 2));
+
+	m_menu[2].setFont(m_fontMenu);
+	m_menu[2].setFillColor(sf::Color::White);
+	m_menu[2].setOutlineColor(sf::Color::Black);
+	m_menu[2].setOutlineThickness(3);
+	m_menu[2].setString("Exit");
+	m_menu[2].setPosition(sf::Vector2f(width / 2.2, height / (MAX_NUMBER_ELEMENTS + 1) * 3));
+
+}
+
+void Menu::InitializeModeGame(unsigned int width, unsigned int height)
+{
+	m_modeGame[0].setFont(m_fontMenu);
+	m_modeGame[0].setFillColor(sf::Color::Red);
+	m_modeGame[0].setOutlineColor(sf::Color::Black);
+	m_modeGame[0].setOutlineThickness(5);
+	m_modeGame[0].setString("Singleplayer");
+	m_modeGame[0].setCharacterSize(50);
+	m_modeGame[0].setPosition(sf::Vector2f(width / 3.8, height / 8 * 1.5));
+
+	m_modeGame[1].setFont(m_fontMenu);
+	m_modeGame[1].setFillColor(sf::Color::White);
+	m_modeGame[1].setOutlineColor(sf::Color::Black);
+	m_modeGame[1].setOutlineThickness(5);
+	m_modeGame[1].setString("Multiplayer");
+	m_modeGame[1].setCharacterSize(50);
+	m_modeGame[1].setPosition(sf::Vector2f(width / 3.7, height / 4 * 2.5));
 }

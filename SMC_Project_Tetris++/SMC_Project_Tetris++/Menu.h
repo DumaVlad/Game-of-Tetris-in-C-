@@ -7,7 +7,7 @@
 class Menu
 {
 public:
-	Menu(unsigned int witdh, unsigned int height);
+	Menu(unsigned int width, unsigned int height);
 	~Menu();
 
 	void draw(sf::RenderWindow& window);
@@ -16,6 +16,10 @@ public:
 	int GetPressedItem();
 	void ModeGame();
 	void Select();
+	
+private:
+	void InitializeMenu(unsigned int width, unsigned int height);
+	void InitializeModeGame(unsigned int width, unsigned int height);
 
 private:
 	sf::RenderWindow m_window;
