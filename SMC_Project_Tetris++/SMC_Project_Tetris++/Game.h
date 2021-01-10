@@ -23,6 +23,7 @@ private:
 	void Rotate();
 	void ScaleUp();
 	void ScaleDown();
+	void AddSpecialShape();
 	void CreateShape();
 	bool IsValidMovement(std::array<Position, 16>);
 	bool IsOccupied(uint16_t, uint16_t);

@@ -97,6 +97,14 @@ void Game::ScaleDown()
 	IGame::ScaleDown();
 }
 
+void Game::AddSpecialShape()
+{
+	std::pair<uint16_t, uint16_t> field = GetFreePosition(Utils::GetRandomNumber(0, BOARD_WIDTH-1), BOARD_HEIGHT);
+	Position block(field.first, field.second);
+	m_board->AddSpecialBlock(Utils::GetRandomNumber(0, 6), block);
+	return;
+}
+
 void Game::CreateShape()
 {
 	m_tetrisShape.reset(new TetrisShape(m_texture, m_ID, STARTING_POSITION_1P));

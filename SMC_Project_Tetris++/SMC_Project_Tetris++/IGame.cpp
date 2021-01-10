@@ -149,3 +149,15 @@ bool IGame::IsOccupied(uint16_t x, uint16_t y)
 {
 	return m_board->GetField(x, y)->m_Occupied;
 }
+
+std::pair<uint16_t, uint16_t> IGame::GetFreePosition(uint16_t x, uint16_t y)
+{
+	for (--y; y >= 0; y--)
+	{
+		if (!IsOccupied(x, y))
+		{
+			std::pair<uint16_t, uint16_t> field(x, y);
+			return field;
+		}
+	}
+}

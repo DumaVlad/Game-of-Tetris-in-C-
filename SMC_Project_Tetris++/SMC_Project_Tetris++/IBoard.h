@@ -42,13 +42,14 @@ public:
 	void Draw(sf::RenderWindow&);
 	inline bool IsToRemoveBlocks() const { return m_ToRemoveBlocks; };
 	Field* GetField(uint16_t, uint16_t);
+	void AddSpecialBlock(uint16_t, Position);
 
 private:
 	int Convert2DTo1D(uint16_t, uint16_t);
 	void CleanLines();
 	virtual void MarkLinesForRemoval() = 0;
 	void Blink();
-	void AddSpecialBlock(uint16_t, Position);
+	
 
 protected:
 	IGame& m_Game;

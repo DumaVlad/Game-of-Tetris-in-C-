@@ -25,11 +25,14 @@ protected:
 	void ScaleUp();
 	void ScaleDown();
 	bool IsOccupied(uint16_t, uint16_t);
+	std::pair<uint16_t, uint16_t> GetFreePosition(uint16_t, uint16_t);
+	virtual void AddSpecialShape() = 0;
 	virtual void CreateShape() = 0;
 	virtual bool IsValidMovement(std::array<Position, 16>) = 0;
 	virtual void Update(const sf::Time&) = 0;
 	virtual void ProcessEvents(bool&, uint16_t& levelSound) = 0;
 	virtual void FileWriter(std::string file) = 0;
+	
 
 protected:
 	sf::RenderWindow m_renderWindow;
