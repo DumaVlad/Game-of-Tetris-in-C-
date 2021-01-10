@@ -26,6 +26,7 @@ private:
 	void ScaleUp_2P();
 	void ScaleDown();
 	void ScaleDown_2P();
+	void AddSpecialShape();
 	void CreateShape();
 	void CreateShape_2P();
 	bool IsValidMovement(std::array<Position, 16>);
