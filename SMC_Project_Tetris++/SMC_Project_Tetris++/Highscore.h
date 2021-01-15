@@ -4,6 +4,7 @@
 #include "Utils.h"
 
 #define MAX_NUMBER_PLAYERS 10
+typedef std::pair<std::string, std::string> typePlayer;
 
 class Highscore
 {
@@ -23,7 +24,7 @@ private:
 	sf::Sprite m_spriteHighscore;
 	sf::Text m_playersList[MAX_NUMBER_PLAYERS];
 	void FileReader();
-	static bool m_comparePlayers(const std::pair<std::string, std::string>& Player1, const std::pair<std::string, std::string>& Player2) {
-		return (std::stoi(Player1.second) > std::stoi(Player2.second));
+	static bool m_comparePlayers(const typePlayer& Player1, const typePlayer& Player2) {
+		return std::stoi(Player1.second) > std::stoi(Player2.second);
 	}
 };

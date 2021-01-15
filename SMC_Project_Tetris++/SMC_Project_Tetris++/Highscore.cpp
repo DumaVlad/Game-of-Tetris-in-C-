@@ -39,6 +39,14 @@ void Highscore::runHighscore()
 			{
 				m_renderWindowHighscore.close();
 			}
+			else if (e.type == sf::Event::KeyPressed)
+			{
+
+				if (e.key.code == sf::Keyboard::Escape)
+				{
+					m_renderWindowHighscore.close();
+				}
+			}
 		}
 		m_renderWindowHighscore.clear();
 		m_renderWindowHighscore.draw(m_spriteHighscore);
@@ -70,12 +78,12 @@ void Highscore::InitializeScorePlayerList()
 
 void Highscore::FileReader()
 {
-	std::ifstream readFile("out.txt");
+	std::ifstream readFile("../Resources/Files/outputPlayers1P.txt");
 	if (readFile.is_open())
 	{
 		std::string line;
 		uint16_t index = 0;
-		std::vector<std::pair<std::string, std::string>> playersVector;
+		std::vector<typePlayer> playersVector;
 		for (std::string line; getline(readFile, line);)
 		{
 			std::istringstream wordbyword(line);
@@ -85,20 +93,32 @@ void Highscore::FileReader()
 			std::getline(wordbyword, score);
 			while (name.size() != 10)
 				name += " ";
-			std::pair<std::string, std::string> player;
+			typePlayer player;
 			player.first = name;
 			player.second = score;
-			playersVector.push_back(player);
+			bool find = false;
+			for (typePlayer& playerIndex : playersVector)
+				if (playerIndex.first.compare(player.first) == 0)
+				{
+					if (std::stoi(player.second) > std::stoi(playerIndex.second))
+						playerIndex.second = player.second;
+					find = true;
+				}
+
+			if (!find)
+				playersVector.push_back(player);
 		}
 
 		std::sort(playersVector.begin(), playersVector.end(), m_comparePlayers);
 
-		for (std::pair<std::string, std::string> player : playersVector)
+		for (typePlayer player : playersVector)
 			if (index < MAX_NUMBER_PLAYERS)
 			{
 				m_playersList[index].setString(playersVector.at(index).first + playersVector.at(index).second);
 				index++;
 			}
+			else
+				break;
 
 		readFile.close();
 	}

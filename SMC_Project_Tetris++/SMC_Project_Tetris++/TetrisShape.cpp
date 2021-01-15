@@ -9,7 +9,7 @@ unsigned int ScaledBlockArray[BLOCK_ARRAY_ROWS][BLOCK_ARRAY_COLUMNS];
 
 void TetrisShape::Read()
 {
-	std::ifstream readFile("input.txt");
+	std::ifstream readFile("../Resources/Files/inputTetrisShape.txt");
 	if (readFile.is_open())
 	{
 		for (uint16_t index = 0; index < BLOCK_ARRAY_ROWS; index++)

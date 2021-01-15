@@ -58,7 +58,7 @@ void Game_2P::Run(bool& menuOrGame, uint16_t& levelSound)
 				std::cout << std::endl << duration.count();
 				start = std::chrono::system_clock::now();
 				AddSpecialShape();
-				randomTime = Utils::GetRandomNumber(10, 20);
+				randomTime = Utils::GetRandomNumber(40, 120);
 				std::cout << std::endl << randomTime;
 			}
 
@@ -225,9 +225,9 @@ void Game_2P::CreateShape_2P()
 		std::cout << "Game Over" << std::endl;
 
 		sf::Music gameoverMusic;
-		if (!gameoverMusic.openFromFile("..Resources/Sounds/gameover.wav"))
+		if (!gameoverMusic.openFromFile("../Resources/Sounds/gameover.wav"))
 			std::cout << "Could not load the gameover sound from file !! \n";
-		FileWriter("out.txt");
+		FileWriter("../Resources/Files/outputPlayers2Pcoop.txt");
 
 		m_gameplayMusic.stop();
 		gameoverMusic.play();
@@ -292,7 +292,7 @@ void Game_2P::ProcessEvents(bool& menuOrGame, uint16_t& levelSound)
 				}
 				else if (e.text.unicode > 64 && e.text.unicode < 91 || e.text.unicode > 96 && e.text.unicode < 123)
 				{
-					if (m_playerNameInput.getSize() < 10)
+					if (m_playerNameInput.getSize() < 9)
 						m_playerNameInput += e.text.unicode;
 					m_playerNameText.setString(m_playerNameInput);
 				}

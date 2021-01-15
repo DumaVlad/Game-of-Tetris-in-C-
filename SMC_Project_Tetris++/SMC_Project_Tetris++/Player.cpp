@@ -5,7 +5,7 @@ Player::Player(const std::string& playerName, const uint16_t width, const uint16
 {
 	if (m_playerName == "")
 	{
-		m_playerName = "Player1";
+		m_playerName = "Player";
 	}
 
 	m_font.loadFromFile("../Resources/Fonts/arial.ttf");
@@ -15,7 +15,7 @@ Player::Player(const std::string& playerName, const uint16_t width, const uint16
 	m_levelText.setFont(m_font);
 	m_levelText.setCharacterSize(20);
 	m_playerNameText.setFont(m_font);
-	m_playerNameText.setCharacterSize(20);
+	m_playerNameText.setCharacterSize(19);
 	m_playerNameText.setPosition(sf::Vector2f{ (float)width * 18 + 10 , 120.f });
 	m_scoreText.setPosition(sf::Vector2f{ (float)width * 18 + 10, 220.f });
 	m_levelText.setPosition(sf::Vector2f{ (float)width * 18 + 10, 320.f });

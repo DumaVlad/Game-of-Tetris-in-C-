@@ -3,14 +3,13 @@
 #include <iostream>
 
 IGame::IGame(const unsigned int width, const unsigned int height)
-	: m_renderWindow{ sf::VideoMode {width * 18 + 130, height * 18}, "TETRIS++", sf::Style::Default }, m_texture{}, m_separationLine{}, m_tetrisShape{ nullptr }, m_preview{ nullptr }, m_board{},
+	: m_renderWindow{ sf::VideoMode {width * 18 + 180, height * 18}, "TETRIS++", sf::Style::Default }, m_texture{}, m_separationLine{}, m_tetrisShape{ nullptr }, m_preview{ nullptr }, m_board{},
 	m_elapsedTime{ sf::Time::Zero }, m_ID{ Utils::GetRandomNumber(7) }, m_gameplayMusic{}, m_pause{ 3 }, m_pauseMenu{}, m_fontOptions{}, m_textPauseMenu{}, m_player{ nullptr }
 {
 	m_separationLine.setSize(sf::Vector2f{ 2.f, height * 18.f });
 	m_separationLine.setPosition(sf::Vector2f{ width * 18.f, 0 });
 	m_separationLine.setFillColor(sf::Color::Red);
 
-	m_pauseMenu.setSize(sf::Vector2f{ 250.f,200.f });
 	m_pauseMenu.setFillColor(sf::Color(0, 250, 154));
 	m_pauseMenu.setOutlineColor(sf::Color::White);
 	m_pauseMenu.setOutlineThickness(4);

@@ -19,6 +19,8 @@ Game::Game()
 	m_backGroundSprite.setColor(sf::Color(255, 255, 255, 160));
 	m_backGroundSprite.setOrigin(0.75, 0);
 
+	m_pauseMenu.setSize(sf::Vector2f{ 270.f,200.f });
+
 	m_board = std::make_unique<Board>(Position{ BOARD_WIDTH,BOARD_HEIGHT }, *this);
 	CreateShape();
 }
@@ -55,7 +57,7 @@ void Game::Run(bool& menuOrGame, uint16_t& levelSound)
 				std::cout << std::endl << duration.count();
 				start = std::chrono::system_clock::now();
 				AddSpecialShape();
-				randomTime = Utils::GetRandomNumber(10, 20);
+				randomTime = Utils::GetRandomNumber(40, 100);
 				std::cout << std::endl << randomTime;
 			}
 
@@ -131,7 +133,7 @@ void Game::CreateShape()
 		sf::Music gameoverMusic;
 		if (!gameoverMusic.openFromFile("../Resources/Sounds/gameover.wav"))
 			std::cout << "Could not load the gameover sound from file !! \n";
-		FileWriter("out.txt");
+		FileWriter("../Resources/Files/outputPlayers1P.txt");
 
 		m_gameplayMusic.stop();
 		gameoverMusic.play();
@@ -196,7 +198,7 @@ void Game::ProcessEvents(bool& menuOrGame, uint16_t& levelSound)
 				}
 				else if (e.text.unicode > 64 && e.text.unicode < 91 || e.text.unicode > 96 && e.text.unicode < 123)
 				{
-					if (m_playerNameInput.getSize() < 10)
+					if (m_playerNameInput.getSize() < 9)
 						m_playerNameInput += e.text.unicode;
 					m_playerNameText.setString(m_playerNameInput);
 				}
