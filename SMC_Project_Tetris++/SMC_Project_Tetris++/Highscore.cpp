@@ -16,7 +16,7 @@ Highscore::Highscore()
 	//m_spriteHighscore.setColor(sf::Color(255, 255, 255, 200));
 	m_spriteHighscore.setOrigin(0, 0);
 
-	InitializeScorePlayerList();
+	//InitializeScorePlayerList();
 }
 
 void Highscore::draw()
@@ -25,12 +25,21 @@ void Highscore::draw()
 	{
 		m_renderWindowHighscore.draw(m_playersList[i]);
 	}
+	if (m_modeGame == 0)
+	{
+		m_textModeGame.setPosition(sf::Vector2f(HIGHSCORE_WIDTH / 4, HIGHSCORE_HEIGHT / 4.8));
+		m_textModeGame.setString("Singleplayer");
+	}
+	else
+	{
+		m_textModeGame.setPosition(sf::Vector2f(HIGHSCORE_WIDTH / 5.2, HIGHSCORE_HEIGHT / 4.8));
+		m_textModeGame.setString("MultiplayerCo-op");
+	}
 	m_renderWindowHighscore.draw(m_textModeGame);
 }
 
 void Highscore::runHighscore()
 {
-	FileReader();
 	while (m_renderWindowHighscore.isOpen())
 	{
 		sf::Event e;
@@ -42,13 +51,23 @@ void Highscore::runHighscore()
 			}
 			else if (e.type == sf::Event::KeyPressed)
 			{
-
 				if (e.key.code == sf::Keyboard::Escape)
 				{
 					m_renderWindowHighscore.close();
 				}
+				if (e.key.code == sf::Keyboard::Left)
+				{
+					if (m_modeGame > 0)
+						m_modeGame--;
+				}
+				if (e.key.code == sf::Keyboard::Right)
+				{
+					if (m_modeGame < 1)
+						m_modeGame++;
+				}
 			}
 		}
+		FileReader();
 		m_renderWindowHighscore.clear();
 		m_renderWindowHighscore.draw(m_spriteHighscore);
 		draw();
@@ -63,8 +82,6 @@ void Highscore::InitializeScorePlayerList()
 	m_textModeGame.setOutlineColor(sf::Color::White);
 	m_textModeGame.setOutlineThickness(3);
 	m_textModeGame.setCharacterSize(25);
-	m_textModeGame.setString("Singleplayer");
-	m_textModeGame.setPosition(sf::Vector2f(HIGHSCORE_WIDTH / 4, HIGHSCORE_HEIGHT / 4.8));
 
 	for (int i = 0; i < MAX_NUMBER_PLAYERS; i++)
 	{
@@ -72,9 +89,18 @@ void Highscore::InitializeScorePlayerList()
 		m_playersList[i].setFillColor(sf::Color(55, 205, 55));
 		m_playersList[i].setOutlineColor(sf::Color::Black);
 		m_playersList[i].setOutlineThickness(3);
-		m_playersList[i].setCharacterSize(19);
-		m_playersList[i].setString("Unknown   0");
-		m_playersList[i].setPosition(sf::Vector2f(HIGHSCORE_WIDTH / 3, HIGHSCORE_HEIGHT / 18 * i + 265));
+		if (m_modeGame == 0)
+		{
+			m_playersList[i].setString("Unknown   0");
+			m_playersList[i].setCharacterSize(19);
+			m_playersList[i].setPosition(sf::Vector2f(HIGHSCORE_WIDTH / 3, HIGHSCORE_HEIGHT / 18 * i + 265));
+		}
+		else
+		{
+			m_playersList[i].setString("Unknown1&\n Unknown2  0");
+			m_playersList[i].setCharacterSize(16);
+			m_playersList[i].setPosition(sf::Vector2f(HIGHSCORE_WIDTH / 3, HIGHSCORE_HEIGHT / 17.5 * i + 250));
+		}
 	}
 
 	m_playersList[0].setFillColor(sf::Color::Red);
@@ -87,50 +113,108 @@ void Highscore::InitializeScorePlayerList()
 
 void Highscore::FileReader()
 {
-	std::ifstream readFile("../Resources/Files/outputPlayers1P.txt");
-	if (readFile.is_open())
+	if (m_modeGame == 0)
 	{
-		std::string line;
-		uint16_t index = 0;
-		std::vector<typePlayer> playersVector;
-		for (std::string line; getline(readFile, line);)
+		InitializeScorePlayerList();
+		std::ifstream readFile("../Resources/Files/outputPlayers1P.txt");
+		if (readFile.is_open())
 		{
-			std::istringstream wordbyword(line);
-			std::string name;
-			std::string score;
-			std::getline(wordbyword, name, ' ');
-			std::getline(wordbyword, score);
-			while (name.size() != 10)
-				name += " ";
-			typePlayer player;
-			player.first = name;
-			player.second = score;
-			bool find = false;
-			for (typePlayer& playerIndex : playersVector)
-				if (playerIndex.first.compare(player.first) == 0)
-				{
-					if (std::stoi(player.second) > std::stoi(playerIndex.second))
-						playerIndex.second = player.second;
-					find = true;
-				}
-
-			if (!find)
-				playersVector.push_back(player);
-		}
-
-		std::sort(playersVector.begin(), playersVector.end(), m_comparePlayers);
-
-		for (typePlayer player : playersVector)
-			if (index < MAX_NUMBER_PLAYERS)
+			std::string line;
+			uint16_t index = 0;
+			std::vector<typePlayer> playersVector;
+			for (std::string line; getline(readFile, line);)
 			{
-				m_playersList[index].setString(playersVector.at(index).first + playersVector.at(index).second);
-				index++;
-			}
-			else
-				break;
+				std::istringstream wordbyword(line);
+				std::string name;
+				std::string score;
+				std::getline(wordbyword, name, ' ');
+				std::getline(wordbyword, score);
+				while (name.size() != 10)
+					name += " ";
+				typePlayer player;
+				player.first = name;
+				player.second = score;
+				bool find = false;
+				for (typePlayer& playerIndex : playersVector)
+					if (playerIndex.first.compare(player.first) == 0)
+					{
+						if (std::stoi(player.second) > std::stoi(playerIndex.second))
+							playerIndex.second = player.second;
+						find = true;
+					}
 
-		readFile.close();
+				if (!find)
+					playersVector.push_back(player);
+			}
+
+			std::sort(playersVector.begin(), playersVector.end(), m_comparePlayers);
+
+			for (typePlayer player : playersVector)
+				if (index < MAX_NUMBER_PLAYERS)
+				{
+					m_playersList[index].setString(playersVector.at(index).first + playersVector.at(index).second);
+					index++;
+				}
+				else
+					break;
+
+			readFile.close();
+		}
+		else
+			std::cout << "File was not open!";
 	}
 	else
-		std::cout << "File was not open!";
+	{
+		InitializeScorePlayerList();
+		std::ifstream readFile("../Resources/Files/outputPlayers2Pcoop.txt");
+		if (readFile.is_open())
+		{
+			std::string line;
+			uint16_t index = 0;
+			std::vector<typePlayer> playersVector;
+			for (std::string line; getline(readFile, line);)
+			{
+				std::istringstream wordbyword(line);
+				std::string name1;
+				std::string name2;
+				std::string score;
+				std::getline(wordbyword, name1, ' ');
+				std::getline(wordbyword, name2, ' ');
+				std::getline(wordbyword, score);
+				while (name2.size() != 10)
+					name2 += " ";
+				std::string name;
+				name = name1 + "&\n" + name2;
+				typePlayer player;
+				player.first = name;
+				player.second = score;
+				bool find = false;
+				for (typePlayer& playerIndex : playersVector)
+					if (playerIndex.first.compare(player.first) == 0)
+					{
+						if (std::stoi(player.second) > std::stoi(playerIndex.second))
+							playerIndex.second = player.second;
+						find = true;
+					}
+
+				if (!find)
+					playersVector.push_back(player);
+			}
+
+			std::sort(playersVector.begin(), playersVector.end(), m_comparePlayers);
+
+			for (typePlayer player : playersVector)
+				if (index < MAX_NUMBER_PLAYERS)
+				{
+					m_playersList[index].setString(playersVector.at(index).first + playersVector.at(index).second);
+					index++;
+				}
+				else
+					break;
+
+			readFile.close();
+		}
+		else
+			std::cout << "File was not open!";
+	}
 }
