@@ -49,7 +49,8 @@ protected:
 	sf::Font m_fontOptions;
 	sf::Text m_textPauseMenu[4];
 	sf::Text m_textGameOverMenu[5];
-	sf::String m_playerNameInput;
+	sf::String m_playerNameInput1;
+	sf::String m_playerNameInput2;
 	sf::Text m_playerNameText;
 	sf::Text m_playerNameBox;
 };

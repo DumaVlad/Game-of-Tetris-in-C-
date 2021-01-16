@@ -27,4 +27,6 @@ private:
 	static bool m_comparePlayers(const typePlayer& Player1, const typePlayer& Player2) {
 		return std::stoi(Player1.second) > std::stoi(Player2.second);
 	}
+	sf::Text m_textModeGame;
+	uint16_t m_modeGame;
 };

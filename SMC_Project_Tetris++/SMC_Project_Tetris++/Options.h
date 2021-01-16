@@ -3,8 +3,8 @@
 #include <iostream>
 #include "Utils.h"
 
-#define MAX_NUMBER_CONTROLS 9
-#define MAX_NUMBER_CONTROLS_MP 17
+#define MAX_NUMBER_CONTROLS 10
+#define MAX_NUMBER_CONTROLS_MP 18
 
 class Options
 {

@@ -3,7 +3,7 @@
 #include <sstream>
 
 Highscore::Highscore()
-	:m_renderWindowHighscore{ sf::VideoMode{HIGHSCORE_WIDTH, HIGHSCORE_HEIGHT}, "HIGHSCORE" }
+	:m_renderWindowHighscore{ sf::VideoMode{HIGHSCORE_WIDTH, HIGHSCORE_HEIGHT}, "HIGHSCORE" }, m_modeGame{ 0 }
 {
 	if (!m_textureHighscore.loadFromFile("../Resources/Images/highscore.png"))
 		std::cout << "Could not load image in Highscore Class !! \n";
@@ -25,6 +25,7 @@ void Highscore::draw()
 	{
 		m_renderWindowHighscore.draw(m_playersList[i]);
 	}
+	m_renderWindowHighscore.draw(m_textModeGame);
 }
 
 void Highscore::runHighscore()
@@ -57,6 +58,14 @@ void Highscore::runHighscore()
 
 void Highscore::InitializeScorePlayerList()
 {
+	m_textModeGame.setFont(m_fontHighscore);
+	m_textModeGame.setFillColor(sf::Color::Blue);
+	m_textModeGame.setOutlineColor(sf::Color::White);
+	m_textModeGame.setOutlineThickness(3);
+	m_textModeGame.setCharacterSize(25);
+	m_textModeGame.setString("Singleplayer");
+	m_textModeGame.setPosition(sf::Vector2f(HIGHSCORE_WIDTH / 4, HIGHSCORE_HEIGHT / 4.8));
+
 	for (int i = 0; i < MAX_NUMBER_PLAYERS; i++)
 	{
 		m_playersList[i].setFont(m_fontHighscore);

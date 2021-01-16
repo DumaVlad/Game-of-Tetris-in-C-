@@ -19,7 +19,7 @@ Game_2P::Game_2P()
 	m_backGroundSprite.setColor(sf::Color(255, 255, 255, 160));
 	m_backGroundSprite.setOrigin(0, 0);
 
-	m_pauseMenu.setSize(sf::Vector2f{ 310.f,200.f });
+	m_pauseMenu.setSize(sf::Vector2f{ 430.f,200.f });
 
 	m_board = std::make_unique<Board_2P>(Position{ BOARD_WIDTH_2P,BOARD_HEIGHT_2P }, *this);
 	CreateShape();
@@ -186,7 +186,7 @@ void Game_2P::ScaleDown_2P()
 
 void Game_2P::AddSpecialShape()
 {
-	std::pair<uint16_t, uint16_t> field = GetFreePosition(Utils::GetRandomNumber(0, BOARD_WIDTH_2P-1), BOARD_HEIGHT_2P);
+	std::pair<uint16_t, uint16_t> field = GetFreePosition(Utils::GetRandomNumber(0, BOARD_WIDTH_2P - 1), BOARD_HEIGHT_2P);
 	Position block(field.first, field.second);
 	m_board->AddSpecialBlock(Utils::GetRandomNumber(0, 6), block);
 	return;
@@ -203,6 +203,7 @@ void Game_2P::CreateShape()
 		sf::Music gameoverMusic;
 		if (!gameoverMusic.openFromFile("../Resources/Sounds/gameover.wav"))
 			std::cout << "Could not load the gameover sound from file !! \n";
+		FileWriter("../Resources/Files/outputPlayers2Pcoop.txt");
 
 		m_gameplayMusic.stop();
 		gameoverMusic.play();
@@ -278,23 +279,45 @@ void Game_2P::ProcessEvents(bool& menuOrGame, uint16_t& levelSound)
 			m_renderWindow.close();
 		}
 
-		if (m_pause == 3) {
+		if (m_pause == 3 || m_pause == 4) {
 			if (e.type == sf::Event::TextEntered)
 			{
 				if (e.text.unicode == 13)
 				{
-					m_pause = 0;
+					if (m_pause == 4)
+						m_pause = 0;
+					else
+						m_pause = 4;
 				}
-				if (e.text.unicode == 8 && !m_playerNameInput.isEmpty())
+				if (m_pause == 3)
 				{
-					m_playerNameInput.erase(m_playerNameInput.getSize() - 1, 1);
-					m_playerNameText.setString(m_playerNameInput);
+					if (e.text.unicode == 8 && !m_playerNameInput1.isEmpty())
+					{
+						m_playerNameInput1.erase(m_playerNameInput1.getSize() - 1, 1);
+						m_playerNameText.setString(m_playerNameInput1);
+					}
+					else if (e.text.unicode > 64 && e.text.unicode < 91 || e.text.unicode > 96 && e.text.unicode < 123)
+					{
+						if (m_playerNameInput1.getSize() < 9)
+							m_playerNameInput1 += e.text.unicode;
+						m_playerNameText.setString(m_playerNameInput1);
+					}
 				}
-				else if (e.text.unicode > 64 && e.text.unicode < 91 || e.text.unicode > 96 && e.text.unicode < 123)
+				else
 				{
-					if (m_playerNameInput.getSize() < 9)
-						m_playerNameInput += e.text.unicode;
-					m_playerNameText.setString(m_playerNameInput);
+					m_playerNameText.setString("");
+
+					if (e.text.unicode == 8 && !m_playerNameInput2.isEmpty())
+					{
+						m_playerNameInput2.erase(m_playerNameInput2.getSize() - 1, 1);
+						m_playerNameText.setString(m_playerNameInput2);
+					}
+					else if (e.text.unicode > 64 && e.text.unicode < 91 || e.text.unicode > 96 && e.text.unicode < 123)
+					{
+						if (m_playerNameInput2.getSize() < 9)
+							m_playerNameInput2 += e.text.unicode;
+						m_playerNameText.setString(m_playerNameInput2);
+					}
 				}
 			}
 			m_renderWindow.draw(m_playerNameText);
@@ -389,10 +412,19 @@ void Game_2P::Render()
 	}
 	else if (m_pause == 3)
 	{
+		m_playerNameBox.setString("Insert your name (player1):");
 		m_renderWindow.draw(m_pauseMenu);
 		m_renderWindow.draw(m_playerNameBox);
 		m_renderWindow.draw(m_playerNameText);
-		m_player = std::make_unique<Player>(m_playerNameInput, BOARD_WIDTH_2P, BOARD_HEIGHT_2P);
+		m_player = std::make_unique<Player>(m_playerNameInput1, BOARD_WIDTH_2P, BOARD_HEIGHT_2P);
+	}
+	else if (m_pause == 4)
+	{
+		m_playerNameBox.setString("Insert your name (player2):");
+		m_renderWindow.draw(m_pauseMenu);
+		m_renderWindow.draw(m_playerNameBox);
+		m_renderWindow.draw(m_playerNameText);
+		m_player2 = std::make_unique<Player>(m_playerNameInput2, BOARD_WIDTH_2P, BOARD_HEIGHT_2P);
 	}
 	m_renderWindow.display();
 }

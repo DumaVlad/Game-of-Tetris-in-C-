@@ -191,16 +191,16 @@ void Game::ProcessEvents(bool& menuOrGame, uint16_t& levelSound)
 				{
 					m_pause = 0;
 				}
-				if (e.text.unicode == 8 && !m_playerNameInput.isEmpty())
+				if (e.text.unicode == 8 && !m_playerNameInput1.isEmpty())
 				{
-					m_playerNameInput.erase(m_playerNameInput.getSize() - 1, 1);
-					m_playerNameText.setString(m_playerNameInput);
+					m_playerNameInput1.erase(m_playerNameInput1.getSize() - 1, 1);
+					m_playerNameText.setString(m_playerNameInput1);
 				}
 				else if (e.text.unicode > 64 && e.text.unicode < 91 || e.text.unicode > 96 && e.text.unicode < 123)
 				{
-					if (m_playerNameInput.getSize() < 9)
-						m_playerNameInput += e.text.unicode;
-					m_playerNameText.setString(m_playerNameInput);
+					if (m_playerNameInput1.getSize() < 9)
+						m_playerNameInput1 += e.text.unicode;
+					m_playerNameText.setString(m_playerNameInput1);
 				}
 			}
 			m_renderWindow.draw(m_playerNameText);
@@ -283,7 +283,7 @@ void Game::Render()
 		m_renderWindow.draw(m_pauseMenu);
 		m_renderWindow.draw(m_playerNameBox);
 		m_renderWindow.draw(m_playerNameText);
-		m_player = std::make_unique<Player>(m_playerNameInput, BOARD_WIDTH, BOARD_HEIGHT);
+		m_player = std::make_unique<Player>(m_playerNameInput1, BOARD_WIDTH, BOARD_HEIGHT);
 	}
 	m_renderWindow.display();
 }

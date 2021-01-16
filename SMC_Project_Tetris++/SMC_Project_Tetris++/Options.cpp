@@ -127,7 +127,7 @@ void Options::InitializeControlsSingleplayerGame()
 	m_controlsSingleplayerGame[6].setString("Z = piece scale down");
 	m_controlsSingleplayerGame[7].setString("Escape = return to menu");
 	m_controlsSingleplayerGame[8].setString("Space = pause game");
-
+	m_controlsSingleplayerGame[9].setString("H (in options or pause) = highscore");
 }
 
 void Options::InitializeControlsMultiplayerGame()
@@ -158,7 +158,7 @@ void Options::InitializeControlsMultiplayerGame()
 	m_controlsMultiplayerGame[2].setString("Player 2");
 	m_controlsMultiplayerGame[2].setPosition(sf::Vector2f(OPTIONS_WIDTH / 10 * 6, OPTIONS_HEIGHT / 15 * 2));
 
-	for (int i = 3; i < MAX_NUMBER_CONTROLS_MP / 2 + 1; i++)
+	for (int i = 3; i < MAX_NUMBER_CONTROLS_MP / 2; i++)
 	{
 		m_controlsMultiplayerGame[i].setFont(m_fontOptions);
 		m_controlsMultiplayerGame[i].setFillColor(sf::Color::White);
@@ -168,7 +168,7 @@ void Options::InitializeControlsMultiplayerGame()
 		m_controlsMultiplayerGame[i].setPosition(sf::Vector2f(OPTIONS_WIDTH / 10, OPTIONS_HEIGHT / 20 * (i + 2)));
 	}
 
-	for (int i = MAX_NUMBER_CONTROLS_MP / 2 + 1; i < MAX_NUMBER_CONTROLS_MP - 2; i++)
+	for (int i = MAX_NUMBER_CONTROLS_MP / 2; i < MAX_NUMBER_CONTROLS_MP - 3; i++)
 	{
 		m_controlsMultiplayerGame[i].setFont(m_fontOptions);
 		m_controlsMultiplayerGame[i].setFillColor(sf::Color::White);
@@ -178,7 +178,7 @@ void Options::InitializeControlsMultiplayerGame()
 		m_controlsMultiplayerGame[i].setPosition(sf::Vector2f(OPTIONS_WIDTH / 10 * 6, OPTIONS_HEIGHT / 20 * (i - 6 + 2)));
 	}
 
-	for (int i = MAX_NUMBER_CONTROLS_MP - 2; i < MAX_NUMBER_CONTROLS_MP; i++)
+	for (int i = MAX_NUMBER_CONTROLS_MP - 3; i < MAX_NUMBER_CONTROLS_MP; i++)
 	{
 		m_controlsMultiplayerGame[i].setFont(m_fontOptions);
 		m_controlsMultiplayerGame[i].setFillColor(sf::Color::White);
@@ -202,6 +202,7 @@ void Options::InitializeControlsMultiplayerGame()
 	m_controlsMultiplayerGame[14].setString(" F = piece scale down");
 	m_controlsMultiplayerGame[15].setString("Escape = return to menu");
 	m_controlsMultiplayerGame[16].setString("Space = pause game");
+	m_controlsMultiplayerGame[17].setString("H (in options or pause) = highscore");
 }
 
 void Options::InitializeControlSound()
