@@ -96,7 +96,7 @@ void Highscore::InitializeScorePlayerList()
 		}
 		else
 		{
-			m_playersList[i].setString("Unknown1&\n Unknown2  0");
+			m_playersList[i].setString("Unknown1&\n Unknown2   0");
 			m_playersList[i].setCharacterSize(16);
 			m_playersList[i].setPosition(sf::Vector2f(HIGHSCORE_WIDTH / 3, HIGHSCORE_HEIGHT / 17.5 * i + 250));
 		}
@@ -176,7 +176,7 @@ void Highscore::FileReader()
 				int score;
 				std::istringstream ss(line);
 				ss >> name1 >> name2 >> score;
-				while (name2.size() != 10)
+				while (name2.size() != 12)
 					name2 += " ";
 				std::string name = name1 + "&\n" + name2;
 				playersSet.insert(std::make_pair(name, score));

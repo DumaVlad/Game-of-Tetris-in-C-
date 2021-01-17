@@ -135,7 +135,7 @@ void Game_2P::Proceed_2P(Direction direction)
 void Game_2P::Update(const sf::Time& dt)
 {
 	m_board->Update(dt);
-	m_player->Update(dt);
+	m_player->Update_2P(dt, m_player2->GetPlayerName());
 	if (!m_tetrisShape)
 	{
 		if (m_board->IsToRemoveBlocks())

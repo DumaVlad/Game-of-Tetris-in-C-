@@ -22,6 +22,7 @@ public:
 	void SumPressedScore();
 	void AddClearedLines(uint16_t num);
 	void Update(const sf::Time& dt);
+	void Update_2P(const sf::Time& dt, std::string);
 	int GetLevel() const;
 	uint32_t GetScore() const;
 
