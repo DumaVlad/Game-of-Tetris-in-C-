@@ -13,15 +13,16 @@ class IGame; // for using methods from class Game
 struct FieldData
 {
 	FieldData(sf::Texture&, uint16_t);
-	sf::Sprite m_Sprite;
+	sf::Sprite m_sprite;
 };
 
 struct Field
 {
 	Field& operator=(const Field&);
-	bool m_Occupied = false;
-	bool m_Visible = false;
-	FieldData* m_Info = nullptr;
+	bool m_occupied = false;
+	bool m_visible = false;
+	bool m_darkHole = false;
+	FieldData* m_info = nullptr;
 };
 
 
@@ -43,9 +44,12 @@ public:
 	inline bool IsToRemoveBlocks() const { return m_ToRemoveBlocks; };
 	Field* GetField(uint16_t, uint16_t);
 	void AddSpecialBlock(uint16_t, Position);
+	virtual void GenerateDarkHole(uint16_t, Position) = 0;
+	virtual void DestroyDarkHole(Position) = 0;
+	int Convert2DTo1D(uint16_t, uint16_t);
 
 private:
-	int Convert2DTo1D(uint16_t, uint16_t);
+	
 	void CleanLines();
 	virtual void MarkLinesForRemoval() = 0;
 	void Blink();

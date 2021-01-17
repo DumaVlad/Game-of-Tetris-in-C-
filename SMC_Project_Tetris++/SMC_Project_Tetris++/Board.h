@@ -19,6 +19,8 @@ public:
 	Board(Position, IGame&);
 	Board(const Board& other) = delete;
 	Board& operator=(const Board& other) = delete;
+	void GenerateDarkHole(uint16_t, Position);
+	void DestroyDarkHole(Position);
 
 private:
 	void MarkLinesForRemoval();

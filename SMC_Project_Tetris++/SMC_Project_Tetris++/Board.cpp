@@ -9,6 +9,23 @@ Board::Board(Position size, IGame& game)
 {
 }
 
+void Board::GenerateDarkHole(uint16_t id, Position block)
+{
+	auto field = GetField(block.x, block.y);
+	field->m_occupied = true;
+	field->m_darkHole = true;
+	field->m_info = m_FieldDatas[id].get();
+}
+
+void Board::DestroyDarkHole(Position block)
+{
+	auto field = GetField(block.x, block.y);
+	field->m_occupied = false;
+	field->m_darkHole = false;
+	field->m_info = nullptr;
+	field->m_visible = true;
+}
+
 void Board::MarkLinesForRemoval()
 {
 	if (m_ToRemoveBlocks)
@@ -20,7 +37,7 @@ void Board::MarkLinesForRemoval()
 		for (int x = 0; x < m_Size.x; x++)
 		{
 			auto field = GetField(x, y);
-			if (field->m_Occupied)
+			if (field->m_occupied)
 				counter++;
 			if (counter == BOARD_WIDTH) // Line full
 			{

@@ -6,15 +6,16 @@
 FieldData::FieldData(sf::Texture& texture, uint16_t id)
 {
 	sf::IntRect rectangle{ (id % 7) * 18, 0, 18, 18 };
-	m_Sprite.setTexture(texture);
-	m_Sprite.setTextureRect(rectangle);
+	m_sprite.setTexture(texture);
+	m_sprite.setTextureRect(rectangle);
 }
 
 Field& Field::operator=(const Field& field)
 {
-	this->m_Occupied = field.m_Occupied;
-	this->m_Visible = field.m_Visible;
-	this->m_Info = field.m_Info;
+	this->m_occupied = field.m_occupied;
+	this->m_visible = field.m_visible;
+	this->m_info = field.m_info;
+	this->m_darkHole = field.m_darkHole;
 
 	return *this;
 }
@@ -52,9 +53,9 @@ void IBoard::Clean()
 		for (uint16_t y = 0; y < m_Size.y; y++)
 		{
 			auto field = GetField(x, y);
-			field->m_Occupied = false;
-			field->m_Visible = true;
-			field->m_Info = nullptr;
+			field->m_occupied = false;
+			field->m_visible = true;
+			field->m_info = nullptr;
 		}
 	}
 }
@@ -64,8 +65,8 @@ void IBoard::AddBlock(uint16_t id, std::array<Position, 16> block)
 	for (int i = 0; i < 16; i++)
 	{
 		auto field = GetField(block[i].x, block[i].y);
-		field->m_Occupied = true;
-		field->m_Info = m_FieldDatas[id].get();
+		field->m_occupied = true;
+		field->m_info = m_FieldDatas[id].get();
 	}
 }
 
@@ -74,7 +75,10 @@ bool IBoard::IsOccupied(std::array<Position, 16> block)
 	for (int i = 0; i < 16; i++)
 	{
 		auto field = GetField(block[i].x, block[i].y);
-		if (field->m_Occupied)
+		if (field->m_darkHole)
+			return false;
+
+		if (field->m_occupied)
 			return true;
 	}
 	return false;
@@ -93,10 +97,10 @@ void IBoard::Draw(sf::RenderWindow& window)
 			auto field = GetField(x, y);
 
 			//if field isn't occupied yet, m_Info is set to nullptr
-			if (field->m_Occupied && field->m_Visible)
+			if (field->m_occupied && field->m_visible)
 			{
-				field->m_Info->m_Sprite.setPosition(x * 18.f, y * 18.f);
-				window.draw(field->m_Info->m_Sprite);
+				field->m_info->m_sprite.setPosition(x * 18.f, y * 18.f);
+				window.draw(field->m_info->m_sprite);
 			}
 		}
 }
@@ -144,12 +148,12 @@ void IBoard::Blink()
 	int num = int(m_ElapsedTime * 5.f);
 	for (auto y : m_ToBeCleaned)
 		for (int x = 0; x < m_Size.x; x++)
-			GetField(x, y)->m_Visible = (num % 2 != 0);
+			GetField(x, y)->m_visible = (num % 2 != 0);
 }
 
 void IBoard::AddSpecialBlock(uint16_t id, Position block)
 {
 	auto field = GetField(block.x, block.y);
-	field->m_Occupied = true;
-	field->m_Info = m_FieldDatas[id].get();
+	field->m_occupied = true;
+	field->m_info = m_FieldDatas[id].get();
 }
