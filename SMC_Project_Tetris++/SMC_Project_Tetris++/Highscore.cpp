@@ -1,6 +1,7 @@
 #include "Highscore.h"
 #include <fstream>
 #include <sstream>
+#include <set>
 
 Highscore::Highscore()
 	:m_renderWindowHighscore{ sf::VideoMode{HIGHSCORE_WIDTH, HIGHSCORE_HEIGHT}, "HIGHSCORE" }, m_modeGame{ 0 }
@@ -117,47 +118,37 @@ void Highscore::FileReader()
 	{
 		InitializeScorePlayerList();
 		std::ifstream readFile("../Resources/Files/outputPlayers1P.txt");
+		auto cmp = [](std::pair<std::string, int> p1, std::pair<std::string, int> p2)
+		{
+			return p1.second > p2.second;
+		};
+
 		if (readFile.is_open())
 		{
 			std::string line;
 			uint16_t index = 0;
-			std::vector<typePlayer> playersVector;
-			for (std::string line; getline(readFile, line);)
+			std::set<std::pair<std::string, int>, decltype(cmp)> playersSet(cmp);
+
+			while (!readFile.eof())
 			{
-				std::istringstream wordbyword(line);
+				std::string line;
+				std::getline(readFile, line);
 				std::string name;
-				std::string score;
-				std::getline(wordbyword, name, ' ');
-				std::getline(wordbyword, score);
+				int score;
+				std::istringstream ss(line);
+				ss >> name >> score;
 				while (name.size() != 10)
 					name += " ";
-				typePlayer player;
-				player.first = name;
-				player.second = score;
-				bool find = false;
-				for (typePlayer& playerIndex : playersVector)
-					if (playerIndex.first.compare(player.first) == 0)
-					{
-						if (std::stoi(player.second) > std::stoi(playerIndex.second))
-							playerIndex.second = player.second;
-						find = true;
-					}
-
-				if (!find)
-					playersVector.push_back(player);
+				playersSet.insert(std::make_pair(name, score));
 			}
 
-			std::sort(playersVector.begin(), playersVector.end(), m_comparePlayers);
-
-			for (typePlayer player : playersVector)
-				if (index < MAX_NUMBER_PLAYERS)
-				{
-					m_playersList[index].setString(playersVector.at(index).first + playersVector.at(index).second);
+			for (auto p : playersSet)
+			{
+				if (index < MAX_NUMBER_PLAYERS) {
+					m_playersList[index].setString(p.first + std::to_string(p.second));
 					index++;
 				}
-				else
-					break;
-
+			}
 			readFile.close();
 		}
 		else

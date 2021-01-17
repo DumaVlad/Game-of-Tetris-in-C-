@@ -16,6 +16,7 @@ public:
 
 private:
 	void InitializeScorePlayerList();
+	void FileReader();
 
 private:
 	sf::RenderWindow m_renderWindowHighscore;
@@ -23,7 +24,6 @@ private:
 	sf::Font m_fontHighscore;
 	sf::Sprite m_spriteHighscore;
 	sf::Text m_playersList[MAX_NUMBER_PLAYERS];
-	void FileReader();
 	static bool m_comparePlayers(const typePlayer& Player1, const typePlayer& Player2) {
 		return std::stoi(Player1.second) > std::stoi(Player2.second);
 	}
