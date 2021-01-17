@@ -38,6 +38,9 @@ void Game_2P::Run(bool& menuOrGame, uint16_t& levelSound)
 
 	auto start = std::chrono::system_clock::now();
 	auto randomTime = Utils::GetRandomNumber(10, 20);
+	auto randomTimeDH = Utils::GetRandomNumber(10, 20);
+	auto pos_x = Utils::GetRandomNumber(0, BOARD_WIDTH_2P - 1);
+	auto pos_y = Utils::GetRandomNumber(0, BOARD_HEIGHT_2P - 1);
 
 	while (m_renderWindow.isOpen())
 	{
@@ -52,14 +55,32 @@ void Game_2P::Run(bool& menuOrGame, uint16_t& levelSound)
 			std::cout << "m_ElapsedTime = " << m_elapsedTime.asMilliseconds() << std::endl << std::endl;
 
 			auto end = std::chrono::system_clock::now();
+
 			std::chrono::duration<double> duration = end - start;
+			std::chrono::duration<double> durationDH = end - start;
+
 			if (duration.count() >= randomTime)
 			{
 				std::cout << std::endl << duration.count();
 				start = std::chrono::system_clock::now();
 				AddSpecialShape();
-				randomTime = Utils::GetRandomNumber(40, 120);
+				randomTime = Utils::GetRandomNumber(10, 20);
 				std::cout << std::endl << randomTime;
+			}
+
+			if (durationDH.count() >= randomTimeDH)
+			{
+				m_board->GenerateDarkHole(1, Position{ pos_x, pos_y });
+				auto end = std::chrono::system_clock::now();
+				durationDH = end - start;
+				randomTimeDH = Utils::GetRandomNumber(5, 10);
+				if (durationDH.count() >= randomTimeDH)
+				{
+					m_board->DestroyDarkHole(Position{ pos_x, pos_y });
+					randomTimeDH = Utils::GetRandomNumber(10, 20);
+					pos_x = Utils::GetRandomNumber(0, BOARD_WIDTH_2P - 1);
+					pos_y = Utils::GetRandomNumber(0, BOARD_HEIGHT_2P - 1);
+				}
 			}
 
 			ProcessEvents(menuOrGame, levelSound);
