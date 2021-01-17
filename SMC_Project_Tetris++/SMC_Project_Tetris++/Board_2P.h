@@ -18,6 +18,8 @@ public:
 	Board_2P(Position, IGame&);
 	Board_2P(const Board_2P& other) = delete;
 	Board_2P& operator=(const Board_2P& other) = delete;
+	void GenerateDarkHole(uint16_t, Position);
+	void DestroyDarkHole(Position);
 
 private:
 	void MarkLinesForRemoval();
