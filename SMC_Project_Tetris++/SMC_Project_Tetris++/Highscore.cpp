@@ -16,8 +16,6 @@ Highscore::Highscore()
 	m_spriteHighscore.setTexture(m_textureHighscore);
 	//m_spriteHighscore.setColor(sf::Color(255, 255, 255, 200));
 	m_spriteHighscore.setOrigin(0, 0);
-
-	//InitializeScorePlayerList();
 }
 
 void Highscore::draw()
@@ -34,7 +32,7 @@ void Highscore::draw()
 	else
 	{
 		m_textModeGame.setPosition(sf::Vector2f(HIGHSCORE_WIDTH / 5.2, HIGHSCORE_HEIGHT / 4.8));
-		m_textModeGame.setString("MultiplayerCo-op");
+		m_textModeGame.setString("Multiplayer");
 	}
 	m_renderWindowHighscore.draw(m_textModeGame);
 }
@@ -158,51 +156,39 @@ void Highscore::FileReader()
 	{
 		InitializeScorePlayerList();
 		std::ifstream readFile("../Resources/Files/outputPlayers2Pcoop.txt");
+		auto cmp = [](std::pair<std::string, int> p1, std::pair<std::string, int> p2)
+		{
+			return p1.second > p2.second;
+		};
+
 		if (readFile.is_open())
 		{
 			std::string line;
 			uint16_t index = 0;
-			std::vector<typePlayer> playersVector;
-			for (std::string line; getline(readFile, line);)
+			std::set<std::pair<std::string, int>, decltype(cmp)> playersSet(cmp);
+
+			while (!readFile.eof())
 			{
-				std::istringstream wordbyword(line);
+				std::string line;
+				std::getline(readFile, line);
 				std::string name1;
 				std::string name2;
-				std::string score;
-				std::getline(wordbyword, name1, ' ');
-				std::getline(wordbyword, name2, ' ');
-				std::getline(wordbyword, score);
+				int score;
+				std::istringstream ss(line);
+				ss >> name1 >> name2 >> score;
 				while (name2.size() != 10)
 					name2 += " ";
-				std::string name;
-				name = name1 + "&\n" + name2;
-				typePlayer player;
-				player.first = name;
-				player.second = score;
-				bool find = false;
-				for (typePlayer& playerIndex : playersVector)
-					if (playerIndex.first.compare(player.first) == 0)
-					{
-						if (std::stoi(player.second) > std::stoi(playerIndex.second))
-							playerIndex.second = player.second;
-						find = true;
-					}
-
-				if (!find)
-					playersVector.push_back(player);
+				std::string name = name1 + "&\n" + name2;
+				playersSet.insert(std::make_pair(name, score));
 			}
 
-			std::sort(playersVector.begin(), playersVector.end(), m_comparePlayers);
-
-			for (typePlayer player : playersVector)
-				if (index < MAX_NUMBER_PLAYERS)
-				{
-					m_playersList[index].setString(playersVector.at(index).first + playersVector.at(index).second);
+			for (auto p : playersSet)
+			{
+				if (index < MAX_NUMBER_PLAYERS) {
+					m_playersList[index].setString(p.first + std::to_string(p.second));
 					index++;
 				}
-				else
-					break;
-
+			}
 			readFile.close();
 		}
 		else
