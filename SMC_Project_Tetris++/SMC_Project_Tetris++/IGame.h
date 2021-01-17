@@ -26,6 +26,11 @@ protected:
 	void ScaleDown();
 	bool IsOccupied(uint16_t, uint16_t);
 	std::pair<uint16_t, uint16_t> GetFreePosition(uint16_t, uint16_t);
+	void InitializePauseMenu(const unsigned int width, const unsigned int height);
+	void InitializeTextPauseMenu(const unsigned int width, const unsigned int height);
+	void InitializeTextGameoverMenu(const unsigned int width, const unsigned int height);
+	void InitializePlayerNameBox(const unsigned int width, const unsigned int height);
+	void InitializePlayerNameText(const unsigned int width, const unsigned int height);
 	virtual void AddSpecialShape() = 0;
 	virtual void CreateShape() = 0;
 	virtual bool IsValidMovement(std::array<Position, BLOCK_ARRAY_COLUMNS>) = 0;
