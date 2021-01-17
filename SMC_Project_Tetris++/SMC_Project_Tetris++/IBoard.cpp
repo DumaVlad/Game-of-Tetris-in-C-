@@ -15,7 +15,7 @@ Field& Field::operator=(const Field& field)
 	this->m_occupied = field.m_occupied;
 	this->m_visible = field.m_visible;
 	this->m_info = field.m_info;
-	this->m_darkHole = field.m_darkHole;
+	
 
 	return *this;
 }

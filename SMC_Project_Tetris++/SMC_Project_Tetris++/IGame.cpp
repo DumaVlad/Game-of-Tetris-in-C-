@@ -146,7 +146,9 @@ void IGame::ScaleDown()
 
 bool IGame::IsOccupied(uint16_t x, uint16_t y)
 {
-	return m_board->GetField(x, y)->m_Occupied;
+	if (m_board->GetField(x, y)->m_darkHole)
+		return false;
+	return m_board->GetField(x, y)->m_occupied;
 }
 
 std::pair<uint16_t, uint16_t> IGame::GetFreePosition(uint16_t x, uint16_t y)
