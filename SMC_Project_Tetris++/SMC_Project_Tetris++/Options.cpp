@@ -81,11 +81,6 @@ void Options::RunOptions(uint16_t& levelSound)
 					if (m_page < 2)
 						m_page++;
 				}
-				if (e.key.code == sf::Keyboard::H)
-				{
-					Highscore highscore;
-					highscore.runHighscore();
-				}
 			}
 		}
 		m_renderWindowOptions.clear();
@@ -102,17 +97,20 @@ Options::~Options()
 void Options::InitializeControlsSingleplayerGame()
 {
 	m_controlsSingleplayerGame[0].setFont(m_fontOptions);
-	m_controlsSingleplayerGame[0].setFillColor(sf::Color::White);
+	m_controlsSingleplayerGame[0].setFillColor(sf::Color::Green);
 	m_controlsSingleplayerGame[0].setOutlineColor(sf::Color::Black);
 	m_controlsSingleplayerGame[0].setOutlineThickness(3);
-	m_controlsSingleplayerGame[0].setCharacterSize(25);
+	m_controlsSingleplayerGame[0].setCharacterSize(30);
 	m_controlsSingleplayerGame[0].setString("Controls in SP game");
 	m_controlsSingleplayerGame[0].setPosition(sf::Vector2f(OPTIONS_WIDTH / 12, OPTIONS_HEIGHT / 15));
 
 	for (int i = 1; i < MAX_NUMBER_CONTROLS; i++)
 	{
 		m_controlsSingleplayerGame[i].setFont(m_fontOptions);
-		m_controlsSingleplayerGame[i].setFillColor(sf::Color::White);
+		if (i > MAX_NUMBER_CONTROLS - 4)
+			m_controlsSingleplayerGame[i].setFillColor(sf::Color::White);
+		else
+			m_controlsSingleplayerGame[i].setFillColor(sf::Color::Yellow);
 		m_controlsSingleplayerGame[i].setOutlineColor(sf::Color::Black);
 		m_controlsSingleplayerGame[i].setOutlineThickness(3);
 		m_controlsSingleplayerGame[i].setCharacterSize(15);
@@ -127,23 +125,22 @@ void Options::InitializeControlsSingleplayerGame()
 	m_controlsSingleplayerGame[6].setString("Z = piece scale down");
 	m_controlsSingleplayerGame[7].setString("Escape = return to menu");
 	m_controlsSingleplayerGame[8].setString("Space = pause game");
-	m_controlsSingleplayerGame[9].setString("H (in options or pause) = highscore");
+	m_controlsSingleplayerGame[9].setString("H (in pause menu) = highscore");
+
 }
 
 void Options::InitializeControlsMultiplayerGame()
 {
-
-
 	m_controlsMultiplayerGame[0].setFont(m_fontOptions);
-	m_controlsMultiplayerGame[0].setFillColor(sf::Color::White);
+	m_controlsMultiplayerGame[0].setFillColor(sf::Color::Green);
 	m_controlsMultiplayerGame[0].setOutlineColor(sf::Color::Black);
 	m_controlsMultiplayerGame[0].setOutlineThickness(3);
-	m_controlsMultiplayerGame[0].setCharacterSize(25);
+	m_controlsMultiplayerGame[0].setCharacterSize(30);
 	m_controlsMultiplayerGame[0].setString("Controls in MP game");
 	m_controlsMultiplayerGame[0].setPosition(sf::Vector2f(OPTIONS_WIDTH / 12, OPTIONS_HEIGHT / 15));
 
 	m_controlsMultiplayerGame[1].setFont(m_fontOptions);
-	m_controlsMultiplayerGame[1].setFillColor(sf::Color::White);
+	m_controlsMultiplayerGame[1].setFillColor(sf::Color::Yellow);
 	m_controlsMultiplayerGame[1].setOutlineColor(sf::Color::Black);
 	m_controlsMultiplayerGame[1].setOutlineThickness(3);
 	m_controlsMultiplayerGame[1].setCharacterSize(20);
@@ -151,7 +148,7 @@ void Options::InitializeControlsMultiplayerGame()
 	m_controlsMultiplayerGame[1].setPosition(sf::Vector2f(OPTIONS_WIDTH / 10, OPTIONS_HEIGHT / 15 * 2));
 
 	m_controlsMultiplayerGame[2].setFont(m_fontOptions);
-	m_controlsMultiplayerGame[2].setFillColor(sf::Color::White);
+	m_controlsMultiplayerGame[2].setFillColor(sf::Color::Cyan);
 	m_controlsMultiplayerGame[2].setOutlineColor(sf::Color::Black);
 	m_controlsMultiplayerGame[2].setOutlineThickness(3);
 	m_controlsMultiplayerGame[2].setCharacterSize(20);
@@ -161,7 +158,7 @@ void Options::InitializeControlsMultiplayerGame()
 	for (int i = 3; i < MAX_NUMBER_CONTROLS_MP / 2; i++)
 	{
 		m_controlsMultiplayerGame[i].setFont(m_fontOptions);
-		m_controlsMultiplayerGame[i].setFillColor(sf::Color::White);
+		m_controlsMultiplayerGame[i].setFillColor(sf::Color::Yellow);
 		m_controlsMultiplayerGame[i].setOutlineColor(sf::Color::Black);
 		m_controlsMultiplayerGame[i].setOutlineThickness(3);
 		m_controlsMultiplayerGame[i].setCharacterSize(15);
@@ -171,7 +168,7 @@ void Options::InitializeControlsMultiplayerGame()
 	for (int i = MAX_NUMBER_CONTROLS_MP / 2; i < MAX_NUMBER_CONTROLS_MP - 3; i++)
 	{
 		m_controlsMultiplayerGame[i].setFont(m_fontOptions);
-		m_controlsMultiplayerGame[i].setFillColor(sf::Color::White);
+		m_controlsMultiplayerGame[i].setFillColor(sf::Color::Cyan);
 		m_controlsMultiplayerGame[i].setOutlineColor(sf::Color::Black);
 		m_controlsMultiplayerGame[i].setOutlineThickness(3);
 		m_controlsMultiplayerGame[i].setCharacterSize(15);
@@ -202,7 +199,8 @@ void Options::InitializeControlsMultiplayerGame()
 	m_controlsMultiplayerGame[14].setString(" F = piece scale down");
 	m_controlsMultiplayerGame[15].setString("Escape = return to menu");
 	m_controlsMultiplayerGame[16].setString("Space = pause game");
-	m_controlsMultiplayerGame[17].setString("H (in options or pause) = highscore");
+	m_controlsMultiplayerGame[17].setString("H (in pause menu) = highscore");
+
 }
 
 void Options::InitializeControlSound()
@@ -224,6 +222,7 @@ void Options::InitializeControlSound()
 	m_controlSound[3].setString("Sound 60%");
 	m_controlSound[4].setString("Sound 80%");
 	m_controlSound[5].setString("Sound 100%");
+
 }
 
 void Options::InitializeTextPage()
@@ -234,10 +233,10 @@ void Options::InitializeTextPage()
 		m_textPage[i].setFillColor(sf::Color::White);
 		m_textPage[i].setOutlineColor(sf::Color::Black);
 		m_textPage[i].setOutlineThickness(5);
-		m_textPage[i].setCharacterSize(13);
+		m_textPage[i].setCharacterSize(15);
 		m_textPage[i].setPosition(sf::Vector2f(OPTIONS_WIDTH / 2.5, OPTIONS_HEIGHT / 15 * 14));
 	}
 
-	m_textPage[0].setString("Page 1/2");
-	m_textPage[1].setString("Page 2/2");
+	m_textPage[0].setString("Page < 1/2 >");
+	m_textPage[1].setString("Page < 2/2 >");
 }

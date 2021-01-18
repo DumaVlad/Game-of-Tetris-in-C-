@@ -52,7 +52,7 @@ protected:
 	uint16_t m_pause;
 	sf::RectangleShape m_pauseMenu;
 	sf::Font m_fontOptions;
-	sf::Text m_textPauseMenu[4];
+	sf::Text m_textPauseMenu[5];
 	sf::Text m_textGameOverMenu[5];
 	sf::String m_playerNameInput1;
 	sf::String m_playerNameInput2;

@@ -17,7 +17,7 @@ IGame::IGame(const unsigned int width, const unsigned int height)
 	if (!m_gameplayMusic.openFromFile("../Resources/Sounds/Tetris.wav"))
 		std::cout << "Could not load music in Game Interface !! \n";
 
-	//Graphics initizlization
+	//Graphics initialization
 	InitializePauseMenu(width, height);
 	InitializeTextPauseMenu(width, height);
 	InitializeTextGameoverMenu(width, height);
@@ -125,7 +125,7 @@ void IGame::InitializeTextPauseMenu(const unsigned int width, const unsigned int
 	m_textPauseMenu[0].setString("Pause Menu");
 	m_textPauseMenu[0].setPosition(sf::Vector2f((width * 18.f + 150.f) / 3.1f, (height * 18.f) / 3.f));
 
-	for (uint16_t i = 1; i < 4; i++)
+	for (uint16_t i = 1; i < 5; i++)
 	{
 		m_textPauseMenu[i].setFont(m_fontOptions);
 		m_textPauseMenu[i].setFillColor(sf::Color::White);
@@ -136,7 +136,8 @@ void IGame::InitializeTextPauseMenu(const unsigned int width, const unsigned int
 	}
 	m_textPauseMenu[1].setString("Press Enter for Continue");
 	m_textPauseMenu[2].setString("Press O for Options");
-	m_textPauseMenu[3].setString("Press Escape for Exit");
+	m_textPauseMenu[3].setString("Press H for Highscore");
+	m_textPauseMenu[4].setString("Press Escape for Exit");
 }
 
 void IGame::InitializeTextGameoverMenu(const unsigned int width, const unsigned int height)
@@ -181,6 +182,6 @@ void IGame::InitializePlayerNameText(const unsigned int width, const unsigned in
 	m_playerNameText.setFillColor(sf::Color::White);
 	m_playerNameText.setOutlineColor(sf::Color::Black);
 	m_playerNameText.setOutlineThickness(3);
-	m_playerNameText.setCharacterSize(25);
+	m_playerNameText.setCharacterSize(30);
 	m_playerNameText.setPosition(sf::Vector2f((width * 18.f + 70.f) / 3.1f, (height * 18.f) / 3.f + 70.f));
 }

@@ -8,7 +8,7 @@
 class Highscore
 {
 public:
-	Highscore();
+	Highscore(uint16_t modeGame);
 	void draw();
 	void runHighscore();
 	~Highscore() = default;

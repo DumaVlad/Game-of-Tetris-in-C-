@@ -19,7 +19,7 @@ Game_2P::Game_2P()
 	m_backGroundSprite.setColor(sf::Color(255, 255, 255, 160));
 	m_backGroundSprite.setOrigin(0, 0);
 
-	m_pauseMenu.setSize(sf::Vector2f{ 430.f,200.f });
+	m_pauseMenu.setSize(sf::Vector2f{ 450.f,200.f });
 
 	m_board = std::make_unique<Board_2P>(Position{ BOARD_WIDTH_2P,BOARD_HEIGHT_2P }, *this);
 	CreateShape();
@@ -390,7 +390,7 @@ void Game_2P::ProcessEvents(bool& menuOrGame, uint16_t& levelSound)
 				}
 				else if (e.key.code == sf::Keyboard::H)
 				{
-					Highscore highscore;
+					Highscore highscore(1);
 					highscore.runHighscore();
 				}
 				else if (e.key.code == sf::Keyboard::Escape)
@@ -422,7 +422,7 @@ void Game_2P::Render()
 	else if (m_pause == 1)
 	{
 		m_renderWindow.draw(m_pauseMenu);
-		for (uint16_t i = 0;i < 4;i++)
+		for (uint16_t i = 0;i < 5;i++)
 			m_renderWindow.draw(m_textPauseMenu[i]);
 	}
 	else if (m_pause == 2)

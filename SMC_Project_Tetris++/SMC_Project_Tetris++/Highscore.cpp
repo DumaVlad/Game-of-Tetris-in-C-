@@ -3,8 +3,8 @@
 #include <sstream>
 #include <set>
 
-Highscore::Highscore()
-	:m_renderWindowHighscore{ sf::VideoMode{HIGHSCORE_WIDTH, HIGHSCORE_HEIGHT}, "HIGHSCORE" }, m_modeGame{ 0 }
+Highscore::Highscore(uint16_t modeGame)
+	:m_renderWindowHighscore{ sf::VideoMode{HIGHSCORE_WIDTH, HIGHSCORE_HEIGHT}, "HIGHSCORE" }, m_modeGame{ modeGame }
 {
 	if (!m_textureHighscore.loadFromFile("../Resources/Images/highscore.png"))
 		std::cout << "Could not load image in Highscore Class !! \n";
@@ -31,7 +31,7 @@ void Highscore::draw()
 	}
 	else
 	{
-		m_textModeGame.setPosition(sf::Vector2f(HIGHSCORE_WIDTH / 5.2, HIGHSCORE_HEIGHT / 4.8));
+		m_textModeGame.setPosition(sf::Vector2f(HIGHSCORE_WIDTH / 3.6, HIGHSCORE_HEIGHT / 4.8));
 		m_textModeGame.setString("Multiplayer");
 	}
 	m_renderWindowHighscore.draw(m_textModeGame);
@@ -54,16 +54,6 @@ void Highscore::runHighscore()
 				{
 					m_renderWindowHighscore.close();
 				}
-				if (e.key.code == sf::Keyboard::Left)
-				{
-					if (m_modeGame > 0)
-						m_modeGame--;
-				}
-				if (e.key.code == sf::Keyboard::Right)
-				{
-					if (m_modeGame < 1)
-						m_modeGame++;
-				}
 			}
 		}
 		FileReader();
@@ -80,7 +70,7 @@ void Highscore::InitializeScorePlayerList()
 	m_textModeGame.setFillColor(sf::Color::Blue);
 	m_textModeGame.setOutlineColor(sf::Color::White);
 	m_textModeGame.setOutlineThickness(3);
-	m_textModeGame.setCharacterSize(25);
+	m_textModeGame.setCharacterSize(30);
 
 	for (int i = 0; i < MAX_NUMBER_PLAYERS; i++)
 	{
@@ -91,14 +81,14 @@ void Highscore::InitializeScorePlayerList()
 		if (m_modeGame == 0)
 		{
 			m_playersList[i].setString("Unknown   0");
-			m_playersList[i].setCharacterSize(19);
-			m_playersList[i].setPosition(sf::Vector2f(HIGHSCORE_WIDTH / 3, HIGHSCORE_HEIGHT / 18 * i + 265));
+			m_playersList[i].setCharacterSize(20);
+			m_playersList[i].setPosition(sf::Vector2f(HIGHSCORE_WIDTH / 2.9, HIGHSCORE_HEIGHT / 17.7 * i + 295));
 		}
 		else
 		{
 			m_playersList[i].setString("Unknown1&\n Unknown2   0");
-			m_playersList[i].setCharacterSize(16);
-			m_playersList[i].setPosition(sf::Vector2f(HIGHSCORE_WIDTH / 3, HIGHSCORE_HEIGHT / 17.5 * i + 250));
+			m_playersList[i].setCharacterSize(18);
+			m_playersList[i].setPosition(sf::Vector2f(HIGHSCORE_WIDTH / 2.9, HIGHSCORE_HEIGHT / 18 * i + 290));
 		}
 	}
 

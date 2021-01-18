@@ -2,7 +2,7 @@
 
 #include <SFML/Graphics.hpp>
 
-#define MAX_NUMBER_ELEMENTS 3
+#define MAX_NUMBER_ELEMENTS 4
 
 class Menu
 {
@@ -31,5 +31,6 @@ private:
 	sf::Texture m_textureMenu;
 	sf::Sprite m_spriteMenu;
 	bool m_menuOrGame;
+	bool m_highscoreOrGame;
 	uint16_t m_levelSound;
 };
