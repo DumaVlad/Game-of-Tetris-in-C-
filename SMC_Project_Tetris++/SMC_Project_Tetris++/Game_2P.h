@@ -1,3 +1,4 @@
+#pragma once
 #include "TetrisShape.h"
 #include "Board_2P.h"
 #include "IGame.h"

@@ -316,7 +316,7 @@ void Game::FileWriter(const std::string& file)
 		std::cout << "File cannot be opened!\n";
 		return;
 	}
-	fileOut << m_player->GetPlayerName() << " " << m_player->GetScore() << "\n";
+	fileOut << '\n' << m_player->GetPlayerName() << " " << m_player->GetScore();
 
 }
 

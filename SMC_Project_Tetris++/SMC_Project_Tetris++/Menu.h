@@ -1,5 +1,4 @@
 #pragma once
-
 #include <SFML/Graphics.hpp>
 
 #define MAX_NUMBER_ELEMENTS 4

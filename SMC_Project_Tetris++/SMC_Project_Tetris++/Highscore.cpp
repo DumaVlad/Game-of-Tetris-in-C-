@@ -1,7 +1,7 @@
 #include "Highscore.h"
 #include <fstream>
 #include <sstream>
-#include <set>
+#include <map>
 
 Highscore::Highscore(uint16_t modeGame)
 	:m_renderWindowHighscore{ sf::VideoMode{HIGHSCORE_WIDTH, HIGHSCORE_HEIGHT}, "HIGHSCORE" }, m_modeGame{ modeGame }
@@ -106,16 +106,17 @@ void Highscore::FileReader()
 	{
 		InitializeScorePlayerList();
 		std::ifstream readFile("../Resources/Files/outputPlayers1P.txt");
-		auto cmp = [](std::pair<std::string, int> p1, std::pair<std::string, int> p2)
+		auto cmp = [](const int& left, const int& right) -> bool
 		{
-			return p1.second > p2.second;
+			return left > right;
 		};
 
 		if (readFile.is_open())
 		{
 			std::string line;
 			uint16_t index = 0;
-			std::set<std::pair<std::string, int>, decltype(cmp)> playersSet(cmp);
+			std::map<std::string, int> tempMap;
+			std::multimap<int, std::string, decltype(cmp)> playerScoreMap(cmp);
 
 			while (!readFile.eof())
 			{
@@ -127,13 +128,23 @@ void Highscore::FileReader()
 				ss >> name >> score;
 				while (name.size() != 10)
 					name += " ";
-				playersSet.insert(std::make_pair(name, score));
+				if (tempMap.find(name) != tempMap.end())
+				{
+					if (tempMap[name] < score)
+						tempMap[name] = score;
+				}
+				else
+					tempMap.emplace(name, score);
 			}
 
-			for (auto p : playersSet)
+			for (auto p : tempMap)
+				playerScoreMap.emplace(p.second, p.first);
+			
+			for (auto p : playerScoreMap) 
 			{
-				if (index < MAX_NUMBER_PLAYERS) {
-					m_playersList[index].setString(p.first + std::to_string(p.second));
+				if (index < MAX_NUMBER_PLAYERS)
+				{
+					m_playersList[index].setString(p.second + std::to_string(p.first));
 					index++;
 				}
 			}
@@ -146,16 +157,17 @@ void Highscore::FileReader()
 	{
 		InitializeScorePlayerList();
 		std::ifstream readFile("../Resources/Files/outputPlayers2Pcoop.txt");
-		auto cmp = [](std::pair<std::string, int> p1, std::pair<std::string, int> p2)
+		auto cmp = [](const int& left, const int& right) -> bool
 		{
-			return p1.second > p2.second;
+			return left > right;
 		};
 
 		if (readFile.is_open())
 		{
 			std::string line;
 			uint16_t index = 0;
-			std::set<std::pair<std::string, int>, decltype(cmp)> playersSet(cmp);
+			std::map<std::string, int> tempMap;
+			std::multimap<int, std::string, decltype(cmp)> playerScoreMap(cmp);
 
 			while (!readFile.eof())
 			{
@@ -169,13 +181,22 @@ void Highscore::FileReader()
 				while (name2.size() != 12)
 					name2 += " ";
 				std::string name = name1 + "&\n" + name2;
-				playersSet.insert(std::make_pair(name, score));
+				if (tempMap.find(name) != tempMap.end())
+				{
+					if (tempMap[name] < score)
+						tempMap[name] = score;
+				}
+				else
+					tempMap.emplace(name, score);
 			}
 
-			for (auto p : playersSet)
+			for (auto p : tempMap)
+				playerScoreMap.emplace(p.second, p.first);
+
+			for (auto p : playerScoreMap)
 			{
 				if (index < MAX_NUMBER_PLAYERS) {
-					m_playersList[index].setString(p.first + std::to_string(p.second));
+					m_playersList[index].setString(p.second + std::to_string(p.first));
 					index++;
 				}
 			}
