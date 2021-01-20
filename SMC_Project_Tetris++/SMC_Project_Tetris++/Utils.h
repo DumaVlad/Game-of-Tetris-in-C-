@@ -15,6 +15,8 @@ constexpr int HIGHSCORE_WIDTH = 700;
 constexpr int HIGHSCORE_HEIGHT = 900;
 constexpr uint16_t BLOCK_ARRAY_ROWS = 7;
 constexpr uint16_t BLOCK_ARRAY_COLUMNS = 16;
+constexpr uint16_t DARKHOLE_TEXTURE_ID = 7;
+constexpr uint16_t SPECIALSHAPE_TEXTURE_ID = 8;
 
 class Utils
 {

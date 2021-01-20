@@ -12,7 +12,7 @@ IGame::IGame(const unsigned int width, const unsigned int height)
 
 	if (!m_fontOptions.loadFromFile("../Resources/Fonts/arial.ttf"))
 		std::cout << "Could not load font in Game Interface !! \n";
-	if (!m_texture.loadFromFile("../Resources/Images/Blocks.png"))
+	if (!m_texture.loadFromFile("../Resources/Images/Blocks2.png"))
 		std::cout << "Could not load texture in Game Interface !! \n";
 	if (!m_gameplayMusic.openFromFile("../Resources/Sounds/Tetris.wav"))
 		std::cout << "Could not load music in Game Interface !! \n";

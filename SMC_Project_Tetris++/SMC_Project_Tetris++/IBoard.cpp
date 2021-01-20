@@ -5,7 +5,7 @@
 
 FieldData::FieldData(sf::Texture& texture, uint16_t id)
 {
-	sf::IntRect rectangle{ (id % 7) * 18, 0, 18, 18 };
+	sf::IntRect rectangle{ (id % 9) * 18, 0, 18, 18 };
 	m_sprite.setTexture(texture);
 	m_sprite.setTextureRect(rectangle);
 }
@@ -15,8 +15,8 @@ Field& Field::operator=(const Field& field)
 	this->m_occupied = field.m_occupied;
 	this->m_visible = field.m_visible;
 	this->m_info = field.m_info;
+	this->m_darkHole = field.m_darkHole;
 	
-
 	return *this;
 }
 
@@ -27,7 +27,7 @@ IBoard::IBoard(Position size, IGame& game)
 		for (int y = 0; y < size.y; y++)
 			m_Fields[Convert2DTo1D(x, y)] = std::make_unique<Field>();
 
-	for (int id = 0; id < 7; id++)
+	for (int id = 0; id < 9; id++)
 		m_FieldDatas[id] = std::make_unique<FieldData>(m_Game.m_texture, id);
 }
 

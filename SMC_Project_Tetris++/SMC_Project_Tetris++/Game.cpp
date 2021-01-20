@@ -67,7 +67,7 @@ void Game::Run(bool& menuOrGame, uint16_t& levelSound)
 
 			if (durationDH.count() >= randomTimeDH)
 			{
-				m_board->GenerateDarkHole(1, Position{ pos_x, pos_y });
+				m_board->GenerateDarkHole(DARKHOLE_TEXTURE_ID, Position{ pos_x, pos_y });
 				auto end = std::chrono::system_clock::now();
 				durationDH = end - start;
 				randomTimeDH = Utils::GetRandomNumber(5, 10);
@@ -137,7 +137,7 @@ void Game::AddSpecialShape()
 {
 	std::pair<uint16_t, uint16_t> field = GetFreePosition(Utils::GetRandomNumber(0, BOARD_WIDTH-1), BOARD_HEIGHT);
 	Position block(field.first, field.second);
-	m_board->AddSpecialBlock(Utils::GetRandomNumber(0, 6), block);
+	m_board->AddSpecialBlock(SPECIALSHAPE_TEXTURE_ID, block);
 	return;
 }
 

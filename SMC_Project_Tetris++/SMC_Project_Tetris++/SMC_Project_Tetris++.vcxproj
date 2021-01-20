@@ -166,7 +166,6 @@
   <ItemGroup>
     <ClCompile Include="Board.cpp" />
     <ClCompile Include="Board_2P.cpp" />
-    <ClCompile Include="DarkHole.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="Game_2P.cpp" />
     <ClCompile Include="Highscore.cpp" />
@@ -182,7 +181,6 @@
   <ItemGroup>
     <ClInclude Include="Board.h" />
     <ClInclude Include="Board_2P.h" />
-    <ClInclude Include="DarkHole.h" />
     <ClInclude Include="Directions.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="Game_2P.h" />
@@ -201,6 +199,7 @@
   </ItemGroup>
   <ItemGroup>
     <Image Include="..\Resources\Images\Blocks.png" />
+    <Image Include="..\Resources\Images\Blocks2.png" />
     <Image Include="..\Resources\Images\optionsTetrisEffect.jpg" />
     <Image Include="..\Resources\Images\tetris600x600.jpg" />
   </ItemGroup>
@@ -210,7 +209,9 @@
     <Media Include="..\Resources\Sounds\Tetris.wav" />
   </ItemGroup>
   <ItemGroup>
-    <Text Include="Input.txt" />
+    <Text Include="..\Resources\Files\inputTetrisShape.txt" />
+    <Text Include="..\Resources\Files\outputPlayers1P.txt" />
+    <Text Include="..\Resources\Files\outputPlayers2Pcoop.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
