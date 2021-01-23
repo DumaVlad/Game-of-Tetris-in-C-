@@ -137,7 +137,7 @@ void Options::InitializeControlsMultiplayerGame()
 	m_controlsMultiplayerGame[0].setOutlineThickness(3);
 	m_controlsMultiplayerGame[0].setCharacterSize(30);
 	m_controlsMultiplayerGame[0].setString("Controls in MP game");
-	m_controlsMultiplayerGame[0].setPosition(sf::Vector2f(OPTIONS_WIDTH / 12, OPTIONS_HEIGHT / 15));
+	m_controlsMultiplayerGame[0].setPosition(sf::Vector2f(OPTIONS_WIDTH / 5, OPTIONS_HEIGHT / 15));
 
 	m_controlsMultiplayerGame[1].setFont(m_fontOptions);
 	m_controlsMultiplayerGame[1].setFillColor(sf::Color::Yellow);
@@ -153,7 +153,7 @@ void Options::InitializeControlsMultiplayerGame()
 	m_controlsMultiplayerGame[2].setOutlineThickness(3);
 	m_controlsMultiplayerGame[2].setCharacterSize(20);
 	m_controlsMultiplayerGame[2].setString("Player 2");
-	m_controlsMultiplayerGame[2].setPosition(sf::Vector2f(OPTIONS_WIDTH / 10 * 6, OPTIONS_HEIGHT / 15 * 2));
+	m_controlsMultiplayerGame[2].setPosition(sf::Vector2f(OPTIONS_WIDTH / 10 * 5.5, OPTIONS_HEIGHT / 15 * 2));
 
 	for (int i = 3; i < MAX_NUMBER_CONTROLS_MP / 2; i++)
 	{
@@ -172,7 +172,7 @@ void Options::InitializeControlsMultiplayerGame()
 		m_controlsMultiplayerGame[i].setOutlineColor(sf::Color::Black);
 		m_controlsMultiplayerGame[i].setOutlineThickness(3);
 		m_controlsMultiplayerGame[i].setCharacterSize(15);
-		m_controlsMultiplayerGame[i].setPosition(sf::Vector2f(OPTIONS_WIDTH / 10 * 6, OPTIONS_HEIGHT / 20 * (i - 6 + 2)));
+		m_controlsMultiplayerGame[i].setPosition(sf::Vector2f(OPTIONS_WIDTH / 10 * 5.5, OPTIONS_HEIGHT / 20 * (i - 6 + 2)));
 	}
 
 	for (int i = MAX_NUMBER_CONTROLS_MP - 3; i < MAX_NUMBER_CONTROLS_MP; i++)
@@ -185,18 +185,23 @@ void Options::InitializeControlsMultiplayerGame()
 		m_controlsMultiplayerGame[i].setPosition(sf::Vector2f(OPTIONS_WIDTH / 3, OPTIONS_HEIGHT / 20 * (i - 6 + 2)));
 	}
 
-	m_controlsMultiplayerGame[3].setString("Arrow Down = piece go down");
-	m_controlsMultiplayerGame[4].setString("Arrow Left = piece go left");
-	m_controlsMultiplayerGame[5].setString("Arrow Right = piece go right");
-	m_controlsMultiplayerGame[6].setString("Arrow Up = piece rotate");
-	m_controlsMultiplayerGame[7].setString("Numpad1 = piece scale up");
-	m_controlsMultiplayerGame[8].setString("Numpad0 = piece scale down");
-	m_controlsMultiplayerGame[9].setString(" S = piece go down");
-	m_controlsMultiplayerGame[10].setString(" A = piece go left");
-	m_controlsMultiplayerGame[11].setString(" D = piece go right");
-	m_controlsMultiplayerGame[12].setString(" W = piece rotate");
-	m_controlsMultiplayerGame[13].setString(" R = piece scale up");
-	m_controlsMultiplayerGame[14].setString(" F = piece scale down");
+	//Controls for player 1
+	m_controlsMultiplayerGame[3].setString(" S = piece go down ");
+	m_controlsMultiplayerGame[4].setString(" A = piece go left");
+	m_controlsMultiplayerGame[5].setString(" D = piece go right");
+	m_controlsMultiplayerGame[6].setString(" W = piece rotate");
+	m_controlsMultiplayerGame[7].setString(" R = piece scale up");
+	m_controlsMultiplayerGame[8].setString(" F = piece scale down");
+
+	//Controls for player 2
+	m_controlsMultiplayerGame[9].setString("Arrow Down = piece go down");
+	m_controlsMultiplayerGame[10].setString("Arrow Left = piece go left");
+	m_controlsMultiplayerGame[11].setString("Arrow Right = piece go right");
+	m_controlsMultiplayerGame[12].setString("Arrow Up = piece rotate");
+	m_controlsMultiplayerGame[13].setString("Numpad1 = piece scale up");
+	m_controlsMultiplayerGame[14].setString("Numpad0 = piece scale down");
+
+	//System controls
 	m_controlsMultiplayerGame[15].setString("Escape = return to menu");
 	m_controlsMultiplayerGame[16].setString("Space = pause game");
 	m_controlsMultiplayerGame[17].setString("H (in pause menu) = highscore");
