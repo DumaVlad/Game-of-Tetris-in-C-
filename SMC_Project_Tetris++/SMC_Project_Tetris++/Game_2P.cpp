@@ -40,7 +40,7 @@ void Game_2P::Run(bool& menuOrGame, uint16_t& levelSound)
 	auto randomTime = Utils::GetRandomNumber(10, 20);
 	auto randomTimeDH = Utils::GetRandomNumber(10, 20);
 	auto pos_x = Utils::GetRandomNumber(0, BOARD_WIDTH_2P - 1);
-	auto pos_y = Utils::GetRandomNumber(0, BOARD_HEIGHT_2P - 1);
+	auto pos_y = Utils::GetRandomNumber(15, BOARD_HEIGHT_2P - 1);
 
 	while (m_renderWindow.isOpen())
 	{
@@ -79,7 +79,7 @@ void Game_2P::Run(bool& menuOrGame, uint16_t& levelSound)
 					m_board->DestroyDarkHole(Position{ pos_x, pos_y });
 					randomTimeDH = Utils::GetRandomNumber(10, 20);
 					pos_x = Utils::GetRandomNumber(0, BOARD_WIDTH_2P - 1);
-					pos_y = Utils::GetRandomNumber(0, BOARD_HEIGHT_2P - 1);
+					pos_y = Utils::GetRandomNumber(15, BOARD_HEIGHT_2P - 1);
 				}
 			}
 
@@ -278,6 +278,21 @@ bool Game_2P::IsValidMovement(std::array<Position, BLOCK_ARRAY_COLUMNS> block)
 		{
 			std::cout << "INVALID" << std::endl;
 			return false;
+		}
+		if (IsDarkHole(block[i].x, block[i].y))
+		{
+			if (i < 15)
+			{
+				m_tetrisShape->m_block[i] = m_tetrisShape->m_block[2];
+				m_tetrisShape_2P->m_block[i] = m_tetrisShape_2P->m_block[2];
+
+			}
+			if (i == 15)
+			{
+				m_tetrisShape->m_block[i] = m_tetrisShape->m_block[2];
+				m_tetrisShape_2P->m_block[i] = m_tetrisShape_2P->m_block[2];
+
+			}
 		}
 	}
 	std::cout << "VALID" << std::endl;
