@@ -114,7 +114,7 @@ void Game_2P::Proceed_2P(Direction direction)
 	if (!m_tetrisShape_2P)
 		return;
 
-	if (IsValidMovement(m_tetrisShape_2P->GetFutureBlockPosition(direction)))
+	if (IsValidMovement_2P(m_tetrisShape_2P->GetFutureBlockPosition(direction)))
 	{
 		m_tetrisShape_2P->Move(direction);
 		if (direction == Direction::UserPressedDown)
@@ -163,7 +163,7 @@ void Game_2P::Rotate_2P()
 
 	TetrisShape temp = *m_tetrisShape_2P;
 	temp.Rotate();
-	if (!IsValidMovement(temp.GetBlockPosition()))
+	if (!IsValidMovement_2P(temp.GetBlockPosition()))
 		return;
 	else
 		m_tetrisShape_2P->Rotate();
@@ -181,7 +181,7 @@ void Game_2P::ScaleUp_2P()
 
 	TetrisShape temp = *m_tetrisShape_2P;
 	temp.ScaleUp();
-	if (!IsValidMovement(temp.GetBlockPosition()))
+	if (!IsValidMovement_2P(temp.GetBlockPosition()))
 		return;
 	else
 		m_tetrisShape_2P->ScaleUp();
@@ -199,7 +199,7 @@ void Game_2P::ScaleDown_2P()
 
 	TetrisShape temp = *m_tetrisShape_2P;
 	temp.ScaleDown();
-	if (!IsValidMovement(temp.GetBlockPosition()))
+	if (!IsValidMovement_2P(temp.GetBlockPosition()))
 		return;
 	else
 		m_tetrisShape_2P->ScaleDown();
@@ -284,14 +284,40 @@ bool Game_2P::IsValidMovement(std::array<Position, BLOCK_ARRAY_COLUMNS> block)
 			if (i < 15)
 			{
 				m_tetrisShape->m_block[i] = m_tetrisShape->m_block[2];
-				m_tetrisShape_2P->m_block[i] = m_tetrisShape_2P->m_block[2];
-
 			}
 			if (i == 15)
 			{
 				m_tetrisShape->m_block[i] = m_tetrisShape->m_block[2];
-				m_tetrisShape_2P->m_block[i] = m_tetrisShape_2P->m_block[2];
+			}
+		}
+	}
+	std::cout << "VALID" << std::endl;
+	return true;
+}
 
+bool Game_2P::IsValidMovement_2P(std::array<Position, BLOCK_ARRAY_COLUMNS> block)
+{
+	for (uint16_t i = 0; i < BLOCK_ARRAY_COLUMNS; i++)
+	{
+		if (block[i].x < 0 || block[i].x > BOARD_WIDTH_2P - 1 || block[i].y > BOARD_HEIGHT_2P - 1)
+		{
+			std::cout << "INVALID" << std::endl;
+			return false;
+		}
+		if (IsOccupied(block[i].x, block[i].y))
+		{
+			std::cout << "INVALID" << std::endl;
+			return false;
+		}
+		if (IsDarkHole(block[i].x, block[i].y))
+		{
+			if (i < 15)
+			{
+				m_tetrisShape_2P->m_block[i] = m_tetrisShape_2P->m_block[2];
+			}
+			if (i == 15)
+			{
+				m_tetrisShape_2P->m_block[i] = m_tetrisShape_2P->m_block[2];
 			}
 		}
 	}
