@@ -389,29 +389,30 @@ void Game_2P::ProcessEvents(bool& menuOrGame, uint16_t& levelSound)
 			if (!m_pause)
 			{
 				if (e.key.code == sf::Keyboard::Down)
-					Proceed(Direction::Down);
-				else if (e.key.code == sf::Keyboard::S)
 					Proceed_2P(Direction::Down);
 				else if (e.key.code == sf::Keyboard::Left)
-					Proceed(Direction::Left);
-				else if (e.key.code == sf::Keyboard::A)
 					Proceed_2P(Direction::Left);
 				else if (e.key.code == sf::Keyboard::Right)
-					Proceed(Direction::Right);
-				else if (e.key.code == sf::Keyboard::D)
 					Proceed_2P(Direction::Right);
 				else if (e.key.code == sf::Keyboard::Up)
-					Rotate();
-				else if (e.key.code == sf::Keyboard::W)
 					Rotate_2P();
 				else if (e.key.code == sf::Keyboard::Numpad1)
-					ScaleUp();
-				else if (e.key.code == sf::Keyboard::R)
 					ScaleUp_2P();
 				else if (e.key.code == sf::Keyboard::Numpad0)
-					ScaleDown();
-				else if (e.key.code == sf::Keyboard::F)
 					ScaleDown_2P();
+
+				else if (e.key.code == sf::Keyboard::S)
+					Proceed(Direction::Down);
+				else if (e.key.code == sf::Keyboard::A)
+					Proceed(Direction::Left);
+				else if (e.key.code == sf::Keyboard::D)
+					Proceed(Direction::Right);
+				else if (e.key.code == sf::Keyboard::W)
+					Rotate();
+				else if (e.key.code == sf::Keyboard::R)
+					ScaleUp();
+				else if (e.key.code == sf::Keyboard::F)
+					ScaleDown();
 				else if (e.key.code == sf::Keyboard::Escape)
 				{
 					menuOrGame = 1;
