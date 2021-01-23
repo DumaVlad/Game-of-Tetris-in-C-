@@ -165,7 +165,7 @@ void Game::CreateShape()
 	}
 	m_ID = Utils::GetRandomNumber(7);
 	m_preview.reset(new TetrisShape(m_texture, m_ID, STARTING_POSITION_1P));
-	m_preview->SetPosition(Position{ BOARD_WIDTH, 30 });
+	m_preview->SetPosition(Position{ BOARD_WIDTH + 3, 30 });
 }
 
 bool Game::IsValidMovement(std::array<Position, BLOCK_ARRAY_COLUMNS> block)
