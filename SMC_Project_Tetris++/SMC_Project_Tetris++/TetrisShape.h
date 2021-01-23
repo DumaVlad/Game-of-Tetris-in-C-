@@ -25,14 +25,16 @@ public:
 	void ScaleUp();
 	void ScaleDown();
 
-private:
-	void draw(sf::RenderTarget&, sf::RenderStates) const override;
+public:
+	std::array<Position, BLOCK_ARRAY_COLUMNS> m_block;
 
 private:
-	Position m_Position;
-	uint16_t m_CurrentRotation;
+	void draw(sf::RenderTarget&, sf::RenderStates) const override;
+	
+private:
+	Position m_position;
+	uint16_t m_currentRotation;
 	uint16_t m_ID;
-	std::array<Position, BLOCK_ARRAY_COLUMNS> m_Block;
-	mutable sf::Sprite m_Sprite;
+	mutable sf::Sprite m_sprite;
 };
 

@@ -24,14 +24,14 @@ void TetrisShape::Read()
 }
 
 TetrisShape::TetrisShape(sf::Texture& texture, uint16_t id, Position start)
-	: m_Position{ start }, m_CurrentRotation{ 0 }, m_ID{ id }, m_Block{}, m_Sprite{ texture, sf::IntRect{(id % 7) * 18, 0, 18, 18} }
+	: m_position{ start }, m_currentRotation{ 0 }, m_ID{ id }, m_block{}, m_sprite{ texture, sf::IntRect{(id % 7) * 18, 0, 18, 18} }
 {
 	Read();
 	m_ID = m_ID % 7; // In case of an id > 6, we make sure that is not out of bounds
 	for (uint16_t index = 0; index < BLOCK_ARRAY_COLUMNS; index++)
 	{
-		m_Block[index].x = BlockArray[m_ID][index] % 8;
-		m_Block[index].y = BlockArray[m_ID][index] / 8;
+		m_block[index].x = BlockArray[m_ID][index] % 8;
+		m_block[index].y = BlockArray[m_ID][index] / 8;
 	}
 }
 
@@ -45,7 +45,7 @@ std::array<TetrisShape::Position, BLOCK_ARRAY_COLUMNS> TetrisShape::GetBlockPosi
 	std::array<Position, BLOCK_ARRAY_COLUMNS> blockPosition;
 	for (uint16_t i = 0; i < BLOCK_ARRAY_COLUMNS; i++)
 	{
-		blockPosition[i] = Position{ m_Block[i].x + m_Position.x, m_Block[i].y + m_Position.y };
+		blockPosition[i] = Position{ m_block[i].x + m_position.x, m_block[i].y + m_position.y };
 	}
 	return blockPosition;
 }
@@ -53,7 +53,7 @@ std::array<TetrisShape::Position, BLOCK_ARRAY_COLUMNS> TetrisShape::GetBlockPosi
 std::array<TetrisShape::Position, BLOCK_ARRAY_COLUMNS> TetrisShape::GetFutureBlockPosition(Direction direction) const
 {
 	std::array<Position, BLOCK_ARRAY_COLUMNS> blockPositions;
-	Position tempPosition{ m_Position };
+	Position tempPosition{ m_position };
 
 	if (direction == Direction::Left)
 		tempPosition.x--;
@@ -63,14 +63,14 @@ std::array<TetrisShape::Position, BLOCK_ARRAY_COLUMNS> TetrisShape::GetFutureBlo
 		tempPosition.y++;
 
 	for (auto i = 0; i < BLOCK_ARRAY_COLUMNS; ++i) {
-		blockPositions[i] = Position{ m_Block[i].x + tempPosition.x, m_Block[i].y + tempPosition.y };
+		blockPositions[i] = Position{ m_block[i].x + tempPosition.x, m_block[i].y + tempPosition.y };
 	}
 	return blockPositions;
 }
 
 void TetrisShape::SetPosition(const Position& position)
 {
-	m_Position = position;
+	m_position = position;
 }
 
 void TetrisShape::Rotate()
@@ -79,12 +79,12 @@ void TetrisShape::Rotate()
 		return;
 	}
 	if (m_ID == 6) { // IShape: restrict "rotation" to two states (horizontal/vertical)
-		m_CurrentRotation++;
+		m_currentRotation++;
 		for (auto i = 0; i < BLOCK_ARRAY_COLUMNS; ++i) {
-			Position oldPoint = m_Block[i];    //pivot
+			Position oldPoint = m_block[i];    //pivot
 			Position localVector = oldPoint - Position{ 1, 2 };
 			Position nextPoint{};
-			if (m_CurrentRotation % 2 == 1) {
+			if (m_currentRotation % 2 == 1) {
 				nextPoint = Position{ (0 * localVector.x) + (-1 * localVector.y),
 										 (1 * localVector.x) + (0 * localVector.y) };
 
@@ -95,37 +95,37 @@ void TetrisShape::Rotate()
 										 (-1 * localVector.x) + (0 * localVector.y) };
 
 			}
-			m_Block[i] = Position{ 1,2 } + nextPoint;
+			m_block[i] = Position{ 1,2 } + nextPoint;
 
 		}
 		return;
 	}
 	for (auto i = 0; i < BLOCK_ARRAY_COLUMNS; ++i) {
-		Position oldPoint = m_Block[i];    //pivot
+		Position oldPoint = m_block[i];    //pivot
 		Position localVector = oldPoint - Position{ 1,2 };
 
 		Position nextPoint{ (0 * localVector.x) + (-1 * localVector.y),
 								(1 * localVector.x) + (0 * localVector.y) };
-		m_Block[i] = Position{ 1,2 } + nextPoint;
+		m_block[i] = Position{ 1,2 } + nextPoint;
 	}
 }
 
 void TetrisShape::Move(Direction direction)
 {
 	if (direction == Direction::Left)
-		m_Position.x--;
+		m_position.x--;
 	else if (direction == Direction::Right)
-		m_Position.x++;
+		m_position.x++;
 	else
-		m_Position.y++;
+		m_position.y++;
 }
 
 void TetrisShape::ScaleUp()
 {
 	for (uint16_t i = 0; i < BLOCK_ARRAY_COLUMNS; i++)
 	{
-		m_Block[i].x = ScaledBlockArray[m_ID][i] % 8;
-		m_Block[i].y = ScaledBlockArray[m_ID][i] / 8;
+		m_block[i].x = ScaledBlockArray[m_ID][i] % 8;
+		m_block[i].y = ScaledBlockArray[m_ID][i] / 8;
 	}
 }
 
@@ -133,8 +133,8 @@ void TetrisShape::ScaleDown()
 {
 	for (uint16_t i = 0; i < BLOCK_ARRAY_COLUMNS; i++)
 	{
-		m_Block[i].x = BlockArray[m_ID][i] % 8;
-		m_Block[i].y = BlockArray[m_ID][i] / 8;
+		m_block[i].x = BlockArray[m_ID][i] % 8;
+		m_block[i].y = BlockArray[m_ID][i] / 8;
 	}
 }
 
@@ -142,7 +142,7 @@ void TetrisShape::draw(sf::RenderTarget& target, sf::RenderStates states) const
 {
 	for (uint16_t i = 0; i < BLOCK_ARRAY_COLUMNS; i++)
 	{
-		m_Sprite.setPosition((m_Block[i].x * 18) + (m_Position.x * 18), (m_Block[i].y * 18) + (m_Position.y * 18));
-		target.draw(m_Sprite);
+		m_sprite.setPosition((m_block[i].x * 18) + (m_position.x * 18), (m_block[i].y * 18) + (m_position.y * 18));
+		target.draw(m_sprite);
 	}
 }
