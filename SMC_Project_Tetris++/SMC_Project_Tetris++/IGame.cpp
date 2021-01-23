@@ -95,6 +95,15 @@ bool IGame::IsOccupied(uint16_t x, uint16_t y)
 	return m_board->GetField(x, y)->m_occupied;
 }
 
+bool IGame::IsDarkHole(uint16_t x, uint16_t y)
+{
+	if (m_board->GetField(x, y)->m_darkHole)
+	{
+		return true;
+	}
+	return false;
+}
+
 std::pair<uint16_t, uint16_t> IGame::GetFreePosition(uint16_t x, uint16_t y)
 {
 	for (--y; y >= 0; y--)
