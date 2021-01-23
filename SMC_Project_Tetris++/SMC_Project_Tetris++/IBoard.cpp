@@ -21,26 +21,26 @@ Field& Field::operator=(const Field& field)
 }
 
 IBoard::IBoard(Position size, IGame& game)
-	: m_Game{ game }, m_Fields{}, m_FieldDatas{}, m_Size{ size }, m_ToBeCleaned{}, m_ElapsedTime{ 0.f }, m_ToRemoveBlocks{ false }
+	: m_game{ game }, m_fields{}, m_fieldDatas{}, m_size{ size }, m_toBeCleaned{}, m_elapsedTime{ 0.f }, m_toRemoveBlocks{ false }
 {
 	for (int x = 0; x < size.x; x++)
 		for (int y = 0; y < size.y; y++)
-			m_Fields[Convert2DTo1D(x, y)] = std::make_unique<Field>();
+			m_fields[Convert2DTo1D(x, y)] = std::make_unique<Field>();
 
 	for (int id = 0; id < 9; id++)
-		m_FieldDatas[id] = std::make_unique<FieldData>(m_Game.m_texture, id);
+		m_fieldDatas[id] = std::make_unique<FieldData>(m_game.m_texture, id);
 }
 
 void IBoard::Update(const sf::Time& dt)
 {
 	MarkLinesForRemoval();
-	if (m_ToRemoveBlocks)
+	if (m_toRemoveBlocks)
 	{
-		m_ElapsedTime += dt.asSeconds();
+		m_elapsedTime += dt.asSeconds();
 		Blink();
-		if (m_ElapsedTime > 0.6f)
+		if (m_elapsedTime > 0.6f)
 		{
-			m_ElapsedTime = 0.f;
+			m_elapsedTime = 0.f;
 			CleanLines();
 		}
 	}
@@ -48,9 +48,9 @@ void IBoard::Update(const sf::Time& dt)
 
 void IBoard::Clean()
 {
-	for (uint16_t x = 0; x < m_Size.x; x++)
+	for (uint16_t x = 0; x < m_size.x; x++)
 	{
-		for (uint16_t y = 0; y < m_Size.y; y++)
+		for (uint16_t y = 0; y < m_size.y; y++)
 		{
 			auto field = GetField(x, y);
 			field->m_occupied = false;
@@ -66,7 +66,7 @@ void IBoard::AddBlock(uint16_t id, std::array<Position, 16> block)
 	{
 		auto field = GetField(block[i].x, block[i].y);
 		field->m_occupied = true;
-		field->m_info = m_FieldDatas[id].get();
+		field->m_info = m_fieldDatas[id].get();
 	}
 }
 
@@ -86,13 +86,13 @@ bool IBoard::IsOccupied(std::array<Position, 16> block)
 
 Field* IBoard::GetField(uint16_t x, uint16_t y)
 {
-	return m_Fields[Convert2DTo1D(x, y)].get();
+	return m_fields[Convert2DTo1D(x, y)].get();
 }
 
 void IBoard::Draw(sf::RenderWindow& window)
 {
-	for (int x = 0; x < m_Size.x; x++)
-		for (int y = 0; y < m_Size.y; y++)
+	for (int x = 0; x < m_size.x; x++)
+		for (int y = 0; y < m_size.y; y++)
 		{
 			auto field = GetField(x, y);
 
@@ -108,12 +108,12 @@ void IBoard::Draw(sf::RenderWindow& window)
 
 int IBoard::Convert2DTo1D(uint16_t x, uint16_t y)
 {
-	return (y * m_Size.x + x);
+	return (y * m_size.x + x);
 }
 
 void IBoard::CleanLines()
 {
-	if (m_ToBeCleaned.empty())
+	if (m_toBeCleaned.empty())
 		return;
 
 	sf::Music clearLinesMusic;
@@ -123,11 +123,11 @@ void IBoard::CleanLines()
 	//m_Game.m_gameplayMusic.stop();
 	clearLinesMusic.play();
 
-	for (auto i : m_ToBeCleaned)
+	for (auto i : m_toBeCleaned)
 	{
 		for (auto y = i; y >= 0; y--)
 		{
-			for (auto x = 0; x < m_Size.x; x++)
+			for (auto x = 0; x < m_size.x; x++)
 			{
 				int up = y - 1;
 				if (up < 0)
@@ -136,18 +136,18 @@ void IBoard::CleanLines()
 			}
 		}
 	}
-	m_ToBeCleaned.clear();
-	m_ToRemoveBlocks = false;
-	m_Game.m_gameplayMusic.play();
+	m_toBeCleaned.clear();
+	m_toRemoveBlocks = false;
+	m_game.m_gameplayMusic.play();
 }
 
 void IBoard::Blink()
 {
 	//Speeds up blinking
 
-	int num = int(m_ElapsedTime * 5.f);
-	for (auto y : m_ToBeCleaned)
-		for (int x = 0; x < m_Size.x; x++)
+	int num = int(m_elapsedTime * 5.f);
+	for (auto y : m_toBeCleaned)
+		for (int x = 0; x < m_size.x; x++)
 			GetField(x, y)->m_visible = (num % 2 != 0);
 }
 
@@ -155,5 +155,5 @@ void IBoard::AddSpecialBlock(uint16_t id, Position block)
 {
 	auto field = GetField(block.x, block.y);
 	field->m_occupied = true;
-	field->m_info = m_FieldDatas[id].get();
+	field->m_info = m_fieldDatas[id].get();
 }

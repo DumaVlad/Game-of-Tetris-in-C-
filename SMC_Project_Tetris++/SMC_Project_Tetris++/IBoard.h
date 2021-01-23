@@ -41,7 +41,7 @@ public:
 	void AddBlock(uint16_t, std::array<Position, 16>);
 	bool IsOccupied(std::array<Position, 16>);
 	void Draw(sf::RenderWindow&);
-	inline bool IsToRemoveBlocks() const { return m_ToRemoveBlocks; };
+	inline bool IsToRemoveBlocks() const { return m_toRemoveBlocks; };
 	Field* GetField(uint16_t, uint16_t);
 	void AddSpecialBlock(uint16_t, Position);
 	virtual void GenerateDarkHole(uint16_t, Position) = 0;
@@ -56,11 +56,11 @@ private:
 	
 
 protected:
-	IGame& m_Game;
-	std::unordered_map<uint16_t, std::unique_ptr<Field>> m_Fields;
-	std::unordered_map<uint16_t, std::unique_ptr<FieldData>> m_FieldDatas;
-	Position m_Size;
-	std::vector<int> m_ToBeCleaned;
-	float m_ElapsedTime;
-	bool m_ToRemoveBlocks;
+	IGame& m_game;
+	std::unordered_map<uint16_t, std::unique_ptr<Field>> m_fields;
+	std::unordered_map<uint16_t, std::unique_ptr<FieldData>> m_fieldDatas;
+	Position m_size;
+	std::vector<int> m_toBeCleaned;
+	float m_elapsedTime;
+	bool m_toRemoveBlocks;
 };
