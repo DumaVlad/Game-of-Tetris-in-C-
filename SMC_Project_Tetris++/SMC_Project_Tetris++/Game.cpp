@@ -170,6 +170,7 @@ void Game::CreateShape()
 
 bool Game::IsValidMovement(std::array<Position, BLOCK_ARRAY_COLUMNS> block)
 {
+	Position lastPosition = m_tetrisShape->m_block[2];
 	for (uint16_t i = 0; i < BLOCK_ARRAY_COLUMNS; i++)
 	{
 		if (block[i].x < 0 || block[i].x > BOARD_WIDTH - 1 || block[i].y > BOARD_HEIGHT - 1)
@@ -184,13 +185,24 @@ bool Game::IsValidMovement(std::array<Position, BLOCK_ARRAY_COLUMNS> block)
 		}
 		if (IsDarkHole(block[i].x, block[i].y))
 		{
-			if (i < 15)
+			if (m_tetrisShape->m_block[i] == lastPosition)
 			{
-				m_tetrisShape->m_block[i] = m_tetrisShape->m_block[2];
+				Position tempPosition;
+				for (int index = 0; index < BLOCK_ARRAY_COLUMNS; index++)
+					if (m_tetrisShape->m_block[index] != lastPosition)
+					{
+						tempPosition = m_tetrisShape->m_block[index];
+						m_tetrisShape->m_block[i] = tempPosition;
+						for (int index = 0; index < BLOCK_ARRAY_COLUMNS; index++)
+							if (m_tetrisShape->m_block[index] == lastPosition)
+								m_tetrisShape->m_block[i] = tempPosition;
+						lastPosition = tempPosition;
+						break;
+					}
 			}
-			if (i == 15)
+			if (i <= 15)
 			{
-				m_tetrisShape->m_block[i] = m_tetrisShape->m_block[2];
+				m_tetrisShape->m_block[i] = lastPosition;
 			}
 		}
 	}

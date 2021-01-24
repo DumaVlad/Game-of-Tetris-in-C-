@@ -1,5 +1,4 @@
 #include "Options.h"
-#include "Highscore.h"
 
 Options::Options()
 	: m_renderWindowOptions{ sf::VideoMode{OPTIONS_WIDTH, OPTIONS_HEIGHT}, "OPTIONS" }, m_page{ 1 }
