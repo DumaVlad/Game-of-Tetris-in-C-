@@ -282,6 +282,19 @@ bool Game_2P::IsValidMovement(std::array<Position, BLOCK_ARRAY_COLUMNS> block)
 		}
 		if (IsDarkHole(block[i].x, block[i].y))
 		{
+			bool q = false;
+			for (int index1 = 0; index1 < BLOCK_ARRAY_COLUMNS - 1; index1++)
+				for (int index2 = index1 + 1; index2 < BLOCK_ARRAY_COLUMNS; index2++)
+					if (m_tetrisShape->m_block[index1] != m_tetrisShape->m_block[index2])
+					{
+						q = true;
+						break;
+					}
+			if (m_tetrisShape->m_block[i] == lastPosition && q == false)
+			{
+				CreateShape();
+				break;
+			}
 			if (m_tetrisShape->m_block[i] == lastPosition)
 			{
 				Position tempPosition;
@@ -324,6 +337,19 @@ bool Game_2P::IsValidMovement_2P(std::array<Position, BLOCK_ARRAY_COLUMNS> block
 		}
 		if (IsDarkHole(block[i].x, block[i].y))
 		{
+			bool q = false;
+			for (int index1 = 0; index1 < BLOCK_ARRAY_COLUMNS - 1; index1++)
+				for (int index2 = index1 + 1; index2 < BLOCK_ARRAY_COLUMNS; index2++)
+					if (m_tetrisShape_2P->m_block[index1] != m_tetrisShape_2P->m_block[index2])
+					{
+						q = true;
+						break;
+					}
+			if (m_tetrisShape_2P->m_block[i] == lastPosition && q == false)
+			{
+				CreateShape_2P();
+				break;
+			}
 			if (m_tetrisShape_2P->m_block[i] == lastPosition)
 			{
 				Position tempPosition;
