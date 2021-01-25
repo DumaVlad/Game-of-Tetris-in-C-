@@ -16,6 +16,7 @@ public:
 	virtual void Run(bool&, uint16_t&) = 0;
 
 	sf::Music m_gameplayMusic;
+	sf::Music m_gameoverMusic;
 	std::unique_ptr<Player> m_player;
 	sf::Texture m_texture;
 

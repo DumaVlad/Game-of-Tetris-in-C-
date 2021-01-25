@@ -47,6 +47,8 @@ public:
 	virtual void GenerateDarkHole(uint16_t, Position) = 0;
 	virtual void DestroyDarkHole(Position) = 0;
 	int Convert2DTo1D(uint16_t, uint16_t);
+	//special
+	sf::Music m_clearLinesMusic;
 
 private:
 	

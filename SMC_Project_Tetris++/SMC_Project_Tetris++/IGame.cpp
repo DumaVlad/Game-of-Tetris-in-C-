@@ -16,6 +16,8 @@ IGame::IGame(const unsigned int width, const unsigned int height)
 		std::cout << "Could not load texture in Game Interface !! \n";
 	if (!m_gameplayMusic.openFromFile("../Resources/Sounds/Tetris.wav"))
 		std::cout << "Could not load music in Game Interface !! \n";
+	if (!m_gameoverMusic.openFromFile("../Resources/Sounds/gameover.wav"))
+		std::cout << "Could not load music in Game Interface !! \n";
 
 	//Graphics initialization
 	InitializePauseMenu(width, height);

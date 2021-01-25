@@ -28,7 +28,7 @@ Game_2P::Game_2P()
 
 void Game_2P::Run(bool& menuOrGame, uint16_t& levelSound)
 {
-	sf::Clock clock; // starting the timer-ul
+	sf::Clock clock; // starting the timer
 	sf::Time deltaTime(sf::Time::Zero);
 
 	m_board->Clean();
@@ -220,17 +220,12 @@ void Game_2P::CreateShape()
 	if (m_board->IsOccupied(m_tetrisShape->GetBlockPosition()))
 	{
 		std::cout << "Game Over" << std::endl;
-
-		sf::Music gameoverMusic;
-		if (!gameoverMusic.openFromFile("../Resources/Sounds/gameover.wav"))
-			std::cout << "Could not load the gameover sound from file !! \n";
 		FileWriter("../Resources/Files/outputPlayers2Pcoop.txt");
 
-		m_gameplayMusic.stop();
-		gameoverMusic.play();
+		m_gameplayMusic.pause();
+		m_gameoverMusic.play();
 
 		m_board->Clean();
-		m_gameplayMusic.play();
 		m_pause = 2;
 	}
 	m_ID = Utils::GetRandomNumber(7);
@@ -245,19 +240,12 @@ void Game_2P::CreateShape_2P()
 	if (m_board->IsOccupied(m_tetrisShape_2P->GetBlockPosition()))
 	{
 		std::cout << "Game Over" << std::endl;
-
-		sf::Music gameoverMusic;
-		if (!gameoverMusic.openFromFile("../Resources/Sounds/gameover.wav"))
-			std::cout << "Could not load the gameover sound from file !! \n";
 		FileWriter("../Resources/Files/outputPlayers2Pcoop.txt");
 
-		m_gameplayMusic.stop();
-		gameoverMusic.play();
-
-		//system("pause");
+		m_gameplayMusic.pause();
+		m_gameoverMusic.play();
 
 		m_board->Clean();
-		m_gameplayMusic.play();
 		m_pause = 2;
 	}
 	m_ID_2P = Utils::GetRandomNumber(7);
@@ -474,7 +462,10 @@ void Game_2P::ProcessEvents(bool& menuOrGame, uint16_t& levelSound)
 			else
 			{
 				if (e.key.code == sf::Keyboard::Enter)
+				{
 					m_pause = 0;
+					m_gameplayMusic.play();
+				}
 				else if (e.key.code == sf::Keyboard::O)
 				{
 					Options options;

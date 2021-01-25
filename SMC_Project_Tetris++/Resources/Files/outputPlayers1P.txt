@@ -7,3 +7,7 @@ DreLaur 3443
 VLD 8769
 Laur 560
 Vio 800
+vlad 0
+dae 120
+vlad 0
+VLad 0

@@ -116,12 +116,10 @@ void IBoard::CleanLines()
 	if (m_toBeCleaned.empty())
 		return;
 
-	sf::Music clearLinesMusic;
-	if (!clearLinesMusic.openFromFile("../Resources/Sounds/clear.wav"))
-		std::cout << "Could not load clear.wav from file !! \n";
+	if (!m_clearLinesMusic.openFromFile("../Resources/Sounds/clear.wav"))
+		std::cout << "Could not load music in Board Interface !! \n";
 
-	//m_Game.m_gameplayMusic.stop();
-	clearLinesMusic.play();
+	m_clearLinesMusic.play();
 
 	for (auto i : m_toBeCleaned)
 	{
