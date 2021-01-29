@@ -149,8 +149,10 @@ void Game::CreateShape()
 	{
 		std::cout << "Game Over" << std::endl;
 		FileWriter("../Resources/Files/outputPlayers1P.txt");
+		m_player->Reset();
 
 		m_gameplayMusic.pause();
+		m_gameoverMusic.stop();
 		m_gameoverMusic.play();
 
 		m_board->Clean();
@@ -166,7 +168,7 @@ bool Game::IsValidMovement(std::array<Position, BLOCK_ARRAY_COLUMNS> block)
 	Position lastPosition = m_tetrisShape->m_block[2];
 	for (uint16_t i = 0; i < BLOCK_ARRAY_COLUMNS; i++)
 	{
-		if (block[i].x < 0 || block[i].x > BOARD_WIDTH - 1 || block[i].y > BOARD_HEIGHT - 1)
+		if (block[i].x < 0 || block[i].x > BOARD_WIDTH - 1 || block[i].y > BOARD_HEIGHT - 1 || block[i].y < 0)
 		{
 			std::cout << "INVALID" << std::endl;
 			return false;

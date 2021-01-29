@@ -221,9 +221,13 @@ void Game_2P::CreateShape()
 	{
 		std::cout << "Game Over" << std::endl;
 		FileWriter("../Resources/Files/outputPlayers2Pcoop.txt");
+		m_player->Reset();
 
 		m_gameplayMusic.pause();
+		m_gameoverMusic.stop();
 		m_gameoverMusic.play();
+		
+		CreateShape_2P();
 
 		m_board->Clean();
 		m_pause = 2;
@@ -241,9 +245,13 @@ void Game_2P::CreateShape_2P()
 	{
 		std::cout << "Game Over" << std::endl;
 		FileWriter("../Resources/Files/outputPlayers2Pcoop.txt");
+		m_player->Reset();
 
 		m_gameplayMusic.pause();
+		m_gameoverMusic.stop();
 		m_gameoverMusic.play();
+
+		CreateShape();
 
 		m_board->Clean();
 		m_pause = 2;
@@ -258,7 +266,7 @@ bool Game_2P::IsValidMovement(std::array<Position, BLOCK_ARRAY_COLUMNS> block)
 	Position lastPosition = m_tetrisShape->m_block[2];
 	for (uint16_t i = 0; i < BLOCK_ARRAY_COLUMNS; i++)
 	{
-		if (block[i].x < 0 || block[i].x > BOARD_WIDTH_2P - 1 || block[i].y > BOARD_HEIGHT_2P - 1)
+		if (block[i].x < 0 || block[i].x > BOARD_WIDTH_2P - 1 || block[i].y > BOARD_HEIGHT_2P - 1 || block[i].y <0)
 		{
 			std::cout << "INVALID" << std::endl;
 			return false;
@@ -313,7 +321,7 @@ bool Game_2P::IsValidMovement_2P(std::array<Position, BLOCK_ARRAY_COLUMNS> block
 	Position lastPosition = m_tetrisShape_2P->m_block[2];
 	for (uint16_t i = 0; i < BLOCK_ARRAY_COLUMNS; i++)
 	{
-		if (block[i].x < 0 || block[i].x > BOARD_WIDTH_2P - 1 || block[i].y > BOARD_HEIGHT_2P - 1)
+		if (block[i].x < 0 || block[i].x > BOARD_WIDTH_2P - 1 || block[i].y > BOARD_HEIGHT_2P - 1 || block[i].y < 0)
 		{
 			std::cout << "INVALID" << std::endl;
 			return false;
