@@ -371,7 +371,7 @@ bool Game_2P::IsValidMovement_2P(std::array<Position, BLOCK_ARRAY_COLUMNS> block
 	return true;
 }
 
-bool Game_2P::IsOccupied(uint16_t x, uint16_t y)
+bool Game_2P::IsOccupied(const uint16_t x, const uint16_t y)
 {
 	return IGame::IsOccupied(x, y);
 }

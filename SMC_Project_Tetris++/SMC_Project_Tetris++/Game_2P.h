@@ -32,7 +32,7 @@ private:
 	void CreateShape_2P();
 	bool IsValidMovement(std::array<Position, BLOCK_ARRAY_COLUMNS>);
 	bool IsValidMovement_2P(std::array<Position, BLOCK_ARRAY_COLUMNS>);
-	bool IsOccupied(uint16_t, uint16_t);
+	bool IsOccupied(const uint16_t, const uint16_t);
 	void ProcessEvents(bool&, uint16_t&);
 	void Render();
 	void FileWriter(const std::string& file);

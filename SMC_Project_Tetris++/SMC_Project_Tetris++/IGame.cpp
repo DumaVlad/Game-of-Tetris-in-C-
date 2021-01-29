@@ -90,14 +90,14 @@ void IGame::ScaleDown()
 		m_tetrisShape->ScaleDown();
 }
 
-bool IGame::IsOccupied(uint16_t x, uint16_t y)
+bool IGame::IsOccupied(const uint16_t x, const uint16_t y)
 {
 	if (m_board->GetField(x, y)->m_darkHole)
 		return false;
 	return m_board->GetField(x, y)->m_occupied;
 }
 
-bool IGame::IsDarkHole(uint16_t x, uint16_t y)
+bool IGame::IsDarkHole(const uint16_t x, const uint16_t y)
 {
 	if (m_board->GetField(x, y)->m_darkHole)
 	{

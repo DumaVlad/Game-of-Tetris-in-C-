@@ -25,8 +25,8 @@ protected:
 	void Rotate();
 	void ScaleUp();
 	void ScaleDown();
-	bool IsOccupied(uint16_t, uint16_t);
-	bool IsDarkHole(uint16_t, uint16_t);
+	bool IsOccupied(const uint16_t, const uint16_t);
+	bool IsDarkHole(const uint16_t, const uint16_t);
 	std::pair<uint16_t, uint16_t> GetFreePosition(uint16_t, uint16_t);
 	void InitializePauseMenu(const unsigned int width, const unsigned int height);
 	void InitializeTextPauseMenu(const unsigned int width, const unsigned int height);

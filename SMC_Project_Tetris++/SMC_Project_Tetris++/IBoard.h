@@ -38,15 +38,15 @@ public:
 
 	void Update(const sf::Time&);
 	void Clean();
-	void AddBlock(uint16_t, std::array<Position, 16>);
-	bool IsOccupied(std::array<Position, 16>);
+	void AddBlock(uint16_t, std::array<Position, BLOCK_ARRAY_COLUMNS>);
+	bool IsOccupied(std::array<Position, BLOCK_ARRAY_COLUMNS>);
 	void Draw(sf::RenderWindow&);
 	inline bool IsToRemoveBlocks() const { return m_toRemoveBlocks; };
-	Field* GetField(uint16_t, uint16_t);
+	Field* GetField(const uint16_t, const uint16_t);
 	void AddSpecialBlock(uint16_t, Position);
 	virtual void GenerateDarkHole(uint16_t, Position) = 0;
 	virtual void DestroyDarkHole(Position) = 0;
-	int Convert2DTo1D(uint16_t, uint16_t);
+	int Convert2DTo1D(const uint16_t, const uint16_t);
 	//special
 	sf::Music m_clearLinesMusic;
 

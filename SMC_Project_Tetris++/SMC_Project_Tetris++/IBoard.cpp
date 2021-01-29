@@ -60,9 +60,9 @@ void IBoard::Clean()
 	}
 }
 
-void IBoard::AddBlock(uint16_t id, std::array<Position, 16> block)
+void IBoard::AddBlock(uint16_t id, std::array<Position, BLOCK_ARRAY_COLUMNS> block)
 {
-	for (int i = 0; i < 16; i++)
+	for (int i = 0; i < BLOCK_ARRAY_COLUMNS; i++)
 	{
 		auto field = GetField(block[i].x, block[i].y);
 		field->m_occupied = true;
@@ -70,9 +70,9 @@ void IBoard::AddBlock(uint16_t id, std::array<Position, 16> block)
 	}
 }
 
-bool IBoard::IsOccupied(std::array<Position, 16> block)
+bool IBoard::IsOccupied(std::array<Position, BLOCK_ARRAY_COLUMNS> block)
 {
-	for (int i = 0; i < 16; i++)
+	for (int i = 0; i < BLOCK_ARRAY_COLUMNS; i++)
 	{
 		auto field = GetField(block[i].x, block[i].y);
 		if (field->m_darkHole)
@@ -84,7 +84,7 @@ bool IBoard::IsOccupied(std::array<Position, 16> block)
 	return false;
 }
 
-Field* IBoard::GetField(uint16_t x, uint16_t y)
+Field* IBoard::GetField(const uint16_t x, const uint16_t y)
 {
 	return m_fields[Convert2DTo1D(x, y)].get();
 }
@@ -106,7 +106,7 @@ void IBoard::Draw(sf::RenderWindow& window)
 }
 
 
-int IBoard::Convert2DTo1D(uint16_t x, uint16_t y)
+int IBoard::Convert2DTo1D(const uint16_t x, const uint16_t y)
 {
 	return (y * m_size.x + x);
 }

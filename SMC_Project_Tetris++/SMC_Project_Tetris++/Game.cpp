@@ -208,7 +208,7 @@ bool Game::IsValidMovement(std::array<Position, BLOCK_ARRAY_COLUMNS> block)
 						break;
 					}
 			}
-			if (i <= 15)
+			if (i <= BLOCK_ARRAY_COLUMNS - 1)
 			{
 				m_tetrisShape->m_block[i] = lastPosition;
 			}
@@ -218,7 +218,7 @@ bool Game::IsValidMovement(std::array<Position, BLOCK_ARRAY_COLUMNS> block)
 	return true;
 }
 
-bool Game::IsOccupied(uint16_t x, uint16_t y)
+bool Game::IsOccupied(const uint16_t x, const uint16_t y)
 {
 	return IGame::IsOccupied(x, y);
 }
