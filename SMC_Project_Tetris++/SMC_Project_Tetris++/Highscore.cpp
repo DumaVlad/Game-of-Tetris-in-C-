@@ -14,7 +14,6 @@ Highscore::Highscore(uint16_t modeGame)
 
 	m_textureHighscore.setSmooth(true);
 	m_spriteHighscore.setTexture(m_textureHighscore);
-	//m_spriteHighscore.setColor(sf::Color(255, 255, 255, 200));
 	m_spriteHighscore.setOrigin(0, 0);
 }
 

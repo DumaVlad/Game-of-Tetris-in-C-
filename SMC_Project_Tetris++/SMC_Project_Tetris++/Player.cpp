@@ -58,7 +58,7 @@ void Player::SumPressedScore()
 void Player::AddClearedLines(uint16_t num)
 {
 	m_linesCleared += num;
-	int level = m_linesCleared / 10;
+	int level = m_linesCleared / 5;
 
 	switch (num)
 	{
@@ -90,22 +90,22 @@ void Player::AddClearedLines(uint16_t num)
 void Player::Update(const sf::Time& dt)
 {
 	m_playerNameText.setString(std::string("Have Fun, \n" + m_playerName));
-	m_levelText.setString(std::string("Level:\n" + std::to_string(m_linesCleared / 10)));
+	m_levelText.setString(std::string("Level:\n" + std::to_string(m_linesCleared / 5)));
 	m_scoreText.setString(std::string("Score:\n" + std::to_string(m_score)));
-	m_clearedLinesText.setString(std::string("Lines:\n" + std::to_string(m_linesCleared)));
+	m_clearedLinesText.setString(std::string("Lines cleared:\n" + std::to_string(m_linesCleared)));
 }
 
 void Player::Update_2P(const sf::Time& dt, std::string player2_name)
 {
 	m_playerNameText.setString(std::string("Have Fun, \n" + m_playerName + " & " + player2_name));
-	m_levelText.setString(std::string("Level:\n" + std::to_string(m_linesCleared / 10)));
+	m_levelText.setString(std::string("Level:\n" + std::to_string(m_linesCleared / 5)));
 	m_scoreText.setString(std::string("Score:\n" + std::to_string(m_score)));
-	m_clearedLinesText.setString(std::string("Lines:\n" + std::to_string(m_linesCleared)));
+	m_clearedLinesText.setString(std::string("Lines cleared:\n" + std::to_string(m_linesCleared)));
 }
 
 int Player::GetLevel() const
 {
-	return m_linesCleared / 10;
+	return m_linesCleared / 5;
 }
 
 uint32_t Player::GetScore() const

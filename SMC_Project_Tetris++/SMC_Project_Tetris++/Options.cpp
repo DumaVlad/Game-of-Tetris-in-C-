@@ -204,20 +204,18 @@ void Options::InitializeControlsMultiplayerGame()
 	m_controlsMultiplayerGame[15].setString("Escape = return to menu");
 	m_controlsMultiplayerGame[16].setString("Space = pause game");
 	m_controlsMultiplayerGame[17].setString("H (in pause menu) = highscore");
-
 }
 
 void Options::InitializeControlSound()
 {
-
-	for (int i = 0; i < 6; i++)
+	for (auto& controlSound : m_controlSound)
 	{
-		m_controlSound[i].setFont(m_fontOptions);
-		m_controlSound[i].setFillColor(sf::Color::Red);
-		m_controlSound[i].setOutlineColor(sf::Color::Black);
-		m_controlSound[i].setOutlineThickness(5);
-		m_controlSound[i].setCharacterSize(25);
-		m_controlSound[i].setPosition(sf::Vector2f(OPTIONS_WIDTH / 12, OPTIONS_HEIGHT / 15 * 12));
+		controlSound.setFont(m_fontOptions);
+		controlSound.setFillColor(sf::Color::Red);
+		controlSound.setOutlineColor(sf::Color::Black);
+		controlSound.setOutlineThickness(5);
+		controlSound.setCharacterSize(25);
+		controlSound.setPosition(sf::Vector2f(OPTIONS_WIDTH / 12, OPTIONS_HEIGHT / 15 * 12));
 	}
 
 	m_controlSound[0].setString("Sound mute");
@@ -226,19 +224,18 @@ void Options::InitializeControlSound()
 	m_controlSound[3].setString("Sound 60%");
 	m_controlSound[4].setString("Sound 80%");
 	m_controlSound[5].setString("Sound 100%");
-
 }
 
 void Options::InitializeTextPage()
 {
-	for (int i = 0; i < 2; i++)
+	for (auto& textPage : m_textPage)
 	{
-		m_textPage[i].setFont(m_fontOptions);
-		m_textPage[i].setFillColor(sf::Color::White);
-		m_textPage[i].setOutlineColor(sf::Color::Black);
-		m_textPage[i].setOutlineThickness(5);
-		m_textPage[i].setCharacterSize(15);
-		m_textPage[i].setPosition(sf::Vector2f(OPTIONS_WIDTH / 2.5, OPTIONS_HEIGHT / 15 * 14));
+		textPage.setFont(m_fontOptions);
+		textPage.setFillColor(sf::Color::White);
+		textPage.setOutlineColor(sf::Color::Black);
+		textPage.setOutlineThickness(5);
+		textPage.setCharacterSize(15);
+		textPage.setPosition(sf::Vector2f(OPTIONS_WIDTH / 2.5, OPTIONS_HEIGHT / 15 * 14));
 	}
 
 	m_textPage[0].setString("Page < 1/2 >");
