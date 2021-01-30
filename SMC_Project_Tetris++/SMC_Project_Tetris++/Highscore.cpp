@@ -19,7 +19,7 @@ Highscore::Highscore(uint16_t modeGame)
 
 void Highscore::draw()
 {
-	for (int i = 0; i < MAX_NUMBER_PLAYERS; i++)
+	for (uint8_t i = 0; i < MAX_NUMBER_PLAYERS; i++)
 	{
 		m_renderWindowHighscore.draw(m_playersList[i]);
 	}
@@ -71,7 +71,7 @@ void Highscore::InitializeScorePlayerList()
 	m_textModeGame.setOutlineThickness(3);
 	m_textModeGame.setCharacterSize(30);
 
-	for (int i = 0; i < MAX_NUMBER_PLAYERS; i++)
+	for (uint8_t i = 0; i < MAX_NUMBER_PLAYERS; i++)
 	{
 		m_playersList[i].setFont(m_fontHighscore);
 		m_playersList[i].setFillColor(sf::Color(55, 205, 55));

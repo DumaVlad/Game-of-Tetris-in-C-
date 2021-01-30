@@ -219,7 +219,7 @@ void Menu::Select()
 
 void Menu::InitializeMenu(unsigned int width, unsigned int height)
 {
-	for (int i = 0; i < MAX_NUMBER_ELEMENTS; i++)
+	for (uint8_t i = 0; i < MAX_NUMBER_ELEMENTS; i++)
 	{
 		m_menu[i].setFont(m_fontMenu);
 		m_menu[i].setFillColor(sf::Color::White);
@@ -239,7 +239,7 @@ void Menu::InitializeMenu(unsigned int width, unsigned int height)
 
 void Menu::InitializeModeGame(unsigned int width, unsigned int height)
 {
-	for (int i = 0; i < 2; i++)
+	for (uint8_t i = 0; i < 2; i++)
 	{
 		m_modeGame[i].setFont(m_fontMenu);
 		m_modeGame[i].setOutlineColor(sf::Color::Black);

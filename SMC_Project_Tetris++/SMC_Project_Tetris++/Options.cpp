@@ -25,7 +25,7 @@ void Options::draw(uint16_t& levelSound)
 {
 	if (m_page == 1)
 	{
-		for (int i = 0; i < MAX_NUMBER_CONTROLS; i++)
+		for (uint8_t i = 0; i < MAX_NUMBER_CONTROLS; i++)
 		{
 			m_renderWindowOptions.draw(m_controlsSingleplayerGame[i]);
 		}
@@ -33,7 +33,7 @@ void Options::draw(uint16_t& levelSound)
 	}
 	else
 	{
-		for (int i = 0; i < MAX_NUMBER_CONTROLS_MP; i++)
+		for (uint8_t i = 0; i < MAX_NUMBER_CONTROLS_MP; i++)
 		{
 			m_renderWindowOptions.draw(m_controlsMultiplayerGame[i]);
 		}
@@ -103,7 +103,7 @@ void Options::InitializeControlsSingleplayerGame()
 	m_controlsSingleplayerGame[0].setString("Controls in SP game");
 	m_controlsSingleplayerGame[0].setPosition(sf::Vector2f(OPTIONS_WIDTH / 12, OPTIONS_HEIGHT / 15));
 
-	for (int i = 1; i < MAX_NUMBER_CONTROLS; i++)
+	for (uint8_t i = 1; i < MAX_NUMBER_CONTROLS; i++)
 	{
 		m_controlsSingleplayerGame[i].setFont(m_fontOptions);
 		if (i > MAX_NUMBER_CONTROLS - 4)
@@ -154,7 +154,7 @@ void Options::InitializeControlsMultiplayerGame()
 	m_controlsMultiplayerGame[2].setString("Player 2");
 	m_controlsMultiplayerGame[2].setPosition(sf::Vector2f(OPTIONS_WIDTH / 10 * 5.5, OPTIONS_HEIGHT / 15 * 2));
 
-	for (int i = 3; i < MAX_NUMBER_CONTROLS_MP / 2; i++)
+	for (uint8_t i = 3; i < MAX_NUMBER_CONTROLS_MP / 2; i++)
 	{
 		m_controlsMultiplayerGame[i].setFont(m_fontOptions);
 		m_controlsMultiplayerGame[i].setFillColor(sf::Color::Yellow);
@@ -164,7 +164,7 @@ void Options::InitializeControlsMultiplayerGame()
 		m_controlsMultiplayerGame[i].setPosition(sf::Vector2f(OPTIONS_WIDTH / 10, OPTIONS_HEIGHT / 20 * (i + 2)));
 	}
 
-	for (int i = MAX_NUMBER_CONTROLS_MP / 2; i < MAX_NUMBER_CONTROLS_MP - 3; i++)
+	for (uint8_t i = MAX_NUMBER_CONTROLS_MP / 2; i < MAX_NUMBER_CONTROLS_MP - 3; i++)
 	{
 		m_controlsMultiplayerGame[i].setFont(m_fontOptions);
 		m_controlsMultiplayerGame[i].setFillColor(sf::Color::Cyan);
@@ -174,7 +174,7 @@ void Options::InitializeControlsMultiplayerGame()
 		m_controlsMultiplayerGame[i].setPosition(sf::Vector2f(OPTIONS_WIDTH / 10 * 5.5, OPTIONS_HEIGHT / 20 * (i - 6 + 2)));
 	}
 
-	for (int i = MAX_NUMBER_CONTROLS_MP - 3; i < MAX_NUMBER_CONTROLS_MP; i++)
+	for (uint8_t i = MAX_NUMBER_CONTROLS_MP - 3; i < MAX_NUMBER_CONTROLS_MP; i++)
 	{
 		m_controlsMultiplayerGame[i].setFont(m_fontOptions);
 		m_controlsMultiplayerGame[i].setFillColor(sf::Color::White);
