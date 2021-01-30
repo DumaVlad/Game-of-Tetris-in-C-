@@ -36,51 +36,52 @@ void Game_2P::Run(bool& menuOrGame, uint16_t& levelSound)
 	m_gameplayMusic.play();
 	m_gameplayMusic.setLoop(true);
 
+	bool existsDH = false;
+	auto copyDurationDH = 0;
 	auto start = std::chrono::system_clock::now();
+	auto startDH = std::chrono::system_clock::now();
+	auto startDestroy = std::chrono::system_clock::now();
 	auto randomTime = Utils::GetRandomNumber(10, 20);
 	auto randomTimeDH = Utils::GetRandomNumber(10, 20);
-	auto pos_x = Utils::GetRandomNumber(0, BOARD_WIDTH_2P - 1);
-	auto pos_y = Utils::GetRandomNumber(15, BOARD_HEIGHT_2P - 1);
+	auto pos_x = Utils::GetRandomNumber(0, BOARD_WIDTH - 1);
+	auto pos_y = Utils::GetRandomNumber(15, BOARD_HEIGHT - 1);
 
 	while (m_renderWindow.isOpen())
 	{
-		m_gameplayMusic.setVolume(levelSound * 20.f);
+		m_gameplayMusic.setVolume((levelSound * 20.f));
 
 		if (!m_pause)
 		{
-			sf::Time trigger(sf::seconds(85.f / (85.f + (m_player->GetLevel() * (m_player->GetLevel() * 5.f))))); // la inceput este = 1;
-			std::cout << "Trigger =" << trigger.asMilliseconds() << std::endl;
+			sf::Time trigger(sf::seconds(85.f / (85.f + (m_player->GetLevel() * (m_player->GetLevel() * 5.f)))));
 			deltaTime = clock.restart(); // restarting the timer and returning the time passed until this point
 			m_elapsedTime += deltaTime;
-			std::cout << "m_ElapsedTime = " << m_elapsedTime.asMilliseconds() << std::endl << std::endl;
 
 			auto end = std::chrono::system_clock::now();
-
 			std::chrono::duration<double> duration = end - start;
-			std::chrono::duration<double> durationDH = end - start;
-
+			std::chrono::duration<double> durationDH = end - startDH;
+			std::chrono::duration<double> durationDestroy = end - startDestroy;
 			if (duration.count() >= randomTime)
 			{
-				std::cout << std::endl << duration.count();
 				start = std::chrono::system_clock::now();
 				AddSpecialShape();
 				randomTime = Utils::GetRandomNumber(10, 20);
-				std::cout << std::endl << randomTime;
 			}
 
 			if (durationDH.count() >= randomTimeDH)
 			{
+				copyDurationDH = randomTimeDH;
+				startDH = std::chrono::system_clock::now();
 				m_board->GenerateDarkHole(DARKHOLE_TEXTURE_ID, Position{ pos_x, pos_y });
-				auto end = std::chrono::system_clock::now();
-				durationDH = end - start;
-				randomTimeDH = Utils::GetRandomNumber(5, 10);
-				if (durationDH.count() >= randomTimeDH)
-				{
-					m_board->DestroyDarkHole(Position{ pos_x, pos_y });
-					randomTimeDH = Utils::GetRandomNumber(10, 20);
-					pos_x = Utils::GetRandomNumber(0, BOARD_WIDTH_2P - 1);
-					pos_y = Utils::GetRandomNumber(15, BOARD_HEIGHT_2P - 1);
-				}
+				randomTimeDH = Utils::GetRandomNumber(15, 25);
+				existsDH = true;
+			}
+			if (durationDestroy.count() >= copyDurationDH + 5 && existsDH == true)
+			{
+				startDestroy = std::chrono::system_clock::now();
+				m_board->DestroyDarkHole(Position{ pos_x, pos_y });
+				pos_x = Utils::GetRandomNumber(0, BOARD_WIDTH - 1);
+				pos_y = Utils::GetRandomNumber(15, BOARD_HEIGHT - 1);
+				existsDH = false;
 			}
 
 			ProcessEvents(menuOrGame, levelSound);
@@ -91,7 +92,6 @@ void Game_2P::Run(bool& menuOrGame, uint16_t& levelSound)
 				m_elapsedTime = sf::Time::Zero;
 				Proceed(Direction::Down);
 				Proceed_2P(Direction::Down);
-				std::cout << "Should go Down" << std::endl;
 			}
 			Render();
 		}
@@ -268,12 +268,10 @@ bool Game_2P::IsValidMovement(std::array<Position, BLOCK_ARRAY_COLUMNS> block)
 	{
 		if (block[i].x < 0 || block[i].x > BOARD_WIDTH_2P - 1 || block[i].y > BOARD_HEIGHT_2P - 1 || block[i].y <0)
 		{
-			std::cout << "INVALID" << std::endl;
 			return false;
 		}
 		if (IsOccupied(block[i].x, block[i].y))
 		{
-			std::cout << "INVALID" << std::endl;
 			return false;
 		}
 		if (IsDarkHole(block[i].x, block[i].y))
@@ -312,7 +310,6 @@ bool Game_2P::IsValidMovement(std::array<Position, BLOCK_ARRAY_COLUMNS> block)
 			}
 		}
 	}
-	std::cout << "VALID" << std::endl;
 	return true;
 }
 
@@ -323,12 +320,10 @@ bool Game_2P::IsValidMovement_2P(std::array<Position, BLOCK_ARRAY_COLUMNS> block
 	{
 		if (block[i].x < 0 || block[i].x > BOARD_WIDTH_2P - 1 || block[i].y > BOARD_HEIGHT_2P - 1 || block[i].y < 0)
 		{
-			std::cout << "INVALID" << std::endl;
 			return false;
 		}
 		if (IsOccupied(block[i].x, block[i].y))
 		{
-			std::cout << "INVALID" << std::endl;
 			return false;
 		}
 		if (IsDarkHole(block[i].x, block[i].y))
@@ -367,7 +362,6 @@ bool Game_2P::IsValidMovement_2P(std::array<Position, BLOCK_ARRAY_COLUMNS> block
 			}
 		}
 	}
-	std::cout << "VALID" << std::endl;
 	return true;
 }
 
