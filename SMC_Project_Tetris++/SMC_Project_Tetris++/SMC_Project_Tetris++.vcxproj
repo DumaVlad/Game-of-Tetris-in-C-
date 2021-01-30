@@ -195,13 +195,17 @@
     <ClInclude Include="Utils.h" />
   </ItemGroup>
   <ItemGroup>
+    <Font Include="..\Resources\Fonts\arcade_i.TTF" />
     <Font Include="..\Resources\Fonts\arial.ttf" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="..\Resources\Images\Blocks.png" />
     <Image Include="..\Resources\Images\Blocks2.png" />
+    <Image Include="..\Resources\Images\highscore.png" />
     <Image Include="..\Resources\Images\optionsTetrisEffect.jpg" />
     <Image Include="..\Resources\Images\tetris600x600.jpg" />
+    <Image Include="..\Resources\Images\tetris_board1P.jpg" />
+    <Image Include="..\Resources\Images\tetris_board2P.jpg" />
   </ItemGroup>
   <ItemGroup>
     <Media Include="..\Resources\Sounds\clear.wav" />

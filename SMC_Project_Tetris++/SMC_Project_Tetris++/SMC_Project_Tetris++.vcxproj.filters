@@ -145,6 +145,9 @@
     <Font Include="..\Resources\Fonts\arial.ttf">
       <Filter>Resource Files\Fonts</Filter>
     </Font>
+    <Font Include="..\Resources\Fonts\arcade_i.TTF">
+      <Filter>Resource Files\Fonts</Filter>
+    </Font>
   </ItemGroup>
   <ItemGroup>
     <Image Include="..\Resources\Images\Blocks.png">
@@ -157,6 +160,15 @@
       <Filter>Resource Files\Images</Filter>
     </Image>
     <Image Include="..\Resources\Images\Blocks2.png">
+      <Filter>Resource Files\Images</Filter>
+    </Image>
+    <Image Include="..\Resources\Images\highscore.png">
+      <Filter>Resource Files\Images</Filter>
+    </Image>
+    <Image Include="..\Resources\Images\tetris_board1P.jpg">
+      <Filter>Resource Files\Images</Filter>
+    </Image>
+    <Image Include="..\Resources\Images\tetris_board2P.jpg">
       <Filter>Resource Files\Images</Filter>
     </Image>
   </ItemGroup>
