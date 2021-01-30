@@ -43,7 +43,7 @@ void Game::Run(bool& menuOrGame, uint16_t& levelSound)
 	auto randomTime = Utils::GetRandomNumber(10, 20);
 	auto randomTimeDH = Utils::GetRandomNumber(10, 20);
 	auto pos_x = Utils::GetRandomNumber(0, BOARD_WIDTH - 1);
-	auto pos_y = Utils::GetRandomNumber(15, BOARD_HEIGHT - 20);
+	auto pos_y = Utils::GetRandomNumber(15, BOARD_HEIGHT - 1);
 	uint16_t initialLines = 0;
 	uint16_t finalLines = 0;
 	uint16_t linesDifference = 0;
