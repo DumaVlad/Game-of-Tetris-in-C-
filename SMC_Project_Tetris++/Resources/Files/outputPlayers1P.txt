@@ -16,3 +16,5 @@ Ceva 0
 Ceva 0
 Cecva 0
 Cecva 0
+Codrut 120
+vad 320

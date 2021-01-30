@@ -43,7 +43,10 @@ void Game::Run(bool& menuOrGame, uint16_t& levelSound)
 	auto randomTime = Utils::GetRandomNumber(10, 20);
 	auto randomTimeDH = Utils::GetRandomNumber(10, 20);
 	auto pos_x = Utils::GetRandomNumber(0, BOARD_WIDTH - 1);
-	auto pos_y = Utils::GetRandomNumber(15, BOARD_HEIGHT - 1);
+	auto pos_y = Utils::GetRandomNumber(15, BOARD_HEIGHT - 20);
+	uint16_t initialLines = 0;
+	uint16_t finalLines = 0;
+	uint16_t linesDifference = 0;
 
 	while (m_renderWindow.isOpen())
 	{
@@ -71,13 +74,23 @@ void Game::Run(bool& menuOrGame, uint16_t& levelSound)
 				copyDurationDH = randomTimeDH;
 				startDH = std::chrono::system_clock::now();
 				m_board->GenerateDarkHole(DARKHOLE_TEXTURE_ID, Position{ pos_x, pos_y });
+				initialLines = m_player->GetClearedLines();
 				randomTimeDH = Utils::GetRandomNumber(15, 25);
 				existsDH = true;
 			}
 			if (durationDestroy.count() >= copyDurationDH + 5 && existsDH == true)
 			{
 				startDestroy = std::chrono::system_clock::now();
-				m_board->DestroyDarkHole(Position{ pos_x, pos_y });
+				finalLines = m_player->GetClearedLines();
+				if (finalLines != initialLines)
+				{
+					linesDifference = finalLines - initialLines;
+					m_board->DestroyDarkHole(Position{ pos_x, pos_y + linesDifference });
+					pos_x = Utils::GetRandomNumber(0, BOARD_WIDTH - 1);
+					pos_y = Utils::GetRandomNumber(15, BOARD_HEIGHT - 1);
+					existsDH = false;
+				}
+				m_board->DestroyDarkHole(Position{ pos_x, pos_y});
 				pos_x = Utils::GetRandomNumber(0, BOARD_WIDTH - 1);
 				pos_y = Utils::GetRandomNumber(15, BOARD_HEIGHT - 1);
 				existsDH = false;

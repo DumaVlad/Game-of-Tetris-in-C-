@@ -25,6 +25,7 @@ public:
 	void Update_2P(const sf::Time& dt, std::string);
 	int GetLevel() const;
 	uint32_t GetScore() const;
+	int GetClearedLines() const;
 
 private:
 	std::string m_playerName;

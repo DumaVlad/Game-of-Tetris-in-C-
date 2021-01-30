@@ -112,3 +112,8 @@ uint32_t Player::GetScore() const
 {
 	return m_score;
 }
+
+int Player::GetClearedLines() const
+{
+	return m_linesCleared;
+}
