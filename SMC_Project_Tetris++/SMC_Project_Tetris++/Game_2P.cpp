@@ -52,6 +52,8 @@ void Game_2P::Run(bool& menuOrGame, uint16_t& levelSound)
 	while (m_renderWindow.isOpen())
 	{
 		m_gameplayMusic.setVolume((levelSound * 20.f));
+		m_gameoverMusic.setVolume((levelSound * 20.f));
+		m_board->m_clearLinesMusic.setVolume((levelSound * 20.f));
 
 		if (!m_pause)
 		{
@@ -280,13 +282,11 @@ bool Game_2P::IsValidMovement(std::array<Position, BLOCK_ARRAY_COLUMNS> block)
 	for (uint16_t i = 0; i < BLOCK_ARRAY_COLUMNS; i++)
 	{
 		if (block[i].x < 0 || block[i].x > BOARD_WIDTH_2P - 1 || block[i].y > BOARD_HEIGHT_2P - 1 || block[i].y <0)
-		{
 			return false;
-		}
+		
 		if (IsOccupied(block[i].x, block[i].y))
-		{
 			return false;
-		}
+		
 		if (IsDarkHole(block[i].x, block[i].y))
 		{
 			bool q = false;
@@ -332,13 +332,11 @@ bool Game_2P::IsValidMovement_2P(std::array<Position, BLOCK_ARRAY_COLUMNS> block
 	for (uint16_t i = 0; i < BLOCK_ARRAY_COLUMNS; i++)
 	{
 		if (block[i].x < 0 || block[i].x > BOARD_WIDTH_2P - 1 || block[i].y > BOARD_HEIGHT_2P - 1 || block[i].y < 0)
-		{
 			return false;
-		}
+		
 		if (IsOccupied(block[i].x, block[i].y))
-		{
 			return false;
-		}
+		
 		if (IsDarkHole(block[i].x, block[i].y))
 		{
 			bool q = false;
