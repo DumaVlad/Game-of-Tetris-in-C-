@@ -36,12 +36,13 @@ void Game::Run(bool& menuOrGame, uint16_t& levelSound)
 	m_gameplayMusic.setLoop(true);
 
 	bool existsDH = false;
-	auto copyDurationDH = 0;
 	auto start = std::chrono::system_clock::now();
 	auto startDH = std::chrono::system_clock::now();
 	auto startDestroy = std::chrono::system_clock::now();
+	auto copyStartDestroy = std::chrono::system_clock::now();
 	auto randomTime = Utils::GetRandomNumber(10, 20);
-	auto randomTimeDH = Utils::GetRandomNumber(10, 20);
+	auto TimeDH = 30;
+	auto deletionTimeDH = 40;
 	auto pos_x = Utils::GetRandomNumber(0, BOARD_WIDTH - 1);
 	auto pos_y = Utils::GetRandomNumber(15, BOARD_HEIGHT - 1);
 	uint16_t initialLines = 0;
@@ -63,7 +64,7 @@ void Game::Run(bool& menuOrGame, uint16_t& levelSound)
 			auto end = std::chrono::system_clock::now();
 			std::chrono::duration<double> duration = end - start;
 			std::chrono::duration<double> durationDH = end - startDH;
-			std::chrono::duration<double> durationDestroy = end - startDestroy;
+			std::chrono::duration<double> durationDestroy = end - copyStartDestroy;
 			if (duration.count() >= randomTime)
 			{
 				start = std::chrono::system_clock::now();
@@ -71,18 +72,21 @@ void Game::Run(bool& menuOrGame, uint16_t& levelSound)
 				randomTime = Utils::GetRandomNumber(10, 20);
 			}
 
-			if (durationDH.count() >= randomTimeDH)
+			if (durationDH.count() >= TimeDH)
 			{
-				copyDurationDH = randomTimeDH;
+				std::cout << "Se face";
 				startDH = std::chrono::system_clock::now();
+				copyStartDestroy = startDestroy;
+				startDestroy = std::chrono::system_clock::now();
 				m_board->GenerateDarkHole(DARKHOLE_TEXTURE_ID, Position{ pos_x, pos_y });
 				initialLines = m_player->GetClearedLines();
-				randomTimeDH = Utils::GetRandomNumber(15, 25);
+				TimeDH = Utils::GetRandomNumber(15, 25);
 				existsDH = true;
 			}
-			if (durationDestroy.count() >= copyDurationDH + 5 && existsDH == true)
+			if (durationDestroy.count() >= deletionTimeDH && existsDH == true)
 			{
-				startDestroy = std::chrono::system_clock::now();
+				std::cout << "Se sterge";
+				copyStartDestroy = std::chrono::system_clock::now();
 				finalLines = m_player->GetClearedLines();
 				if (finalLines != initialLines)
 				{
